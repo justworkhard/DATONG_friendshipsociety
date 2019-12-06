@@ -7,11 +7,12 @@ import App from "./App";
 import router from "./router/index";
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
-import publicFun from './public.js'
+import {getMenuList} from './public.js'
+import axios from 'axios'
 
-Vue.use(ElementUI);
+Vue.use(ElementUI,axios);
 
-Vue.prototype.hashParams = publicFun.obj
+Vue.prototype.getIndexList = getMenuList
 
 FastClick.attach(document.body);
 

@@ -34,24 +34,19 @@ export default {
     RedHeader,
     NewsNavbar
   },
+      async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 10
+      },
+      "/social/information/finance"
+    );
+    this.navList = temp;
+  },
   data() {
     return {
       navList: [
-        { title: "首页", url: "/social/information" },
-        {
-          title: "财政信息",
-          url: "/social/information/finance",
-          secondMenu: [
-            { title: "创业创新服务平台介绍", url: "/social/information/finance?title=创业创新服务平台介绍" },
-            { title: "新闻动态", url: "/social/information/finance?title=新闻动态" },
-            { title: "创业分享", url: "/social/information/finance?title=创业分享" },
-            { title: "资本市场", url: "/social/information/finance?title=资本市场" }
-          ]
-        },
-        { title: "金融信息", url: "/social/information/other/menu?title=金融信息", },
-        { title: "企业管理信息", url: "/social/information/other/menu?title=企业管理信息" },
-        { title: "数字图书馆", url: "/social/information/other/menu?title=数字图书馆" },
-        { title: "索引信息", url: "/social/information/other/menu?title=索引信息" }
       ],
     };
   }

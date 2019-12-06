@@ -25,11 +25,24 @@ export default {
     RedHeader,
     NewsNavbar
   },
+  async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 7
+      },
+      "/project/show"
+    );
+    this.navList = temp;
+  },
   data() {
     return {
       navList: [
         { title: "首页", url: "/project/promot" },
-        { title: "新闻动态", url: "/project/promot/other/menu?title=联谊会简介" },
+        {
+          title: "新闻动态",
+          url: "/project/promot/other/menu?title=联谊会简介"
+        },
         {
           title: "参展须知",
           url: "/project/promot/introduce?title=项目介绍",
@@ -53,8 +66,7 @@ export default {
           ]
         },
         { title: "参展商", url: "/project/promot/other/menu?title=招商信息" },
-        { title: "产品展示", url: "/project/promot/environ?title=政策环境" ,
-        },
+        { title: "产品展示", url: "/project/promot/environ?title=政策环境" }
       ]
     };
   }

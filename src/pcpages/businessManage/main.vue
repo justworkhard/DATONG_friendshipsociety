@@ -4,8 +4,8 @@
     <div class="header_manage">
       <img src="@/assets/images/mipmap-xxxhdpi/logo.png" alt class="logo">
       <div class="search">
-        <input type="text" placeholder="请输入">
-        <div class="btn_search">搜索</div>
+        <input type="text" placeholder="请输入" v-model="keyword">
+        <div class="btn_search" @click="search">搜索</div>
       </div>
     </div>
     <div class="bannar">
@@ -34,12 +34,25 @@ import { Carousel } from "element-ui";
 import Welcome from "@/comonentsPC/welcome.vue";
 import NewsCard from "@/comonentsPC/newsCard.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import { getNewsContentByKeyword } from "@/service/api";
 
 export default {
   components: { Carousel, Welcome, NewsCard,Footer },
   props: ["navs"],
   data() {
-    return {};
+    return {
+      keyword: ''
+    };
+  },
+  methods:{
+    search(){
+      getNewsContentByKeyword({
+        ptCode: 3,
+        title: this.keyword
+      }).then(res=>{
+        
+      })
+    }
   }
 };
 </script>

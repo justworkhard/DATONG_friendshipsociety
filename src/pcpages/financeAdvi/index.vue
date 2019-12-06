@@ -34,35 +34,19 @@ export default {
     RedHeader,
     NewsNavbar
   },
+  async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 5
+      },
+      "/finance/advi"
+    );
+    this.navList = temp;
+  },
   data() {
     return {
-      navList: [
-        { title: "首页", url: "/finance/advi" },
-        {
-          title: "融资定义",
-          url: "/finance/advi/second/menu?title=融资定义"
-        },
-        {
-          title: "融资方式",
-          url: "/finance/advi/second/menu?title=融资方式"
-        },
-        {
-          title: "融资途径",
-          url: "/finance/advi/second/menu?title=融资途径"
-        },
-        {
-          title: "警惕诈骗",
-          url: "/finance/advi/second/menu?title=警惕诈骗"
-        },
-        {
-          title: "融资案例",
-          url: "/finance/advi/second/menutitle=融资案例"
-        },
-        {
-          title: "融资平台",
-          url: "/finance/advi/second/menu?title=融资平台"
-        }
-      ]
+      navList: []
     };
   }
 };

@@ -20,8 +20,6 @@
             </div>
             <select></select>
           </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
         </div>
       </div>
       <div class="row">
@@ -33,7 +31,7 @@
             more="/law/szz?title=商标法"
           ></NewListCard>
           <Tabs
-            :TabsList="[{title:'劳动法',url:'/law/labour?title=劳动法'}]"
+            :TabsList="[{title:'劳动法',url:'/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2Flaw'}]"
             :newsList="newsList"
           ></Tabs>
         </div>
@@ -114,19 +112,19 @@ export default {
       TabsList: [
         {
           title: "公司法",
-          url: "/law/business?title=公司法"
+          url: "/second/menu?parentId=30&ptCode=2&currenId=45&indexUrl=%2Flaw"
         },
         {
           title: "合同法",
-          url: "/law/civil?title=合同法"
+          url: "/second/menu?parentId=28&ptCode=2&currenId=35&indexUrl=%2Flaw"
         },
         {
           title: "侵权责任法",
-          url: "/law/civil?title=侵权责任法"
+          url: "/second/menu?parentId=28&ptCode=2&currenId=36&indexUrl=%2Flaw"
         },
         {
           title: "山西宝翰律师事务所简介",
-          url: "/"
+          url: "/second/menu/solo?title=山西宝翰律师事务所简介&ptCode=2&id=3&contentId=" + id
         }
       ],
 

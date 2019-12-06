@@ -1,11 +1,19 @@
 <template>
-  <div class="news_card">
-    <p class="title">平城区人大常委会组织开展全区民营企业家人大代表第二次观摩交流会</p>
-    <span class="date">2019-06-27</span>
+  <div class="news_card" @click="toDetail">
+    <p class="title">{{newsItem.title}}</p>
+    <span class="date">{{newsItem.createTime}}</span>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ['newsItem'],
+  methods:{
+    toDetail(){
+      
+      this.$emit('toDetail',this.newsItem.id)
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .news_card {

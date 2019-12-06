@@ -3,32 +3,69 @@
     <div class="header">
       <span @mouseenter="active(0)" :class="{'active':activeIndex === 0}">新闻动态</span>
       <span @mouseenter="active(1)" :class="{'active':activeIndex === 1}">联谊会活动</span>
-      <a :href="activeIndex === 0?'#/menu/list?title=新闻动态':'#/menu/list?menu/list?title=联谊会活动'" target="_blank">更多 &gt;&gt;</a>
+      <a
+        :href="activeIndex === 0?'#/second/menu/solo?title=新闻动态&ptCode=0&id=3':'#/menu/list?menu/list?title=联谊会活动'"
+        target="_blank"
+      >更多 &gt;&gt;</a>
     </div>
     <div class="padding_15">
+      <div v-if="activeIndex === 0" class="news_list">
+        <div class="hot_news">
+          <h3>{{newsList[0]?newsList[0].title:''}}</h3>
+          <div class="content" v-html="newsList[0]?newsList[0].content:''"></div>
+        </div>
+        <div
+          class="news_item"
+          v-for="(item,index) in newsList"
+          :key="index"
+          @click="toDetail(item.id)"
+        >
+          <img src="@/assets/images/mipmap-xxxhdpi/hot.png" alt srcset>
+          <p class="title">{{item.title}}</p>
+          <span class="date">{{item.createTime}}</span>
+        </div>
+      </div>
       <slot></slot>
     </div>
   </div>
 </template>
 <script>
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+import NewsCard from "./newsCard";
 export default {
   props: ["title"],
+  components: { NewsCard },
+  created() {
+    getNewsList({
+      colid: 3,
+      ptCode: 0,
+      pageSize: 10,
+      pageNo: 1
+    }).then(res => {
+      this.newsList = res.data.data;
+    });
+  },
   data() {
-    return{
-      activeIndex :0
-    }
+    return {
+      activeIndex: 0,
+      newsList: []
+    };
   },
   methods: {
+    toDetail(id) {
+      this.$router.push(
+        "/second/menu/solo?title=新闻动态&ptCode=0&id=3&contentId=" + id
+      );
+    },
     active(index) {
       this.activeIndex = index;
       console.log(this.activeIndex);
-      
     }
   }
 };
 </script>
 <style lang="less" scoped>
- .red_header {
+.red_header {
   border: 1px solid #f1f1f1;
   margin-bottom: 20px;
   height: 362px;
@@ -51,7 +88,7 @@ export default {
     font-size: 14px;
     cursor: pointer;
     background-color: #fafafa;
-    text-align: center
+    text-align: center;
   }
   .active {
     background-color: #b61412;
@@ -63,6 +100,78 @@ export default {
     color: #666;
     margin-right: 15px;
     font-size: 12px;
+  }
+}
+.news_list {
+  .hot_news {
+    h3 {
+      font-size: 16px;
+      color: #084466;
+      text-align: center;
+      margin: 0 10px;
+      height: 30px;
+      line-height: 30px;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .content {
+      margin-top: 12px;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: #999;
+      line-height: 24px;
+      font-size: 14px;
+      height: 24px;
+      text-overflow: ellipsis;
+    }
+  }
+  .news_item {
+    display: flex;
+    position: relative;
+    border-bottom: 1px dashed #bbb;
+    align-items: center;
+
+    img {
+      height: 12px;
+      width: 22px;
+      margin: 0 5px;
+    }
+
+    .title {
+      display: block;
+      height: 36px;
+      width: 100%;
+      line-height: 36px;
+      font-size: 14px;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      position: relative;
+      color: #6e6e6e;
+      text-decoration: none;
+      margin-right: 100px;
+      cursor: pointer;
+          &:hover {
+      color: #b61412;
+    }
+    }
+    .date {
+      position: absolute;
+      right: 0;
+      top: 0;
+      line-height: 36px;
+      color: #bbb;
+      text-align: center;
+      font-size: 12px;
+    }
   }
 }
 </style>

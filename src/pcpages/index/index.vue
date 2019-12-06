@@ -1,8 +1,8 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
- 
+    <Header :navs="navList" :ptCode='0'></Header>
+
     <router-view></router-view>
     <Footer></Footer>
   </div>
@@ -25,14 +25,19 @@ export default {
     RedHeader,
     NewsNavbar
   },
+  async created() {
+    
+   let temp = await this.getIndexList({
+      parentId: "web",
+      ptCode: 0
+    },'/')
+    this.navList = temp
+    console.log(temp);
+    
+  },
   data() {
     return {
       navList: [
-        { title: "首页", url: "" },
-        { title: "联谊会简介", url: "/menu/list?title=联谊会简介" },
-        { title: "联谊企业", url: "/menu/list?title=联谊企业" },
-        { title: "加入我们", url: "/menu/list?title=加入我们" },
-        { title: "企业产品", url: "/menu/list?title=企业产品" }
       ]
     };
   }

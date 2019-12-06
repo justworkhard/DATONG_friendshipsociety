@@ -5,27 +5,48 @@
       <router-link class="navbar" :to="item.url" v-for="(item,index) in navs" :key="index">
         {{item.title}}
         <div class="navbar_menu">
-          <router-link class="item" :to="second.url" v-for="(second,index) in item.secondMenu" :key='index'>
+          <router-link
+            class="item"
+            :to="second.url"
+            v-for="(second,index) in item.secondMenu"
+            :key="index"
+          >
             <span>{{second.title}}</span>
           </router-link>
         </div>
       </router-link>
     </div>
     <el-carousel height="350px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <img  class="carousel_img" src="http://www.dtpcmq.com/scpt/images/banner9.jpg" >
+      <el-carousel-item v-for="item in imgList" :key="item">
+        <img class="carousel_img" :src="item.img">
       </el-carousel-item>
     </el-carousel>
   </div>
 </template>
 <script>
 import { Carousel } from "element-ui";
+import { getCarouselList, getIndexList } from "@/service/api";
 
 export default {
   components: { Carousel },
-  props: ["navs"],
+  props: ["navs", "ptCode"],
+  created() {
+    getCarouselList(this.ptCode).then(res => {
+      let temp = [];
+      res.data.carouselList.forEach(element => {
+        temp.push({
+          url: "javascript:",
+          img: element.picUrl,
+          title: ""
+        });
+      });
+      this.imgList = res.data.carouselList;
+    });
+  },
   data() {
-    return {};
+    return {
+      imgList: []
+    };
   }
 };
 </script>
@@ -97,7 +118,7 @@ export default {
   }
 }
 .carousel_img {
-  height: 350px!important;
-  width: 100%!important;
+  height: 350px !important;
+  width: 100% !important;
 }
 </style>

@@ -20,18 +20,31 @@
             </div>
             <select></select>
           </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard title="服务业" :data="data" more="/project/promot/introduce?title=服务业"></NewListCard>
-          <Tabs :TabsList="[{title:'文化旅游',url:'/project/promot/introduce?title=文化旅游'}]" ></Tabs>
+          <NewListCard
+            icon="icon-zbgg"
+            title="服务业"
+            :data="data"
+            more="/second/menu?parentId=71&ptCode=4&currenId=76&indexUrl=%2Fproject%2Fpromot"
+          ></NewListCard>
+          <Tabs
+            :TabsList="[{title:'文化旅游',url:'/second/menu?parentId=71&ptCode=4&currenId=78&indexUrl=%2Fproject%2Fpromot'}]"
+          ></Tabs>
         </div>
         <div class="col">
-          <NewListCard title="制造业" more="/project/promot/introduce?title=制造业"></NewListCard>
-          <NewListCard title="现代农业" more="/project/promot/introduce?title=现代农业"></NewListCard>
+          <NewListCard
+            icon="icon-zbgs"
+            title="制造业"
+            more="/second/menu?parentId=71&ptCode=4&currenId=77&indexUrl=%2Fproject%2Fpromot"
+          ></NewListCard>
+          <NewListCard
+            icon="icon-scjg"
+            title="现代农业"
+            more="/second/menu?parentId=71&ptCode=4&currenId=75&indexUrl=%2Fproject%2Fpromot"
+          ></NewListCard>
         </div>
       </div>
     </div>
@@ -69,18 +82,21 @@ export default {
       TabsList: [
         {
           title: "动态工作",
-          url: "/project/promot/other/menu?title=动态工作"
+          url:
+            "/second/menu?title=动态工作&id=70&parentId=70&ptCode=4&indexUrl=%2Fproject%2Fpromot&hadChild=fale&currenId=70"
         },
         {
           title: "招商信息",
-          url: "/project/promot/other/menu?title=招商信息"
+          url:
+            "/second/menu?title=招商信息&id=72&parentId=72&ptCode=4&indexUrl=%2Fproject%2Fpromot&hadChild=fale&currenId=72"
         },
         {
           title: "优惠政策",
-          url: "/project/promot/environ?title=优惠政策"
+          url:
+            "/second/menu?parentId=73&ptCode=4&currenId=80&indexUrl=%2Fproject%2Fpromot"
         }
       ],
- 
+
       demo01_index: 1,
       demo04_list: [
         {

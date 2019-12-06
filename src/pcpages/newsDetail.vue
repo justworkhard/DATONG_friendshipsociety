@@ -16,6 +16,7 @@
         <a href="/">首页></a>
         <span href="/">{{menuList[0].title}}</span>
       </div>
+
       <NewsCardList :data="data" @onChangePage="onChangePage"></NewsCardList>
     </div>
   </div>

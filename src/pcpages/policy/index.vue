@@ -1,7 +1,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" ptCode='1'></Header>
     <!-- <el-carousel height="350px">
       <el-carousel-item v-for="item in 4" :key="item">
         <img
@@ -23,6 +23,7 @@ import RedHeader from "@/comonentsPC/RedHeader.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
+import { getCarouselList, getIndexList } from "@/service/api";
 
 export default {
   components: {
@@ -34,59 +35,20 @@ export default {
     RedHeader,
     NewsNavbar
   },
+  async created() {
+    
+   let temp = await this.getIndexList({
+      parentId: "web",
+      ptCode: 1
+    },'/policy/service')
+    this.navList = temp
+  },
+  async mounted(){
+ 
+  },
   data() {
     return {
-      navList: [
-        { title: "首页", url: "/policy/service" },
-        {
-          title: "政策汇总",
-          url: "/policy/service/second/menu",
-          secondMenu: [
-            {
-              title: "国务院",
-              url: "/policy/service/second/menu?title=国务院"
-            },
-            {
-              title: "省级政策",
-              url: "/policy/service/second/menu?title=省级政策"
-            },
-            {
-              title: "市级政策",
-              url: "/policy/service/second/menu?title=市级政策"
-            },
-            {
-              title: "区级政策",
-              url: "/policy/service/second/menu?title=区级政策"
-            }
-          ]
-        },
-        {
-          title: "政策解读",
-          url: "/policy/service/second/menu",
-          secondMenu: [
-            {
-              title: "中小型微企业政策",
-              url: "/policy/service/second/menu?title=中小型微企业政策"
-            },
-            {
-              title: "民营企业政策",
-              url: "/policy/service/second/menu?title=民营企业政策"
-            },
-            {
-              title: "创业创新政策",
-              url: "/policy/service/second/menu?title=创业创新政策"
-            },
-          ]
-        },
-        {
-          title: "观点观察",
-          url: "/policy/service/second/menu?title=观点观察"
-        },
-        {
-          title: "经验交流",
-          url: "/policy/service/second/menu?title=经验交流"
-        }
-      ]
+      navList: []
     };
   }
 };

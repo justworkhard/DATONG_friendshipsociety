@@ -12,38 +12,25 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList">
-          <!-- <template slot-scope="slotProps">
-            <div v-if="slotProps.slotdata===0" class="news_list">
-              <div v-for="(item,index) in data" :key="index" class="news_item" @click="toDetail()">
-                <span>{{item.title}}</span>
-                <span class="date">{{item.date}}</span>
-              </div>
-            </div>
-            <div v-if="slotProps.slotdata===1" class="news_list">
-              <div v-for="(item,index) in data" :key="index" class="news_item" @click="toDetail()">
-                <span>{{item.title}}</span>
-                <span class="date">{{item.date}}</span>
-              </div>
-            </div>
-          </template>-->
+
         </Tabs>
         <div class="search">
           <div class="input_box">
             <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
+              <input type="text" v-model='keyword'>
+              <div class="btn" @click="onsearch">搜索</div>
             </div>
             <select></select>
           </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
+          <!-- <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
+          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset> -->
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard title="国务院" :data="data" more="/policy/service/second/menu?title=国务院"></NewListCard>
+          <NewListCard title="国务院" :data="data" more="/second/menu?parentId=15&ptCode=1&currenId=19"></NewListCard>
           <Tabs
-            :TabsList="[{title:'观点观察',url:'/policy/service/second/menu?title=观点观察'}]"
+            :TabsList="[{title:'观点观察',url:'/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&hadChild=fale&currenId=17'}]"
             :newsList="newsList"
           ></Tabs>
         </div>
@@ -51,9 +38,9 @@
           <NewListCard
             :data="data"
             title="民营企业政策"
-            more="/policy/service/second/menu?title=民营企业政策"
+            more="/second/menu?parentId=16&ptCode=1&currenId=24"
           ></NewListCard>
-          <NewListCard :data="data" title="经验交流" more="/policy/service/second/menu?title=经验交流"></NewListCard>
+          <NewListCard :data="data" title="经验交流" more="/second/menu?title=经验交流&id=18&parentId=18&ptCode=1&hadChild=fale&currenId=18"></NewListCard>
         </div>
       </div>
     </div>
@@ -67,6 +54,7 @@ import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
+import { getCarouselList, getIndexList } from "@/service/api";
 
 export default {
   components: {
@@ -79,8 +67,20 @@ export default {
     NewsNavbar,
     NewListCard
   },
+    created() {
+    getIndexList({
+      parentId: 'web',
+      ptCode: 1
+    });
+  },
+  methods:{
+    onsearch(){
+      this.$route.push(`/search?keyword=${this.keyword}&ptCode=0`)
+    }
+  },
   data() {
     return {
+      keyword: '',
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },

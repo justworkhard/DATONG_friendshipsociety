@@ -34,62 +34,19 @@ export default {
     RedHeader,
     NewsNavbar
   },
+    async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 6
+      },
+      "/entreAndInnova"
+    );
+    this.navList = temp;
+  },
   data() {
     return {
       navList: [
-        { title: "首页", url: "/entreAndInnova" },
-        {
-          title: "双创动态",
-          url: "/entreAndInnova/dynamic",
-          secondMenu: [
-            {
-              title: "创新创业服务平台介绍",
-              url: "/entreAndInnova/dynamic?title=创新创业服务平台介绍"
-            },
-            {
-              title: "新闻动态",
-              url: "/entreAndInnova/dynamic?title=新闻动态"
-            },
-            {
-              title: "创业分享",
-              url: "/entreAndInnova/dynamic?title=创业分享"
-            },
-            {
-              title: "资本市场",
-              url: "/entreAndInnova/dynamic?title=资本市场"
-            }
-          ]
-        },
-        {
-          title: "双创基地",
-          url: "/entreAndInnova/secondMenu?title=双创基地"
-        },
-        {
-          title: "双创活动",
-          url: "/entreAndInnova/secondMenu?title=双创活动"
-        },
-        {
-          title: "双创项目",
-          url: "/entreAndInnova/secondMenu?title=双创项目"
-        },
-        {
-          title: "双创服务",
-          url: "/entreAndInnova/service?title=双创服务",
-          secondMenu: [
-            {
-              title: "双创政策",
-              url: "/entreAndInnova/service?title=双创政策"
-            },
-            {
-              title: "股权融资",
-              url: "/entreAndInnova/service?title=股权融资"
-            },
-            {
-              title: "挂牌服务",
-              url: "/entreAndInnova/service?title=挂牌服务"
-            }
-          ]
-        }
       ]
     };
   }

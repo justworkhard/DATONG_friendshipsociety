@@ -26,26 +26,19 @@ export default {
     NewsNavbar
     
   },
+      async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 9
+      },
+      "/export/country"
+    );
+    this.navList = temp;
+  },
   data() {
     return {
       navList: [
-        { title: "首页", url: "/export/country" },
-        {
-          title: "相关政策",
-          url: "/export/country/secondMenu?title=相关政策"
-        },
-        {
-          title: "项目合作",
-          url: "/export/country/secondMenu?title=项目合作",
-        },
-        {
-          title: "项目交流",
-          url: "/export/country/secondMenu?title=项目交流",
-        },
-        {
-          title: "行业标准查询",
-          url: "/export/country/secondMenu?title=行业标准查询",
-        }
       ]
     };
   }

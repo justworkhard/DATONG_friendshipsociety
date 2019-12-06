@@ -284,6 +284,27 @@ let RouterPC = new Router({
       component: resolve => require(["@/pcpages/businessManage/main"], resolve)
     },
     {
+      path: "/second/menu",
+      component: resolve => require(["@/pcpages/main"], resolve),
+      children: [
+        {
+          path: "/",
+          component: resolve =>
+            require(["@/pcpages/secondMenu"], resolve)
+        },
+        {
+          path: "/second/menu/solo",
+          component: resolve =>
+            require(["@/pcpages/secondMenuSolo"], resolve)
+        },
+      ]
+    },
+    {
+      path: "/search",
+      component: resolve =>
+        require(["@/pcpages/search"], resolve) 
+    },
+    {
       path: "/policy/service",
       component: resolve => require(["@/pcpages/policy"], resolve),
       children: [

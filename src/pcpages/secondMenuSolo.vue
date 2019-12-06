@@ -7,25 +7,35 @@
         v-for="(item,index) in menuList"
         :key="index"
       >
-        <a>{{item.title}}</a>
+        <a>{{item?item.title:''}}</a>
       </li>
     </ul>
     <div class="right">
       <div class="crumbs">
         <span>您的位置：</span>
-        <a href="/">首页></a>
-        <span href="/">{{menuList[0].title}}</span>
+        <a>首页></a>
+        <!-- <span href="/">{{menuList[0].title+'>'}}</span> -->
+        <span href="/" v-if="showContent">{{selectNew?selectNew.title:''}}</span>
       </div>
-      <NewsCardList :data="data" @onChangePage="onChangePage"></NewsCardList>
+
+      <NewsCardList
+        v-if="!showContent"
+        @toDetail="toDetail"
+        :data="data"
+        @onChangePage="onChangePage"
+        :count="count"
+      ></NewsCardList>
+      <NewsContent v-if="showContent" :contentId="contentId"></NewsContent>
     </div>
   </div>
 </template>
 <script>
 import NewsCardList from "@/comonentsPC/newsCardList";
-import { getCarouselList, getIndexList ,getNewsList } from "@/service/api";
+import NewsContent from "@/comonentsPC/newsContent";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
 
 export default {
-  components: { NewsCardList },
+  components: { NewsCardList, NewsContent },
   watch: {
     async $route(to, from) {
       let temp = [];
@@ -40,19 +50,22 @@ export default {
         });
       } else {
         temp = await this.getIndexList(
-          getIndexList,
           {
             parentId: this.$route.query.parentId,
             ptCode: this.$route.query.ptCode
           },
-          "/policy/service/second/menu"
+          "/second/menu",
+          true
         );
+        console.log(temp);
       }
 
       this.menuList = temp;
 
       this.menuList.forEach((item, index) => {
         if (item.id == this.$route.query.currenId) {
+          console.log("=-=-=-=watch");
+
           this.setActive(index);
         }
       });
@@ -62,57 +75,73 @@ export default {
   },
   async created() {
     let temp = [];
-    if (
-      this.$route.query.title &&
-      this.$route.query.id &&
-      this.$route.query.hadChild
-    ) {
-      temp.push({
-        title: this.$route.query.title,
-        id: this.$route.query.id
-      });
-    } else {
-      temp = await this.getIndexList(
-        getIndexList,
-        {
-          parentId: this.$route.query.parentId,
-          ptCode: this.$route.query.ptCode
-        },
-        "/policy/service/second/menu"
-      );
-    }
+    temp.push({
+      title: this.$route.query.title,
+      id: this.$route.query.id,
+      ptCode: this.$route.query.ptCode
+    });
 
     this.menuList = temp;
     this.menuList.forEach((item, index) => {
-      if (item.id == this.$route.query.currenId) {
+      if (item.id == this.$route.query.id) {
         this.setActive(index);
       }
     });
   },
+  mounted() {
+    if (this.$route.query.contentId) {
+      this.showContent = true;
+      this.contentId = this.$route.query.contentId;
+    }
+  },
   data() {
     return {
-      data: ["", "", "", ""],
+      contentId: "",
+      showContent: false,
       activeTitle: "",
-      menuList: []
+      menuList: [],
+      selectNew: {},
+      count: 0,
+      pageNo: 1
     };
   },
   methods: {
+    toDetail(id) {
+      this.showContent = true;
+
+      this.contentId = id;
+    },
     setActive(index) {
-      if (index === 0) {
-        return;
-      }
+      let _this = this;
+      // if (index === 0) {
+      //   return;
+      // }
+      this.showContent = false;
       let temp = this.menuList[index];
       this.menuList.splice(index, 1);
       this.menuList.unshift(temp);
+
       getNewsList({
-        colid: 2 ,//temp.id,
-        ptCode: 0 ,//||temp.ptCode
-      }).then(res=>{
-        this.data = res.data.tInfoList
-      })
+        // colid: 2,
+        colid: temp.id,
+        // ptCode: 0,
+        ptCode: temp.ptCode,
+        pageSize: 10,
+        pageNo: this.pageNo
+      }).then(res => {
+        _this.data = res.data.data;
+      });
     },
     onChangePage(current) {
-      console.log("parent oage ");
+      this.pageNo = current;
+      getNewsList({
+        colid: 2, //temp.id,
+        ptCode: 0, //||temp.ptCode
+        pageSize: 10,
+        pageNo: current
+      }).then(res => {
+        this.data = res.data.data;
+      });
     }
   }
 };

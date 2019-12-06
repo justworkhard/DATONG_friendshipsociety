@@ -68,15 +68,20 @@
     <div class="col">
       <div class="col_left">
         <!--  联谊会简介 -->
-        <RedHeader title="联谊会介绍" href="/menu/list?title=联谊会简介"></RedHeader>
+        <RedHeader title="联谊会介绍" href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0"></RedHeader>
         <!-- 积分排行榜 -->
-        <RedHeader title="积分排行榜" href="/menu/list?title=积分排行榜"></RedHeader>
+        <RedHeader title="积分排行榜" href="/second/menu/solo?title=积分排行榜&ptCode=0&id=5"></RedHeader>
         <!-- 阅读排行榜 -->
-        <RedHeader title="阅读排行榜" href="/menu/list?title=阅读排行榜"></RedHeader>
+        <RedHeader title="阅读排行榜" href="/second/menu/solo?title=阅读排行榜&ptCode=0&id=5"></RedHeader>
       </div>
       <div class="col_right">
-        <RedHeader title="联谊企业" href="/menu/list?title=企业联谊">
+        <RedHeader
+          title="联谊企业"
+          href="/second/menu?title=联谊会企业&id=7&parentId=7&ptCode=0&hadChild=fale&currenId=7"
+        >
           <div class="box">
+            <ProductCard :data="item" v-for="(item,index) in componyList" :key="index" type='c'></ProductCard>
+            <!-- <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
@@ -84,13 +89,17 @@
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
+            <ProductCard :data="componyItem"></ProductCard>-->
           </div>
         </RedHeader>
-        <RedHeader title="企业产品" href="/menu/list?title=企业产品">
+        <RedHeader
+          title="企业产品"
+          href="/second/menu?title=企业产品展示&id=8&parentId=8&ptCode=0&hadChild=fale&currenId=8"
+        >
           <div class="box">
+            <ProductCard :data="item" v-for="(item,index) in productList" :key="index" type='p'></ProductCard>
+
+            <!-- <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
@@ -99,8 +108,7 @@
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
+            <ProductCard :data="componyItem"></ProductCard>-->
           </div>
         </RedHeader>
       </div>
@@ -115,6 +123,7 @@ import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import ProductCard from "./productCard.vue";
 import { Swiper, SwiperItem } from "vux";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
 
 export default {
   components: {
@@ -127,14 +136,58 @@ export default {
     NewsNavbar,
     ProductCard
   },
+  created() {
+    getIndexList({
+      parentId: 1,
+      ptCode: "web"
+    });
+    getNewsList({
+      // colid: 2,
+      colid: 7,
+      // ptCode: 0,
+      ptCode: 0,
+      pageSize: 10,
+      pageNo: 1
+    }).then(res => {
+      res.data.data.forEach(element => {
+        this.componyList.push({
+          title: element.title,
+          url: element.minPicAddress,
+          introduct: element.content,
+          id: element.id,
+          summary: element.summary
+        });
+      });
+    });
+    getNewsList({
+      // colid: 2,
+      colid: 8,
+      // ptCode: 0,
+      ptCode: 0,
+      pageSize: 10,
+      pageNo: 1
+    }).then(res => {
+      res.data.data.forEach(element => {
+        this.productList.push({
+          title: element.title,
+          url: element.minPicAddress,
+          introduct: element.content,
+          id: element.id,
+          summary: element.summary
+        });
+      });
+    });
+  },
   data() {
     return {
-      componyItem: {
-        title: "大同华林有限公司",
-        url: "http://www.dtpcmq.com/upload/20190301172227887.png",
-        introduct:
-          "山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商"
-      },
+      componyList: [],
+      // componyItem: {
+      //   title: "大同华林有限公司",
+      //   url: "http://www.dtpcmq.com/upload/20190301172227887.png",
+      //   introduct:
+      //     "山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商"
+      // },
+      productList: [],
       productItem: {
         title: "大同市全域旅游直通车+大同旅游交通一卡行",
         url: "http://www.dtpcmq.com/upload/201903011612527619.png",
