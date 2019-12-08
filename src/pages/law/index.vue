@@ -5,13 +5,7 @@
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
     <Search></Search>
-    <swiper
-      :aspect-ratio="300/800"
-      height="200px"
-      :list="demo04_list"
-      v-model="demo01_index"
-      auto
-    ></swiper>
+    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -19,12 +13,31 @@
             <li
               class="news_title"
               @click="toDetail()"
-              v-for="(item,index) in newsList"
+              v-for="(item,index) in gongshifa"
               :key="index"
             >{{item.title}}</li>
           </ul>
         </div>
-        <div v-if="slotProps.slotdata===1">2</div>
+        <div v-if="slotProps.slotdata===1">
+          <ul class="news">
+            <li
+              class="news_title"
+              @click="toDetail()"
+              v-for="(item,index) in hetongfa"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
+        <div v-if="slotProps.slotdata===2">
+          <ul class="news">
+            <li
+              class="news_title"
+              @click="toDetail()"
+              v-for="(item,index) in qingquan"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
@@ -43,7 +56,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in shangbiaofa" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -54,7 +67,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in zhuzuoquan" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -65,7 +78,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in laodongfa" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -76,7 +89,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in zhuanlifa" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -93,8 +106,84 @@ import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
+import { getNewsList } from "@/service/api";
 
 export default {
+  async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 2
+      },
+      "/",
+      true
+    );
+    this.tabList = temp;
+    getNewsList({
+      colid: 45,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.gongshifa = res.data.data;
+    });
+    getNewsList({
+      colid: 35,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.hetongfa = res.data.data;
+    });
+    getNewsList({
+      colid: 36,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.qingquan = res.data.data;
+    });
+    getNewsList({
+      colid: 19,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.lvshisuo = res.data.data[0];
+    });
+    getNewsList({
+      colid: 24,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.shangbiaofa = res.data.data;
+    });
+    getNewsList({
+      colid: 17,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.zhuzuoquan = res.data.data;
+    });
+    getNewsList({
+      colid: 31,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.laodongfa = res.data.data;
+    });
+        getNewsList({
+      colid: 31,
+      ptCode: 2,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.zhuanlifa = res.data.data;
+    });
+  },
   components: {
     XHeader,
     Header,
@@ -108,26 +197,38 @@ export default {
     toDetail() {
       this.$router.push("/");
     },
-      onChangeTabs(){
-
+    onChangeTabs(id) {
+      // console.log(id);
     }
   },
   data() {
     return {
+      gongshifa: [],
+      hetongfa: [],
+      qingquan: [],
+      lvshisuo: [],
+      shangbiaofa: [],
+      zhuzuoquan: [],
+      laodongfa: [],
+      zhuanlifa: [],
       TabsList: [
-        ["公司法", "合同法", "侵权责任法"],
-        ["山西宝翰律师事务所简介"],
-        ["商标法"],
-        ["著作权法"],
-        ["劳动法"],
-        ["专利法"]
+        [{ title: "公司法" }, { title: "合同法" }, { title: "侵权责任法" }],
+        [{ title: "山西宝翰律师事务所简介" }],
+        [{ title: "商标法" }],
+        [{ title: "著作权法" }],
+        [{ title: "劳动法" }],
+        [{ title: "专利法" }]
       ],
       hrefs: [
-        ["/law/companyLaw", "/law/proveandattact","/law/proveandattact"],
-        ['/newsDetail'],
+        [
+          "/second/menu?title=商法&id=30&parentId=30&ptCode=2&indexUrl=%2F",
+          "/second/menu?title=民刑法&id=28&parentId=28&ptCode=2&indexUrl=%2F",
+          "/second/menu?title=民刑法&id=28&parentId=28&ptCode=2&indexUrl=%2F"
+        ],
+        ["/newsDetail"],
         ["/law/zzs"],
         ["/law/zzs"],
-        ["/law/labour"],
+        ["/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2F"],
         ["/law/zzs"]
       ],
       demo01_index: 0,
@@ -141,15 +242,7 @@ export default {
         { label: "税法", url: "/law/taxLaw" },
         { label: "指导案例", url: "/law/guide" }
       ],
-      newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-      ],
+      newsList: [],
       demo04_list: [
         {
           url: "javascript:",
@@ -177,6 +270,7 @@ export default {
 .news {
   font-size: 14px;
   padding: 14px 13px;
+  min-height: 194px;;
   .news_title {
     padding: 7px 0px;
     width: 100%;

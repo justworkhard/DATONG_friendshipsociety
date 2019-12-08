@@ -1,8 +1,8 @@
 <template>
   <div class="news_car" v-on:click="toDetail()">
     <p class="title noWarp">{{data.title}}</p>
-    <p class="content noWarp">{{data.content}}</p>
-    <p class="date noWarp">{{data.date}}</p>
+    <p class="content noWarp">{{data.summary}}</p>
+    <p class="date noWarp">{{data.createTime}}</p>
   </div>
 </template>
 <script>
@@ -10,7 +10,7 @@ export default {
   props: ['data'],
   methods:{
     toDetail(){
-      this.$router.push('/newsdetail')
+      this.$router.push('/newsdetail?newsId='+this.data.id)
     }
   }
 };

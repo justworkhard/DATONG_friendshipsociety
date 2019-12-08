@@ -6,7 +6,7 @@
     <div class="tabs" :style="{'background-color':Bcolor,'color':Fcolor}">
       <div class="tab_pane" v-for="(item,index) in tabList" :key="index">
         <router-link :to="item.url">
-          <p class="label" :style="{'color':Fcolor}">{{item.label}}</p>
+          <p class="label" :style="{'color':Fcolor}">{{item.title}}</p>
         </router-link>
       </div>
     </div>

@@ -14,7 +14,7 @@
       <div class="crumbs">
         <span>您的位置：</span>
         <a >首页></a>
-        <!-- <span href="/">{{menuList[0].title+'>'}}</span> -->
+        <span href="/">{{menuList[0].title+'>'}}</span>
         <span href="/"  v-if="showContent">{{selectNew?selectNew.title:''}}</span>
 
       </div>
@@ -134,6 +134,11 @@ export default {
     toDetail(id) {
       this.contentId = id
       this.showContent = true
+      this.data.forEach((item,index)=>{
+        if(item.id == id){
+          this.selectNew = item
+        }
+      })
     },
     setActive(index) {
       let _this = this;

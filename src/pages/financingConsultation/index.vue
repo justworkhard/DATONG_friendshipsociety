@@ -15,10 +15,19 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" @click="toDetail()" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" @click="toDetail()" v-for="(item,index) in pingtai" :key="index">{{item.title}}</li>
           </ul>
         </div>
-        <div v-if="slotProps.slotdata===1">2</div>
+   <div v-if="slotProps.slotdata===1">
+          <ul class="news">
+            <li class="news_title" @click="toDetail()" v-for="(item,index) in dingyi" :key="index">{{item.title}}</li>
+          </ul>
+        </div>
+          <div v-if="slotProps.slotdata===2">
+          <ul class="news">
+            <li class="news_title" @click="toDetail()" v-for="(item,index) in fangshi" :key="index">{{item.title}}</li>
+          </ul>
+        </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
@@ -26,7 +35,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in tujing" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -37,7 +46,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in zhapian" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -48,7 +57,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in anli" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -59,28 +68,98 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in fangshi" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
 
 export default {
+   async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 5
+      },
+      "/",
+      true
+    );
+    this.tabList = temp;
+    getNewsList({
+      colid: 87,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.pingtai = res.data.data;
+    });
+    getNewsList({
+      colid: 82,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.dingyi = res.data.data;
+    });
+    getNewsList({
+      colid: 83,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.fangshi = res.data.data;
+    });
+    getNewsList({
+      colid: 84,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.tujing = res.data.data;
+    });
+    getNewsList({
+      colid: 85,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.zhapian = res.data.data;
+    });
+    getNewsList({
+      colid: 86,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.anli = res.data.data;
+    });
+    getNewsList({
+      colid: 87,
+      ptCode: 5,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.fangshi = res.data.data;
+    });
+  },
   components: {
     XHeader,
     Header,
     Swiper,
     SwiperItem,
-    Tabs
+    Tabs,
+    Footer
   },
   methods:{
     toDetail(){
@@ -92,39 +171,29 @@ export default {
   },
   data() {
     return {
+      pingtai: [],
+      dingyi: [],
+      fangshi: [],
+      tujing: [],
+      zhapian: [],
+      anli: [],
+      fangshi: [],
       TabsList: [
-        ["融资平台", "融资定义","融资方式"],
-        ["融资途径"],
-        ["警惕诈骗"],
-        ["融资案例"],
-        ["融资方式"],
+        [{title:"融资平台"}, {title:"融资定义"},{title:"融资方式"}],
+        [{title:"融资途径"}],
+        [{title:"警惕诈骗"}],
+        [{title:"融资案例"}],
+        [{title:"融资方式"}],
       ],
       hrefs: [
-        ["/financing/consultation/list", "/financing/consultation/list","/financing/consultation/list"],
-        ["/financing/consultation/list"],
-        ["/financing/consultation/list"],
-        ["/financing/consultation/list"],
-        ["/financing/consultation/list"],
+        ["/second/menu?title=融资平台&id=87&parentId=87&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=87", "/second/menu?title=融资定义&id=82&parentId=82&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=82","/second/menu?title=融资方式&id=83&parentId=83&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=83"],
+        ["/second/menu?title=融资途径&id=84&parentId=84&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=84"],
+        ["/second/menu?title=警惕诈骗&id=85&parentId=85&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=85"],
+        ["/second/menu?title=融资案例&id=86&parentId=86&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=86"],
+        ["/second/menu?title=融资方式&id=83&parentId=83&ptCode=5&indexUrl=%2F&hadChild=fale&currenId=83"],
       ],
       demo01_index: 0,
-      tabList: [
-        { label: "首页",url:'/' },
-        { label: "融资定义",url:'/financing/consultation/list' },
-        { label: "融资方式",url:'/financing/consultation/list' },
-        { label: "融资途径",url:'/financing/consultation/list' },
-        { label: "警惕诈骗",url:'/financing/consultation/list' },
-        { label: "融资案例",url:'/financing/consultation/list' },
-        { label: "融资平台",url:'/policy/chat' },
-      ],
-          newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-      ],
+      tabList: [],
       demo04_list: [
         {
           url: "javascript:",
@@ -152,6 +221,7 @@ export default {
 .news {
   font-size: 14px;
   padding: 14px 13px;
+  min-height: 194px;
   .news_title {
     padding: 7px 0px;
     width: 100%;

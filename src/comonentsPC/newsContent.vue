@@ -101,4 +101,8 @@ export default {
     }
   }
 }
+.content_html{
+  overflow-x: scroll;
+  width: 885px;
+}
 </style>

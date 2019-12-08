@@ -11,36 +11,35 @@
             auto
           ></swiper>
         </div>
-        <Tabs :TabsList="TabsList" :newsList="newsList">
-
-        </Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text" v-model='keyword'>
-              <div class="btn" @click="onsearch">搜索</div>
-            </div>
-            <select></select>
-          </div>
-          <!-- <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset> -->
-        </div>
+        <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
+        <SearchBox :ptCode='1'></SearchBox>
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard title="国务院" :data="data" more="/second/menu?parentId=15&ptCode=1&currenId=19"></NewListCard>
+          <NewListCard
+            title="国务院"
+            icon="icon-zbgg"
+            :data="guowuyuan"
+            more="/second/menu?parentId=15&ptCode=1&currenId=19"
+          ></NewListCard>
           <Tabs
-            :TabsList="[{title:'观点观察',url:'/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&hadChild=fale&currenId=17'}]"
-            :newsList="newsList"
+            :TabsList="[{title:'观点观察',url:'/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=17'}]"
+            :newsList="guandianguanc"
           ></Tabs>
         </div>
         <div class="col">
           <NewListCard
-            :data="data"
+            :data="mingying"
+            icon="icon-zbgs"
             title="民营企业政策"
             more="/second/menu?parentId=16&ptCode=1&currenId=24"
           ></NewListCard>
-          <NewListCard :data="data" title="经验交流" more="/second/menu?title=经验交流&id=18&parentId=18&ptCode=1&hadChild=fale&currenId=18"></NewListCard>
+          <NewListCard
+            :data="jingyanjiaoliu"
+            title="经验交流"
+            icon="icon-scjg"
+            more="/second/menu?title=经验交流&id=18&parentId=18&ptCode=1&hadChild=fale&currenId=18"
+          ></NewListCard>
         </div>
       </div>
     </div>
@@ -52,9 +51,10 @@ import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList } from "@/service/api";
+import { getCarouselList, getIndexList ,getNewsList} from "@/service/api";
 
 export default {
   components: {
@@ -65,36 +65,58 @@ export default {
     Footer,
     Tabs,
     NewsNavbar,
-    NewListCard
+    NewListCard,
+    SearchBox
   },
-    created() {
+  created() {
     getIndexList({
-      parentId: 'web',
+      parentId: "web",
       ptCode: 1
     });
+    getNewsList({
+      ptCode:'1',
+      colid: "19",
+      pageSize: '10',
+      pageNo: '0'
+    }).then(res=>{
+      this.guowuyuan = res.data.data
+    })
+        getNewsList({
+      ptCode:'1',
+      colid: "124",
+      pageSize: '10',
+      pageNo: '0'
+    }).then(res=>{
+      this.mingying = res.data.data
+    })
+        getNewsList({
+      ptCode:'1',
+      colid: "18",
+      pageSize: '10',
+      pageNo: '0'
+    }).then(res=>{
+      this.jingyanjiaoliu = res.data.data
+    })
+        getNewsList({
+      ptCode:'1',
+      colid: "17",
+      pageSize: '10',
+      pageNo: '0'
+    }).then(res=>{
+      this.guandianguanc = res.data.data
+    })
   },
-  methods:{
-    onsearch(){
-      this.$route.push(`/search?keyword=${this.keyword}&ptCode=0`)
-    }
+  methods: {
+
   },
   data() {
     return {
-      keyword: '',
-      data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
-      ],
+      keyword: "",
+      guowuyuan: [],
+      mingying: [],
+      jingyanjiaoliu: [],
+      guandianguanc: [],
+
       newsList: [
         [
           { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },

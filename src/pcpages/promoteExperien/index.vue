@@ -30,7 +30,7 @@ export default {
     let temp = await this.getIndexList(
       {
         parentId: "web",
-        ptCode: 8
+        ptCode: 10
       },
       "/promote/experien"
     );

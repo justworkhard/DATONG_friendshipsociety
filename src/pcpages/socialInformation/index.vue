@@ -38,7 +38,7 @@ export default {
     let temp = await this.getIndexList(
       {
         parentId: "web",
-        ptCode: 10
+        ptCode: 8
       },
       "/social/information/finance"
     );

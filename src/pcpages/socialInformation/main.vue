@@ -12,26 +12,20 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList"></Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
-            </div>
-            <select></select>
-          </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
-        </div>
+        <SearchBox :ptCode="8"></SearchBox>
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard title="行业标志查询" :data="data" more="/social/information/other/menu?title=行业标志查询"></NewListCard>
-          <Tabs :TabsList="[{title:'企业信息管理',url:'/social/information/other/menu?title=企业信息管理'}]" ></Tabs>
+          <NewListCard
+            title="行业标志查询"
+            :data="hangyebiaozhi"
+            more="/social/information/other/menu?title=行业标志查询"
+          ></NewListCard>
+          <Tabs :data='[qiyexingxi]' :TabsList="[{title:'企业信息管理',url:'/social/information/other/menu?title=企业信息管理'}]"></Tabs>
         </div>
         <div class="col">
-          <NewListCard title="企业信用查询" more="/social/information/other/menu?title=企业信用查询"></NewListCard>
-          <NewListCard title="行业数据统计" more="/social/information/other/menu?title=行业数据统计"></NewListCard>
+          <NewListCard title="企业信用查询" :data='qiyexingyong' more="/social/information/other/menu?title=企业信用查询"></NewListCard>
+          <NewListCard title="行业数据统计" :data='hangyeshuju' more="/social/information/other/menu?title=行业数据统计"></NewListCard>
         </div>
       </div>
     </div>
@@ -43,11 +37,13 @@ import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
 
 export default {
   components: {
+    SearchBox,
     Welcome,
     Header,
     Swiper,
@@ -57,8 +53,70 @@ export default {
     NewsNavbar,
     NewListCard
   },
+  created() {
+    getNewsList({
+      ptCode: "9",
+      colid: "70",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+    getNewsList({
+      ptCode: "9",
+      colid: "72",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+    getNewsList({
+      ptCode: "9",
+      colid: "80",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+    getNewsList({
+      ptCode: "9",
+      colid: "120",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.hangyebiaozhi = res.data.data;
+    });
+    getNewsList({
+      ptCode: "9",
+      colid: "119",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.qiyexingxi = res.data.data;
+    });
+    getNewsList({
+      ptCode: "9",
+      colid: "118",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.qiyexingyong = res.data.data;
+    });
+    getNewsList({
+      ptCode: "10",
+      colid: "75",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.hangyeshuju = res.data.data;
+    });
+  },
   data() {
     return {
+      hangyebiaozhi: [],
+      hangyeshuju: [],
+      qiyexingxi: [],
+      qiyexingyong: [],
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
@@ -80,7 +138,7 @@ export default {
           url: "/social/information/other/menu?title=金融信息"
         }
       ],
- 
+
       demo01_index: 1,
       demo04_list: [
         {

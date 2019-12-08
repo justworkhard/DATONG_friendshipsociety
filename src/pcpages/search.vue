@@ -15,7 +15,7 @@
       </el-carousel-item>
     </el-carousel>
     <div class="news_list">
-      <NewsCard :newsItem="newsItem"></NewsCard>
+      <NewsCard v-for="(item,index) in newsList" :newsItem="item" :key="index"></NewsCard>
       <el-pagination
         background
         @current-change="onChangePage"
@@ -53,7 +53,8 @@ export default {
     NewsCard
   },
   async created() {
-    getCarouselList(this.ptCode).then(res => {
+    this.keyword = this.$route.query.keyword||''
+    getCarouselList(this.$route.query.ptCode).then(res => {
       let temp = [];
       res.data.carouselList.forEach(element => {
         temp.push({
@@ -64,17 +65,24 @@ export default {
       });
       this.imgList = res.data.carouselList;
     });
+     getNewsContentByKeyword({
+        ptCode: this.$route.query.ptCode,
+        title: this.keyword
+      }).then(res => {
+        
+      });
   },
   async mounted() {},
   methods: {
     onChangePage() {},
     search() {
-      console.log(this.keyword);
       
       getNewsContentByKeyword({
         ptCode: this.$route.query.ptCode,
         title: this.keyword
-      }).then(res => {});
+      }).then(res => {
+
+      });
     }
   },
   data() {
@@ -82,10 +90,12 @@ export default {
       navList: [],
       imgList: [],
       keyword: "",
-      newsItem: {
+      newsList: [
+        {
         title: "1",
         createTime: "2"
       }
+      ],
     };
   }
 };

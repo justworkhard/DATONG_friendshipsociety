@@ -12,42 +12,19 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
-            </div>
-            <select></select>
-          </div>
-        </div>
+        <SearchBox :ptCode="2"></SearchBox>
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard
-            icon="icon-zbgg"
-            title="商标法"
-            :data="data"
-            more="/law/szz?title=商标法"
-          ></NewListCard>
+          <NewListCard icon="icon-zbgg" title="商标法" :data="shangbiaofa" more></NewListCard>
           <Tabs
             :TabsList="[{title:'劳动法',url:'/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2Flaw'}]"
             :newsList="newsList"
           ></Tabs>
         </div>
         <div class="col">
-          <NewListCard
-            icon="icon-zbgs"
-            :data="data"
-            title="著作权法"
-            more="/law/szz?title=著作权法"
-          ></NewListCard>
-          <NewListCard
-            icon="icon-scjg"
-            :data="data"
-            title="专利法"
-            more="/law/szz?title=专利法"
-          ></NewListCard>
+          <NewListCard icon="icon-zbgs" :data="zuzuoquan" title="著作权法" more></NewListCard>
+          <NewListCard icon="icon-scjg" :data="zhuanlifa" title="专利法" more></NewListCard>
         </div>
       </div>
     </div>
@@ -59,8 +36,10 @@ import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
 
 export default {
   components: {
@@ -71,7 +50,42 @@ export default {
     Footer,
     Tabs,
     NewsNavbar,
-    NewListCard
+    NewListCard,
+    SearchBox
+  },
+  created() {
+    getNewsList({
+      ptCode: "2",
+      colid: "45",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+    getNewsList({
+      ptCode: "2",
+      colid: "35",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[1] = res.data.data;
+    });
+    getNewsList({
+      ptCode: "2",
+      colid: "36",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[2] = res.data.data;
+    });
+    getNewsList({
+      ptCode: "2",
+      colid: "36",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[2] = res.data.data;
+    });
   },
   data() {
     return {
@@ -89,26 +103,10 @@ export default {
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
       ],
-      newsList: [
-        [
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ],
-        [
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ]
-      ],
+      shangbiaofa: [],
+      zuzuoquan: [],
+      zhuanlifa: [],
+      newsList: [],
       TabsList: [
         {
           title: "公司法",
@@ -124,7 +122,8 @@ export default {
         },
         {
           title: "山西宝翰律师事务所简介",
-          url: "/second/menu/solo?title=山西宝翰律师事务所简介&ptCode=2&id=3&contentId=" + id
+          url:
+            "/second/menu/solo?title=山西宝翰律师事务所简介&ptCode=2&id=3&contentId="
         }
       ],
 

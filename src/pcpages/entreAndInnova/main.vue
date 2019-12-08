@@ -12,43 +12,33 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
-            </div>
-            <select></select>
-          </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
-        </div>
+        <SearchBox :ptCode='6'></SearchBox>
       </div>
       <div class="row">
         <div class="col">
           <NewListCard
             icon="icon-zbgg"
             title="双创项目"
-            :data="data"
-            more="/entreAndInnova/secondMenu?title=双创项目"
+            :data="xiangmu"
+            more="/second/menu?title=双创项目&id=92&parentId=92&ptCode=6&indexUrl=%2FentreAndInnova&hadChild=fale&currenId=92"
           ></NewListCard>
           <Tabs
-            :TabsList="[{title:'双创活动',url:'/entreAndInnova/secondMenu?title=双创活动'}]"
-            :newsList="newsList"
+            :TabsList="[{title:'双创活动',url:'/second/menu?title=双创活动&id=91&parentId=91&ptCode=6&indexUrl=%2FentreAndInnova&hadChild=fale&currenId=91'}]"
+            :newsList="[huodong]"
           ></Tabs>
         </div>
         <div class="col">
           <NewListCard
             icon="icon-zbgs"
-            :data="data"
+            :data="zhengche"
             title="双创政策"
-            more="/entreAndInnova/service?title=双创政策"
+            more="/second/menu?parentId=93&ptCode=6&currenId=98&indexUrl=%2FentreAndInnova"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
-            :data="data"
+            :data="fuwu"
             title="挂牌服务"
-            more="/entreAndInnova/service?title=挂牌服务"
+            more="/second/menu?parentId=93&ptCode=6&currenId=100&indexUrl=%2FentreAndInnova"
           ></NewListCard>
         </div>
       </div>
@@ -63,6 +53,9 @@ import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
+import SearchBox from "@/comonentsPC/Search.vue";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+
 
 export default {
   components: {
@@ -73,10 +66,73 @@ export default {
     Footer,
     Tabs,
     NewsNavbar,
-    NewListCard
+    NewListCard,
+    SearchBox
+  },
+  created(){
+           getNewsList({
+      ptCode: "6",
+      colid: "95",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "6",
+      colid: "96",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[1] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "6",
+      colid: "97",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[2] = res.data.data;
+    });
+          getNewsList({
+      ptCode: "6",
+      colid: "97",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.xiangmu = res.data.data;
+    });
+          getNewsList({
+      ptCode: "6",
+      colid: "97",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.zhengche = res.data.data;
+    });
+          getNewsList({
+      ptCode: "6",
+      colid: "97",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.huodong = res.data.data;
+    });
+          getNewsList({
+      ptCode: "6",
+      colid: "97",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.fuwu = res.data.data;
+    });
   },
   data() {
     return {
+      xiangmu: [],
+      zhengche: [],
+      huodong: [],
+      fuwu: [],
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
@@ -114,15 +170,15 @@ export default {
       TabsList: [
         {
           title: "新闻动态",
-          url: "/entreAndInnova/dynamic?title=新闻动态"
+          url: "/second/menu?parentId=89&ptCode=6&currenId=95&indexUrl=%2FentreAndInnova"
         },
         {
           title: "创业分享",
-          url: "/entreAndInnova/dynamic?title=创业分享"
+          url: "/second/menu?parentId=89&ptCode=6&currenId=96&indexUrl=%2FentreAndInnova"
         },
         {
           title: "资本市场",
-          url: "/entreAndInnova/dynamic?title=资本市场"
+          url: "/second/menu?parentId=89&ptCode=6&currenId=97&indexUrl=%2FentreAndInnova"
         }
       ],
 

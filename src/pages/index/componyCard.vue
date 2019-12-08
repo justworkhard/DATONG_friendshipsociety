@@ -2,14 +2,14 @@
   <div class="body">
     <div class="logo">
       <img
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1574743418433&di=921035e080d9e1f76fc1d8851197ca8d&imgtype=0&src=http%3A%2F%2Fpic108.huitu.com%2Fres%2F20180805%2F1648367_20180805102422927080_1.jpg"
+        :src="data.minPicAddress"
         alt
       >
     </div>
     <div class="content">
-      <p class="title">大同市华林有限责任公司</p>
-      <p class="introduce">山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物…</p>
-      <p class="date">2019-03-02</p>
+      <p class="title">{{data.title}}</p>
+      <p class="introduce">{{data.summary}}</p>
+      <p class="date">{{data.createTime}}</p>
     </div>
   </div>
 </template>
@@ -18,6 +18,7 @@ import { Tabs } from "element-ui";
 
 export default {
   name: "HelloWorld",
+  props: ['data'],
   data() {
     return {
       tabList: [

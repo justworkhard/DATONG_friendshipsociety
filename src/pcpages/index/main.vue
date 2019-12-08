@@ -31,7 +31,7 @@
           <div class="pic"></div>
           <p>法律服务平台</p>
         </router-link>
-        <router-link to="/business/manage" target="_blank" class="icon3">
+        <router-link to="/search?ptCode=3" target="_blank" class="icon3">
           <div class="pic"></div>
           <p>企业经营管理咨询平台</p>
         </router-link>
@@ -59,7 +59,7 @@
           <div class="pic"></div>
           <p>对外经济技术项目交流合作平台</p>
         </router-link>
-        <router-link to="/social/information/finance" target="_blank" class="icon10">
+        <router-link to="/social/information" target="_blank" class="icon10">
           <div class="pic"></div>
           <p>社会信息服务平台</p>
         </router-link>
@@ -68,7 +68,12 @@
     <div class="col">
       <div class="col_left">
         <!--  联谊会简介 -->
-        <RedHeader title="联谊会介绍" href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0"></RedHeader>
+        <RedHeader title="联谊会介绍" href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0">
+          <div class="about">
+            <img :src="about.minPicAddress" alt srcset>
+            {{about.summary}}
+          </div>
+        </RedHeader>
         <!-- 积分排行榜 -->
         <RedHeader title="积分排行榜" href="/second/menu/solo?title=积分排行榜&ptCode=0&id=5"></RedHeader>
         <!-- 阅读排行榜 -->
@@ -80,7 +85,7 @@
           href="/second/menu?title=联谊会企业&id=7&parentId=7&ptCode=0&hadChild=fale&currenId=7"
         >
           <div class="box">
-            <ProductCard :data="item" v-for="(item,index) in componyList" :key="index" type='c'></ProductCard>
+            <ProductCard :data="item" v-for="(item,index) in componyList" :key="index" type="c"></ProductCard>
             <!-- <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
@@ -97,7 +102,7 @@
           href="/second/menu?title=企业产品展示&id=8&parentId=8&ptCode=0&hadChild=fale&currenId=8"
         >
           <div class="box">
-            <ProductCard :data="item" v-for="(item,index) in productList" :key="index" type='p'></ProductCard>
+            <ProductCard :data="item" v-for="(item,index) in productList" :key="index" type="p"></ProductCard>
 
             <!-- <ProductCard :data="componyItem"></ProductCard>
             <ProductCard :data="componyItem"></ProductCard>
@@ -123,7 +128,12 @@ import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import ProductCard from "./productCard.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getSororityList
+} from "@/service/api";
 
 export default {
   components: {
@@ -137,10 +147,6 @@ export default {
     ProductCard
   },
   created() {
-    getIndexList({
-      parentId: 1,
-      ptCode: "web"
-    });
     getNewsList({
       // colid: 2,
       colid: 7,
@@ -160,9 +166,7 @@ export default {
       });
     });
     getNewsList({
-      // colid: 2,
       colid: 8,
-      // ptCode: 0,
       ptCode: 0,
       pageSize: 10,
       pageNo: 1
@@ -177,9 +181,13 @@ export default {
         });
       });
     });
+    getSororityList().then(res => {
+      this.about = res.data.sororityInfo;
+    });
   },
   data() {
     return {
+      about: {},
       componyList: [],
       // componyItem: {
       //   title: "大同华林有限公司",
@@ -402,6 +410,19 @@ export default {
   > .el-tabs__header
   .el-tabs__item:not(.is-disabled):hover {
   color: #333;
+}
+.about {
+  img {
+    width: 100px;
+    float: left;
+    margin-right: 15px;
+    margin-top: 10px;
+    height: 70px;;
+  }
+
+  font-size: 14px;
+  color: #333;
+  line-height: 28px;
 }
 </style>
 

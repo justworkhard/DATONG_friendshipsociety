@@ -15,10 +15,19 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" @click="toDetail()" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" @click="toDetail()" v-for="(item,index) in xinwen" :key="index">{{item.title}}</li>
           </ul>
         </div>
-        <div v-if="slotProps.slotdata===1">2</div>
+          <div v-if="slotProps.slotdata===1">
+          <ul class="news">
+            <li class="news_title" @click="toDetail()" v-for="(item,index) in chuangye" :key="index">{{item.title}}</li>
+          </ul>
+        </div>
+           <div v-if="slotProps.slotdata===2">
+          <ul class="news">
+            <li class="news_title" @click="toDetail()" v-for="(item,index) in zhiben" :key="index">{{item.title}}</li>
+          </ul>
+        </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
@@ -26,7 +35,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in biaozhun" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -37,7 +46,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in jiaoliu" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -48,39 +57,91 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in zhengce" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs">
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
-          <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
-          </ul>
-        </div>
-        <div v-if="slotProps.slotdata===1">2</div>
-      </template>
-      <!-- <div v-if='slotData.activeIndex===0'> -->
-    </Tabs>
+    <Footer></Footer>
   </div>
 </template>
 <script>
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
 
 export default {
+   async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 9
+      },
+      "/",
+      true
+    );
+    this.tabList = temp;
+    getNewsList({
+      colid: 105,
+      ptCode: 9,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.xinwen = res.data.data;
+    });
+        getNewsList({
+      colid: 105,
+      ptCode: 9,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.chuangye = res.data.data;
+    });
+        getNewsList({
+      colid: 105,
+      ptCode: 9,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.zhiben = res.data.data;
+    });
+        getNewsList({
+      colid: 120,
+      ptCode: 9,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.biaozhun = res.data.data;
+    });
+        getNewsList({
+      colid: 119,
+      ptCode: 9,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.jiaoliu = res.data.data;
+    });
+        getNewsList({
+      colid: 117,
+      ptCode: 9,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.zhengce = res.data.data;
+    });
+  
+  },
   components: {
     XHeader,
     Header,
     Swiper,
     SwiperItem,
-    Tabs
+    Tabs,
+    Footer
   },
   methods:{
     toDetail(){
@@ -92,28 +153,20 @@ export default {
   },
   data() {
     return {
+      xinwen: [],
+      chuangye: [],
+      zhiben: [],
+      biaozhun: [],
+      jiaoliu: [],
+      zhengce: [],
       TabsList: [
-        ["新闻动态", "创业分享", "资本市场"],
-        ["行业标准查询"],
-        ["项目交流"],
-        ["相关政策"],
+        [{title:"新闻动态"}, {title:"创业分享"}, {title:"资本市场"}],
+        [{title:"行业标准查询"}],
+        [{title:"项目交流"}],
+        [{title:"相关政策"}],
       ],
       demo01_index: 0,
       tabList: [
-        { label: "首页",url:'/' },
-        { label: "相关政策",url:'/policy/summary' },
-        { label: "项目合作",url:'/policy/explain' },
-        { label: "项目交流",url:'/policy/inspect' },
-        { label: "行业标准查询",url:'/policy/chat' }
-      ],
-          newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
       ],
       demo04_list: [
         {
@@ -142,6 +195,7 @@ export default {
 .news {
   font-size: 14px;
   padding: 14px 13px;
+  min-height: 194px;
   .news_title {
     padding: 7px 0px;
     width: 100%;

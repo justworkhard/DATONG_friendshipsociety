@@ -1,8 +1,8 @@
 <template>
   <div class="search">
     <img src="@/assets/images/mipmap-hdpi/icon_search.png" alt srcset>
-    <input class="input" type="text">
-    <div class="button">搜索</div>
+    <input class="input" type="text" v-model="keyword">
+    <div class="button" @click="onSearch">搜索</div>
   </div>
 </template>
 <script>
@@ -11,11 +11,16 @@ import { Tabs } from "element-ui";
 export default {
   props: ["title"],
   data() {
-    return {};
+    return {
+      keyword: '',
+    };
   },
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+    onSearch(){
+      this.$emit('onSearch',this.keyword)
     }
   }
 };

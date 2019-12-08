@@ -5,17 +5,17 @@
       <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset>
       <span>最新公告</span>
     </div>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" href="/newslist" :href='hrefs[0]'>
+    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" v-model="demo01_index" auto></swiper>
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
               v-for="(item,index) in newsList"
+              @click="toDetail(item.id)"
               :key="index"
-            >{{'∙ '+item.title}}</li>
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">
@@ -23,7 +23,7 @@
             <li
               class="news_title"
               @click="toDetail()"
-              v-for="(item,index) in newsList"
+              v-for="(item,index) in huodong"
               :key="index"
             >{{item.title}}</li>
           </ul>
@@ -31,17 +31,26 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs id="ten" :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href='hrefs[1]'>
+    <Tabs id="ten" :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <Ten></Ten>
         </div>
-        <div v-if="slotProps.slotdata===1">2</div>
+        <div v-if="slotProps.slotdata===1">
+          <ul class="news">
+            <li
+              class="news_title"
+              @click="toDetail()"
+              v-for="(item,index) in qiyexingxi"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
     <!-- 平台排行榜 -->
-    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href='hrefs[2]'>
+    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div class="rank" v-if="slotProps.slotdata===0">
           <div class="rankItem">
@@ -52,35 +61,40 @@
           </div>
         </div>
       </template>
-      <!-- <div v-if='slotData.activeIndex===0'> -->
+      <template slot-scope="slotProps">
+        <div class="rank" v-if="slotProps.slotdata===0">
+          <div class="rankItem">
+            <img src="@/assets/images/mipmap-hdpi/points.png" alt srcset>
+          </div>
+          <div class="rankItem">
+            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset>
+          </div>
+        </div>
+      </template>
     </Tabs>
     <!-- 联谊会介绍 -->
-    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href='hrefs[3]'>
+    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0" class="introduce">
-          <h3 class="introduce_title">大同市平城区人大代表民营企业联谊会</h3>
-          <div
-            class="introduce_content"
-          >大同市平城区人大代表民营企业联谊会于2019年1月18日成立，是中国共产党领导的由平城区人大代表中的民营企业家自愿组成的社会团体，是党和政府联系民营企业家的桥梁和…</div>
+          <h3 class="introduce_title">{{jieshao.title}}</h3>
+          <div class="introduce_content">{{jieshao.summary}}</div>
         </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
     <!-- 联谊企业 -->
-    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs"  :href='hrefs[4]'>
+    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" :href="hrefs[4]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0" class="compony">
-          <ComponyCard></ComponyCard>
-          <ComponyCard></ComponyCard>
+          <ComponyCard :data="item" v-for="(item,index)  in qiye" :key="index"></ComponyCard>
         </div>
       </template>
     </Tabs>
     <!-- 企业产品展示 -->
-    <Tabs :TabsList="TabsList[5]" @onChangeTab="onChangeTabs"  :href='hrefs[5]'>
+    <Tabs :TabsList="TabsList[5]" @onChangeTab="onChangeTabs" :href="hrefs[5]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0" class="product_show">
-          <ComponyCard></ComponyCard>
-          <ComponyCard></ComponyCard>
+          <ComponyCard :data="item" v-for="(item,index)  in productList" :key="index"></ComponyCard>
         </div>
       </template>
     </Tabs>
@@ -97,40 +111,103 @@ import Ten from "./ten.vue";
 import ComponyCard from "./componyCard.vue";
 import { Button, Carousel } from "element-ui";
 import { Swiper, SwiperItem } from "vux";
-import axios from 'axios'
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+
 export default {
   name: "app",
   components: { Header, Footer, Swiper, SwiperItem, Tabs, Ten, ComponyCard },
-  created(){
-    console.log('creat');
-    
-      axios.post('/api/web/tc/indexlis',{       // 还可以直接把参数拼接在url后边
-            keyname:'眼镜'
-    }).then(function(res){
-        this.goodsList = res.data;
-    }).catch(function (error) {
-        console.log(error);
+  async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 0
+      },
+      "/",
+      true
+    );
+    this.tabList = temp;
+    getNewsList({
+      colid: 3,
+      ptCode: 0,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.newsList = res.data.data;
+    });
+    getNewsList({
+      colid: 10,
+      ptCode: 0,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.huodong = res.data.data;
+    });
+    // getNewsList({
+    //   colid: 3,
+    //   ptCode: 0,
+    //   pageSize: 5,
+    //   pageNo: 1
+    // }).then(res => {
+    //   this.newsList = res.data.data;
+    // });
+    getNewsList({
+      colid: 10,
+      ptCode: 0,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.jieshao = res.data.data[0];
+    });
+    getNewsList({
+      colid: 7,
+      ptCode: 0,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.qiye = res.data.data;
+    });
+    getNewsList({
+      colid: 8,
+      ptCode: 0,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.productList = res.data.data;
     });
   },
   data() {
     return {
+      qiyexingxi: [],
+      huodong: [],
+      jieshao: {},
+      productList: [],
+      qiye: [],
       demo01_index: 0,
       activeName: "",
       TabsList: [
-        ["新闻动态", "联谊会活动"],
-        ["十大平台", "企业信息服务"],
-        ["平台排行榜"],
-        ["联谊会介绍"],
-        ["联谊会企业"],
-        ["企业产品介绍"]
+        [{ title: "新闻动态" }, { title: "联谊会活动" }],
+        [{ title: "十大平台" }, { title: "企业信息服务" }],
+        [{ title: "平台排行榜" }],
+        [{ title: "联谊会介绍" }],
+        [{ title: "联谊会企业" }],
+        [{ title: "企业产品介绍" }]
       ],
       hrefs: [
-        ["/newslist", "/newslist"],
+        [
+          "/second/menu?title=新闻动态&id=3&parentId=3&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=3",
+          "/newslist"
+        ],
         ["", "企业信息服务"],
-        ["平台排行榜"],
-        ["/introduce"],
-        ["/enterprise/list"],
-        ["product/list"]
+        [
+          "/second/menu?title=平台排行榜&id=5&parentId=5&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=5"
+        ],
+        ["/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F"],
+        [
+          "/second/menu?title=联谊会企业&id=7&parentId=7&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=7"
+        ],
+        [
+          "/second/menu?title=企业产品展示&id=8&parentId=8&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=8"
+        ]
       ],
       tabList: [
         { label: "首页", url: "/" },
@@ -140,17 +217,8 @@ export default {
         { label: "平台排行榜", url: "/policy/chat" }
       ],
       TabsIndex: 0,
-      newsList: [
-        {
-          title:
-            "平城区人大常委会组织开展全区民营企业家人大代平城区人大常委会组织开展全区民营企业家人大代"
-        },
-        { title: "平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "平城区人大常委会组织开展全区民营企业家人大代" }
-      ],
-      demo04_list: [
+      newsList: [],
+      carouselList: [
         {
           url: "javascript:",
           img:
@@ -173,8 +241,8 @@ export default {
     onChangeTabs(index) {
       this.TabsIndex = index;
     },
-    toDetail() {
-      this.$router.push("/newsdetail");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     }
   }
 };
@@ -231,6 +299,7 @@ body {
 .news {
   font-size: 14px;
   padding: 14px 13px;
+  min-height: 194px;
   .news_title {
     padding: 7px 0px;
     width: 100%;
@@ -265,6 +334,9 @@ body {
   .introduce_content {
     font-size: 12px;
     color: #666666;
+    height: 128px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 .compony {

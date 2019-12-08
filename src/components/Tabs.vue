@@ -1,13 +1,13 @@
 <template>
   <div class="tabs">
-    <div class="label">
+    <div class="label" v-if="TabsList.length>0">
       <p
         class="title"
         v-bind:class="{active:activeIndex == index,active_one:TabsList.length<=1}"
         v-for="(item,index) in TabsList"
         :key="index"
         v-on:click="changeTab(index)"
-      >{{item}}</p>
+      >{{item.title}}</p>
       <a @click="toList(href[activeIndex])">
         <img
           v-if="href[activeIndex]"
@@ -26,36 +26,51 @@ import { Tabs } from "element-ui";
 
 export default {
   name: "HelloWorld",
+  watch: {
+    defaultIndex(curV, oldV) {
+      this.changeTab(curV);
+    }
+  },
   props: {
-    TabsList:{
-          type: Array,
+    TabsList: {
+      type: Array,
       // 对象或数组默认值必须从一个工厂函数获取
-      default: function () {
-        return []
+      default: function() {
+        return [];
       }
     },
     href: {
       type: Array,
       // 对象或数组默认值必须从一个工厂函数获取
-      default: function () {
-        return []
+      default: function() {
+        return [];
       }
-  }},
+    },
+    defaultIndex: {
+      type: Number,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function() {
+        return 0;
+      }
+    }
+  },
   data() {
     return {
       activeIndex: 0
     };
   },
+  created() {
+    console.log("this.defaultIndex", this.defaultIndex);
 
+    this.changeTab(this.defaultIndex);
+  },
   methods: {
     changeTab(index) {
-      console.log("child", index);
       this.activeIndex = index;
       this.$emit("onChangeTab", index);
-      console.log("child", index);
     },
-    toList(url){
-     this.$router.push(url)
+    toList(url) {
+      this.$router.push(url);
     }
   }
 };

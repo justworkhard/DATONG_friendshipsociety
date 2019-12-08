@@ -12,20 +12,12 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
-            </div>
-            <select></select>
-          </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
-        </div>
+        <SearchBox :ptCode='7'></SearchBox>
       </div>
-      <RedHeader title="企业产品" href="/project/show/secondMenu?title=企业产品">
+      <RedHeader title="企业产品" href="/second/menu?title=产品展示&id=105&parentId=105&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=105">
         <div class="box">
+          <ProductCard :data="item" v-for="(item,index) in zhanshi" :key="index"></ProductCard>
+          <!-- <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
@@ -33,9 +25,7 @@
           <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
-          <ProductCard :data="componyItem"></ProductCard>
-          <ProductCard :data="componyItem"></ProductCard>
-          <ProductCard :data="componyItem"></ProductCard>
+          <ProductCard :data="componyItem"></ProductCard> -->
         </div>
       </RedHeader>
     </div>
@@ -50,6 +40,7 @@ import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import ProductCard from "./productCard.vue";
 import RedHeader from "@/comonentsPC/RedHeader.vue";
+import SearchBox from "@/comonentsPC/Search.vue";
 import { Swiper, SwiperItem } from "vux";
 
 export default {
@@ -63,16 +54,52 @@ export default {
     Tabs,
     RedHeader,
     NewsNavbar,
-    NewListCard
+    NewListCard,
+    SearchBox
+  },
+  created(){
+               getNewsList({
+      ptCode: "7",
+      colid: "102",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "7",
+      colid: "103",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[1] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "7",
+      colid: "104",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[2] = res.data.data;
+    });
+          getNewsList({
+      ptCode: "7",
+      colid: "105",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.zhanshi = res.data.data;
+    });
   },
   data() {
     return {
-      componyItem: {
-        title: "大同华林有限公司",
-        url: "http://www.dtpcmq.com/upload/20190301172227887.png",
-        introduct:
-          "山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商"
-      },
+      zhanshi: [],
+      // componyItem: {
+      //   title: "大同华林有限公司",
+      //   url: "http://www.dtpcmq.com/upload/20190301172227887.png",
+      //   introduct:
+      //     "山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商"
+      // },
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
@@ -87,38 +114,38 @@ export default {
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
       ],
-      newsList: [
-        [
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ],
-        [
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ]
-      ],
+      // newsList: [
+      //   [
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
+      //   ],
+      //   [
+      //     { title: "∙ 12" },
+      //     { title: "∙ 12" },
+      //     { title: "∙ 12" },
+      //     { title: "∙ 12" },
+      //     { title: "∙ 12" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
+      //     { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
+      //   ]
+      // ],
       TabsList: [
         {
           title: "新闻动态",
-          url: "/project/show/secondMenu?title=新闻动态"
+          url: "/second/menu?title=新闻动态&id=102&parentId=102&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=102"
         },
         {
           title: "参展须知",
-          url: "/project/show/secondMenu?title=参展须知"
+          url: "/second/menu?title=参展须知&id=103&parentId=103&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=103"
         },
         {
           title: "参展商",
-          url: "/project/show/secondMenu?title=参展商"
+          url: "/second/menu?title=参展商&id=104&parentId=104&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=104"
         }
       ],
 

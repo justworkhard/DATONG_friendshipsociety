@@ -4,13 +4,7 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper
-      :aspect-ratio="300/800"
-      height="200px"
-      :list="demo04_list"
-      v-model="demo01_index"
-      auto
-    ></swiper>
+    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -27,7 +21,7 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-   <Footer></Footer>
+    <Footer></Footer>
   </div>
 </template>
 <script>
@@ -38,6 +32,25 @@ import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
 
 export default {
+  async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 7
+      },
+      "/",
+      true
+    );
+    this.tabList = temp;
+    getNewsList({
+      colid: 105,
+      ptCode: 7,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.newsList = res.data.data;
+    });
+  },
   components: {
     XHeader,
     Header,
@@ -50,34 +63,18 @@ export default {
     toDetail() {
       this.$router.push("/");
     },
-      onChangeTabs(){
-
-    }
+    onChangeTabs() {}
   },
   data() {
     return {
-      TabsList: [["企业产品展示"]],
+      TabsList: [[{title:"企业产品展示"}]],
       hrefs: [
-        ["/product/show/list"],
-        ["/product/show/list"],
-        ["/product/show/list"]
+        ["/second/menu?title=产品展示&id=105&parentId=105&ptCode=7&indexUrl=%2F&hadChild=fale&currenId=105"],
       ],
       demo01_index: 0,
       tabList: [
-        { label: "首页", url: "/" },
-        { label: "新闻动态", url: "/product/show/list" },
-        { label: "参展须知", url: "/product/show/list" },
-        { label: "参展商", url: "/product/show/list" },
-        { label: "产品展示", url: "/product/show/list" }
       ],
       newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
       ],
       demo04_list: [
         {
@@ -106,6 +103,7 @@ export default {
 .news {
   font-size: 14px;
   padding: 14px 13px;
+  min-width: 194px;
   .news_title {
     padding: 7px 0px;
     width: 100%;

@@ -4,62 +4,86 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper
-      :aspect-ratio="300/800"
-      height="200px"
-      :list="demo04_list"
-      v-model="demo01_index"
-      auto
-    ></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" href='/policy/activeAnddynamic'>
+    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="['/policy/activeAnddynamic']">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" @click="toDetail()" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              @click="toDetail()"
+              v-for="(item,index) in newsList"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
+        <div v-if="slotProps.slotdata===1">
+          <ul class="news">
+            <li
+              class="news_title"
+              @click="toDetail()"
+              v-for="(item,index) in newsList"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
+      </template>
+      <!-- <div v-if='slotData.activeIndex===0'> -->
+    </Tabs>
+    <Tabs
+      :TabsList="TabsList[1]"
+      @onChangeTab="onChangeTabs"
+      :href="['/second/menu?title=政策汇总&id=15&parentId=15&ptCode=1&indexUrl=%2F']"
+    >
+      <template slot-scope="slotProps">
+        <div v-if="slotProps.slotdata===0">
+          <ul class="news">
+            <li class="news_title" v-for="(item,index) in guowuyuan" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" href='/policy/summary'>
+    <Tabs
+      :TabsList="TabsList[2]"
+      @onChangeTab="onChangeTabs"
+      :href="['/second/menu?title=政策解读&id=16&parentId=16&ptCode=1&indexUrl=%2F&currentId=24']"
+    >
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in mingying" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" href='/policy/explain'>
+    <Tabs
+      :TabsList="TabsList[3]"
+      @onChangeTab="onChangeTabs"
+      :href="['/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&indexUrl=%2F&hadChild=fale&currenId=17']"
+    >
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in guandian" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" href='/policy/inspect'>
+    <Tabs
+      :TabsList="TabsList[4]"
+      @onChangeTab="onChangeTabs"
+      :href="['/second/menu?title=经验交流&id=18&parentId=18&ptCode=1&indexUrl=%2F&hadChild=fale&currenId=18']"
+    >
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
-          </ul>
-        </div>
-        <div v-if="slotProps.slotdata===1">2</div>
-      </template>
-      <!-- <div v-if='slotData.activeIndex===0'> -->
-    </Tabs>
-    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" href='/policy/chat'>
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
-          <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li class="news_title" v-for="(item,index) in jingyan" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -75,6 +99,7 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
+import { getNewsList } from "@/service/api";
 
 export default {
   components: {
@@ -85,32 +110,93 @@ export default {
     Tabs,
     Footer
   },
-  methods:{
-    toDetail(){
-      this.$router.push('/')
+  async created() {
+    let temp = await this.getIndexList(
+      {
+        parentId: "web",
+        ptCode: 1
+      },
+      "/",
+      true
+    );
+    this.tabList = temp;
+    getNewsList({
+      colid: 3,
+      ptCode: 1,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.newsList = res.data.data;
+    });
+    // getNewsList({
+    //   colid: 3,
+    //   ptCode: 0,
+    //   pageSize: 5,
+    //   pageNo: 1
+    // }).then(res => {
+    //   this.newsList = res.data.data;
+    // });
+    getNewsList({
+      colid: 19,
+      ptCode: 1,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.guowuyuan = res.data.data[0];
+    });
+    getNewsList({
+      colid: 24,
+      ptCode: 1,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.mingying = res.data.data;
+    });
+    getNewsList({
+      colid: 17,
+      ptCode: 1,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.guandian = res.data.data;
+    });
+    getNewsList({
+      colid: 18,
+      ptCode: 1,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.jingyan = res.data.data;
+    });
+  },
+  methods: {
+    toDetail() {
+      this.$router.push("/");
     },
-      onChangeTabs(){
-
-    }
+    onChangeTabs() {}
   },
   data() {
     return {
+      guowuyuan: [],
+      mingying: [],
+      guandian: [],
+      jingyan: [],
       TabsList: [
-        ["发布动态", "发布活动"],
-        ["国务院"],
-        ["民营企业政策"],
-        ["观点考察"],
-        ["经验交流"],
+        [{ title: "发布动态" }, { title: "发布活动" }],
+        [{ title: "国务院" }],
+        [{ title: "民营企业政策" }],
+        [{ title: "观点考察" }],
+        [{ title: "经验交流" }]
       ],
       demo01_index: 0,
       tabList: [
-        { label: "首页",url:'/' },
-        { label: "政策汇总",url:'/policy/summary' },
-        { label: "政策解读",url:'/policy/explain' },
-        { label: "观点考察",url:'/policy/inspect' },
-        { label: "经验交流",url:'/policy/chat' }
+        // { label: "首页", url: "/" },
+        // { label: "政策汇总", url: "/policy/summary" },
+        // { label: "政策解读", url: "/policy/explain" },
+        // { label: "观点考察", url: "/policy/inspect" },
+        // { label: "经验交流", url: "/policy/chat" }
       ],
-          newsList: [
+      newsList: [
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
@@ -146,6 +232,7 @@ export default {
 .news {
   font-size: 14px;
   padding: 14px 13px;
+  min-height: 194px;
   .news_title {
     padding: 7px 0px;
     width: 100%;

@@ -12,25 +12,18 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList"></Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
-            </div>
-            <select></select>
-          </div>
-        </div>
+        <SearchBox :ptCode='4'></SearchBox>
       </div>
       <div class="row">
         <div class="col">
           <NewListCard
             icon="icon-zbgg"
             title="服务业"
-            :data="data"
+            :data="fuwuye"
             more="/second/menu?parentId=71&ptCode=4&currenId=76&indexUrl=%2Fproject%2Fpromot"
           ></NewListCard>
           <Tabs
+            :newsList='wenhualvyou'
             :TabsList="[{title:'文化旅游',url:'/second/menu?parentId=71&ptCode=4&currenId=78&indexUrl=%2Fproject%2Fpromot'}]"
           ></Tabs>
         </div>
@@ -38,11 +31,13 @@
           <NewListCard
             icon="icon-zbgs"
             title="制造业"
+            :data='zhizhaoye'
             more="/second/menu?parentId=71&ptCode=4&currenId=77&indexUrl=%2Fproject%2Fpromot"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
             title="现代农业"
+            :data='xiandainongye'
             more="/second/menu?parentId=71&ptCode=4&currenId=75&indexUrl=%2Fproject%2Fpromot"
           ></NewListCard>
         </div>
@@ -57,10 +52,14 @@ import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
+import SearchBox from "@/comonentsPC/Search.vue";
 import { Swiper, SwiperItem } from "vux";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+
 
 export default {
   components: {
+    SearchBox,
     Welcome,
     Header,
     Swiper,
@@ -69,6 +68,65 @@ export default {
     Tabs,
     NewsNavbar,
     NewListCard
+  },
+  created(){
+    getNewsList({
+      ptCode: "4",
+      colid: "70",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "4",
+      colid: "72",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "4",
+      colid: "80",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+            getNewsList({
+      ptCode: "4",
+      colid: "76",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.fuwuye = res.data.data;
+    });
+                getNewsList({
+      ptCode: "4",
+      colid: "77",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.zhizhaoye = res.data.data;
+    });
+                getNewsList({
+      ptCode: "4",
+      colid: "78",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.wenhualvyou = res.data.data;
+    });
+                   getNewsList({
+      ptCode: "4",
+      colid: "75",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.xiandainongye = res.data.data;
+    });
+    
   },
   data() {
     return {
@@ -79,6 +137,10 @@ export default {
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
       ],
+      fuwuye: [],
+      zhizhaoye: [],
+      wenhualvyou: [],
+      xiandainongye: [],
       TabsList: [
         {
           title: "动态工作",

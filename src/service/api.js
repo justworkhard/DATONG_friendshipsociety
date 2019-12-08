@@ -29,3 +29,8 @@ export function getNextContent(params) {
     `/api/web/preNextcontent?id=${params}`,
   )
 }
+export function getSororityList() {
+  return axios.get(
+    `/api/web/sororitylList`,
+  )
+}

@@ -4,7 +4,7 @@
       <span @mouseenter="active(0)" :class="{'active':activeIndex === 0}">新闻动态</span>
       <span @mouseenter="active(1)" :class="{'active':activeIndex === 1}">联谊会活动</span>
       <a
-        :href="activeIndex === 0?'#/second/menu/solo?title=新闻动态&ptCode=0&id=3':'#/menu/list?menu/list?title=联谊会活动'"
+        :href="activeIndex === 0?'#/second/menu?parentId=6&ptCode=0&currenId=11&indexUrl=%2F':'#/menu/list?menu/list?title=联谊会活动'"
         target="_blank"
       >更多 &gt;&gt;</a>
     </div>
@@ -37,7 +37,7 @@ export default {
   components: { NewsCard },
   created() {
     getNewsList({
-      colid: 3,
+      colid: 11,
       ptCode: 0,
       pageSize: 10,
       pageNo: 1
@@ -54,7 +54,7 @@ export default {
   methods: {
     toDetail(id) {
       this.$router.push(
-        "/second/menu/solo?title=新闻动态&ptCode=0&id=3&contentId=" + id
+        "/second/menu?parentId=6&ptCode=0&currenId=11&indexUrl=%2F&contentId=" + id
       );
     },
     active(index) {

@@ -12,43 +12,33 @@
           ></swiper>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <div class="search">
-          <div class="input_box">
-            <div class="input">
-              <input type="text">
-              <div class="btn">搜索</div>
-            </div>
-            <select></select>
-          </div>
-          <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
-          <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>
-        </div>
+        <SearchBox :ptCode='9'></SearchBox>
       </div>
       <div class="row">
         <div class="col">
           <NewListCard
             icon="icon-zbgg"
             title="行业标准查询"
-            :data="data"
-            more="/export/country/secondMenu?title=行业标准查询"
+            :data="hangyebiaozhun"
+            more="/second/menu?title=行业标准查询&id=120&parentId=120&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=120"
           ></NewListCard>
           <Tabs
-            :TabsList="[{title:'项目交流',url:'/export/country/secondMenu?title=项目交流'}]"
-            :newsList="newsList"
+            :TabsList="[{title:'项目交流',url:'/second/menu?title=项目交流&id=119&parentId=119&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=119'}]"
+            :newsList="xiangmujiaoliu"
           ></Tabs>
         </div>
         <div class="col">
           <NewListCard
             icon="icon-zbgs"
-            :data="data"
+            :data="xiangmuhezuo"
             title="项目合作"
-            more="/export/country/secondMenu?title=项目合作"
+            more="/second/menu?title=项目合作&id=118&parentId=118&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=118"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
-            :data="data"
+            :data="xiangguanzhengce"
             title="相关政策"
-            more="/export/country/secondMenu?title=相关政策"
+            more="/second/menu?title=相关政策&id=117&parentId=117&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=117"
           ></NewListCard>
         </div>
       </div>
@@ -61,11 +51,14 @@ import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
+
 import { Swiper, SwiperItem } from "vux";
 
 export default {
   components: {
+    SearchBox,
     Welcome,
     Header,
     Swiper,
@@ -75,8 +68,71 @@ export default {
     NewsNavbar,
     NewListCard
   },
+      created(){
+    getNewsList({
+      ptCode: "9",
+      colid: "70",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "9",
+      colid: "72",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+        getNewsList({
+      ptCode: "9",
+      colid: "80",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.newsList[0] = res.data.data;
+    });
+            getNewsList({
+      ptCode: "9",
+      colid: "120",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.hangyebiaozhun = res.data.data;
+    });
+                getNewsList({
+      ptCode: "9",
+      colid: "119",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.xiangmujiaoliu = res.data.data;
+    });
+                getNewsList({
+      ptCode: "9",
+      colid: "118",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.xiangmuhezuo = res.data.data;
+    });
+                   getNewsList({
+      ptCode: "4",
+      colid: "75",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.xiangguanzhengce = res.data.data;
+    });
+    
+  },
   data() {
     return {
+    hangyebiaozhun: [],
+    xiangmujiaoliu: [],
+    xiangmuhezuo: [],
+    xiangguanzhengce: [],
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },

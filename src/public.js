@@ -19,7 +19,6 @@ export async function getMenuList(params, Firsturl,leftMenu) {
           id: element.id,
           ptCode: element.ptCode
         };
-        console.log(temp);
         
         await getIndexList({
           parentId: element.id,
