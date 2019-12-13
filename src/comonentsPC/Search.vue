@@ -5,7 +5,7 @@
         <input type="text" v-model="keyword">
         <div class="btn" @click="onSearch">搜索</div>
       </div>
-      <select></select>
+      <!-- <select></select> -->
     </div>
     <!-- <img src="@/assets/images/mipmap-xxxhdpi/noticeEntry.png" alt srcset>
     <img src="@/assets/images/mipmap-xxxhdpi/manageEntry.png" alt srcset>-->

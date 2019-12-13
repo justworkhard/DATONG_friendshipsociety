@@ -74,14 +74,16 @@ export default {
   },
   async mounted() {},
   methods: {
-    onChangePage() {},
+    onChangePage(currentPage) {
+      
+    },
     search() {
       
       getNewsContentByKeyword({
         ptCode: this.$route.query.ptCode,
         title: this.keyword
       }).then(res => {
-
+          this.newsList = res.data.tInfoList
       });
     }
   },
@@ -90,12 +92,7 @@ export default {
       navList: [],
       imgList: [],
       keyword: "",
-      newsList: [
-        {
-        title: "1",
-        createTime: "2"
-      }
-      ],
+      newsList: [],
     };
   }
 };
@@ -149,5 +146,6 @@ export default {
   width: 70%;
   margin: 0 auto;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>

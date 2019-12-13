@@ -5,13 +5,14 @@
       <span class="title">最新公告</span>
     </div>
     <div class="swiper_box">
-      <swiper
+      <!-- <swiper
         :aspect-ratio="300/800"
         height="362px"
         :list="demo04_list"
-        v-model="demo01_index"
-        auto
-      ></swiper>
+        :auto='true'
+        show-dots
+      ></swiper> -->
+      <MCarousel :data='demo04_list'></MCarousel>
     </div>
     <div class="news_box">
       <NewsNavbar></NewsNavbar>
@@ -68,52 +69,32 @@
     <div class="col">
       <div class="col_left">
         <!--  联谊会简介 -->
-        <RedHeader title="联谊会介绍" href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0">
+        <RedHeader title="联谊会介绍" href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F">
           <div class="about">
             <img :src="about.minPicAddress" alt srcset>
             {{about.summary}}
           </div>
         </RedHeader>
         <!-- 积分排行榜 -->
-        <RedHeader title="积分排行榜" href="/second/menu/solo?title=积分排行榜&ptCode=0&id=5"></RedHeader>
+        <RedHeader title="积分排行榜" href="/second/menu/solo?title=积分排行榜&ptCode=0&id=5&indexUrl=%2F"></RedHeader>
         <!-- 阅读排行榜 -->
-        <RedHeader title="阅读排行榜" href="/second/menu/solo?title=阅读排行榜&ptCode=0&id=5"></RedHeader>
+        <RedHeader title="阅读排行榜" href="/second/menu/solo?title=阅读排行榜&ptCode=0&id=5&indexUrl=%2F"></RedHeader>
       </div>
       <div class="col_right">
         <RedHeader
           title="联谊企业"
-          href="/second/menu?title=联谊会企业&id=7&parentId=7&ptCode=0&hadChild=fale&currenId=7"
+          href="/second/menu?title=联谊会企业&id=7&parentId=7&ptCode=0&hadChild=fale&currenId=7&indexUrl=%2F"
         >
           <div class="box">
             <ProductCard :data="item" v-for="(item,index) in componyList" :key="index" type="c"></ProductCard>
-            <!-- <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>-->
           </div>
         </RedHeader>
         <RedHeader
           title="企业产品"
-          href="/second/menu?title=企业产品展示&id=8&parentId=8&ptCode=0&hadChild=fale&currenId=8"
+          href="/second/menu?title=企业产品展示&id=8&parentId=8&ptCode=0&hadChild=fale&currenId=8&indexUrl=%2F"
         >
           <div class="box">
             <ProductCard :data="item" v-for="(item,index) in productList" :key="index" type="p"></ProductCard>
-
-            <!-- <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>
-            <ProductCard :data="componyItem"></ProductCard>-->
           </div>
         </RedHeader>
       </div>
@@ -127,12 +108,14 @@ import RedHeader from "@/comonentsPC/RedHeader.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import ProductCard from "./productCard.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import { Swiper, SwiperItem } from "vux";
 import {
   getCarouselList,
   getIndexList,
   getNewsList,
-  getSororityList
+  getSororityList,
+  getContentCarouselList
 } from "@/service/api";
 
 export default {
@@ -144,9 +127,14 @@ export default {
     Footer,
     RedHeader,
     NewsNavbar,
-    ProductCard
+    ProductCard,
+    MCarousel
   },
   created() {
+    getContentCarouselList(0).then(res=>{
+      console.log(res);
+      this.demo04_list = res.data.contentCarouselList
+    })
     getNewsList({
       // colid: 2,
       colid: 7,
@@ -202,21 +190,7 @@ export default {
         introduct:
           "大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、"
       },
-      demo01_index: 1,
       demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
       ]
     };
   }
@@ -417,7 +391,7 @@ export default {
     float: left;
     margin-right: 15px;
     margin-top: 10px;
-    height: 70px;;
+    height: 70px;
   }
 
   font-size: 14px;

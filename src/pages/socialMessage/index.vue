@@ -4,20 +4,14 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper
-      :aspect-ratio="300/800"
-      height="200px"
-      :list="demo04_list"
-      v-model="demo01_index"
-      auto
-    ></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href='hrefs[0]'>
+    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in xinwen"
               :key="index"
             >{{item.title}}</li>
@@ -27,17 +21,17 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in suoying"
               :key="index"
             >{{item.title}}</li>
           </ul>
         </div>
-             <div v-if="slotProps.slotdata===2">
+        <div v-if="slotProps.slotdata===2">
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in jinrong"
               :key="index"
             >{{item.title}}</li>
@@ -46,51 +40,71 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href='hrefs[1]'>
+    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in biaozhun" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in biaozhun"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href='hrefs[2]'>
+    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in xingyong" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in xingyong"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href='hrefs[3]'>
+    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in guanli" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in guanli"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" :href='hrefs[4]'>
+    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" :href="hrefs[4]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in shuju" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in shuju"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-        <Footer></Footer>    
+    <Footer></Footer>
   </div>
 </template>
 <script>
@@ -101,7 +115,7 @@ import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
 
 export default {
-    async created() {
+  async created() {
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -119,7 +133,7 @@ export default {
     }).then(res => {
       this.xinwen = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 113,
       ptCode: 8,
       pageSize: 5,
@@ -127,7 +141,7 @@ export default {
     }).then(res => {
       this.newsList = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 111,
       ptCode: 8,
       pageSize: 5,
@@ -135,7 +149,7 @@ export default {
     }).then(res => {
       this.suoying = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 108,
       ptCode: 8,
       pageSize: 5,
@@ -143,7 +157,7 @@ export default {
     }).then(res => {
       this.jinrong = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 113,
       ptCode: 8,
       pageSize: 5,
@@ -161,12 +175,10 @@ export default {
     Footer
   },
   methods: {
-    toDetail() {
-      this.$router.push("/");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
-      onChangeTabs(){
-
-    }
+    onChangeTabs() {}
   },
   data() {
     return {
@@ -178,24 +190,28 @@ export default {
       guanli: [],
       shuju: [],
       TabsList: [
-        [{title:"新闻动态"}, {title:"索引信息"}, {title:"金融信息"}],
-        [{title:"行业标准查询"}],
-        [{title:"企业信用查询"}],
-        [{title:"企业管理信息"}],
-        [{title:"行业数据查询"}]
+        [{ title: "新闻动态" }, { title: "索引信息" }, { title: "金融信息" }],
+        [{ title: "行业标准查询" }],
+        [{ title: "企业信用查询" }],
+        [{ title: "企业管理信息" }],
+        [{ title: "行业数据查询" }]
       ],
       hrefs: [
-        ["/social/message/list", "/social/message/list", "/social/message/list"],
+        [
+          "/social/message/list",
+          "/social/message/list",
+          "/social/message/list"
+        ],
         ["/social/message/list"],
         ["/social/message/list"],
-        ["/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currenId=109"],
+        [
+          "/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currenId=109"
+        ],
         ["/social/message/list"]
       ],
       demo01_index: 0,
-      tabList: [
-      ],
-      newsList: [
-      ],
+      tabList: [],
+      newsList: [],
       demo04_list: [
         {
           url: "javascript:",

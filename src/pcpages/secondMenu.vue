@@ -13,10 +13,9 @@
     <div class="right">
       <div class="crumbs">
         <span>您的位置：</span>
-        <a >首页></a>
-        <span href="/">{{menuList[0].title+'>'}}</span>
-        <span href="/"  v-if="showContent">{{selectNew?selectNew.title:''}}</span>
-
+        <a>首页></a>
+        <span href="/">{{menuList[0]?menuList[0].title+'>':''}}</span>
+        <span href="/" v-if="showContent">{{selectNew?selectNew.title:''}}</span>
       </div>
 
       <NewsCardList
@@ -24,7 +23,7 @@
         @toDetail="toDetail"
         :data="data"
         @onChangePage="onChangePage"
-        :count='count'
+        :count="count"
       ></NewsCardList>
       <NewsContent v-if="showContent" :contentId="contentId"></NewsContent>
     </div>
@@ -50,8 +49,7 @@ export default {
           id: this.$route.query.id
         });
       } else {
-
-        temp = await this.getIndexList(          
+        temp = await this.getIndexList(
           {
             parentId: this.$route.query.parentId,
             ptCode: this.$route.query.ptCode
@@ -60,26 +58,22 @@ export default {
           true
         );
         console.log(temp);
-        
       }
 
       this.menuList = temp;
-
-      this.menuList.forEach((item, index) => {
-        if (item.id == this.$route.query.currenId) {
-        console.log('=-=-=-=watch');
-
-          this.setActive(index);
-        }
-      });
-
-      // let title = this.$route.query.title;
+      if (this.$route.query.currenId) {
+        this.menuList.forEach((item, index) => {
+          if (item.id == this.$route.query.currenId) {
+            this.setActive(index);
+          }
+        });
+      } else {
+        this.setActive(0);
+      }
     }
   },
   async created() {
     let temp = [];
-    console.log('this.$route.query.contentId',this.$route.query.contentId);
-    
 
     if (
       this.$route.query.title &&
@@ -97,25 +91,29 @@ export default {
           ptCode: this.$route.query.ptCode
         },
         "/second/menu",
-          true
+        true
       );
     }
 
     this.menuList = temp;
-    this.menuList.forEach((item, index) => {
-      if (item.id == this.$route.query.currenId) {
-        console.log('=-=-=-=');
-        
-        this.setActive(index);
-      }
-    });
+    if (this.$route.query.currenId) {
+      this.menuList.forEach((item, index) => {
+        if (item.id == this.$route.query.currenId) {
+          this.setActive(index, true);
+        }
+      });
+    } else {
+      this.setActive(0, true);
+    }
+    // this.menuList.forEach((item, index) => {
+    //   if (item.id == this.$route.query.currenId) {
+    //   }
+    // });
   },
-  mounted(){
-        if(this.$route.query.contentId){
-      this.showContent = true
-      this.contentId = this.$route.query.contentId
-      console.log('this.showContent',this.showContent);
-      
+  mounted() {
+    if (this.$route.query.contentId) {
+      this.showContent = true;
+      this.contentId = this.$route.query.contentId;
     }
   },
   data() {
@@ -127,45 +125,48 @@ export default {
       selectNew: {},
       count: 0,
       pageNo: 1,
-      contentId: ''
+      contentId: "",
+      selectMenu: ""
     };
   },
   methods: {
     toDetail(id) {
-      this.contentId = id
-      this.showContent = true
-      this.data.forEach((item,index)=>{
-        if(item.id == id){
-          this.selectNew = item
+      this.contentId = id;
+      this.showContent = true;
+      this.data.forEach((item, index) => {
+        if (item.id == id) {
+          this.selectNew = item;
         }
-      })
+      });
     },
-    setActive(index) {
+    setActive(index, ifShowContent) {
+      console.log("active");
+
       let _this = this;
-      // if (index === 0) {
-      //   return;
-      // }
-      this.showContent = false;
+      this.selectMenu = index;
+      ifShowContent ? "" : (this.showContent = false);
       let temp = this.menuList[index];
       this.menuList.splice(index, 1);
       this.menuList.unshift(temp);
-      
+
       getNewsList({
         // colid: 2,
-         colid: temp.id,
-        // ptCode: 0, 
+        colid: temp.id,
+        // ptCode: 0,
         ptCode: this.$route.query.ptCode,
         pageSize: 10,
         pageNo: this.pageNo
       }).then(res => {
         _this.data = res.data.data;
+        _this.count = res.data.count;
       });
     },
     onChangePage(current) {
-      this.pageNo = current
+      this.pageNo = current;
+      let temp = this.menuList[this.selectMenu];
       getNewsList({
-        colid: 2, //temp.id,
-        ptCode: 0, //||temp.ptCode
+        colid: temp.id,
+        ptCode: this.$route.query.ptCode,
         pageSize: 10,
         pageNo: current
       }).then(res => {

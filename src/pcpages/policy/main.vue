@@ -20,7 +20,7 @@
             title="国务院"
             icon="icon-zbgg"
             :data="guowuyuan"
-            more="/second/menu?parentId=15&ptCode=1&currenId=19"
+            more="/second/menu?parentId=15&ptCode=1&currenId=19&indexUrl=%2Fpolicy%2Fservice"
           ></NewListCard>
           <Tabs
             :TabsList="[{title:'观点观察',url:'/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=17'}]"
@@ -32,13 +32,13 @@
             :data="mingying"
             icon="icon-zbgs"
             title="民营企业政策"
-            more="/second/menu?parentId=16&ptCode=1&currenId=24"
+            more="/second/menu?parentId=16&ptCode=1&currenId=24&indexUrl=%2Fpolicy%2Fservice"
           ></NewListCard>
           <NewListCard
             :data="jingyanjiaoliu"
             title="经验交流"
             icon="icon-scjg"
-            more="/second/menu?title=经验交流&id=18&parentId=18&ptCode=1&hadChild=fale&currenId=18"
+            more="/second/menu?title=经验交流&id=18&parentId=18&ptCode=1&hadChild=fale&currenId=18&indexUrl=%2Fpolicy%2Fservice"
           ></NewListCard>
         </div>
       </div>
@@ -83,7 +83,7 @@ export default {
     })
         getNewsList({
       ptCode:'1',
-      colid: "124",
+      colid: "24",
       pageSize: '10',
       pageNo: '0'
     }).then(res=>{
@@ -103,7 +103,7 @@ export default {
       pageSize: '10',
       pageNo: '0'
     }).then(res=>{
-      this.guandianguanc = res.data.data
+      this.guandianguanc[0] = res.data.data
     })
   },
   methods: {

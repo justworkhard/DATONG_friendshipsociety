@@ -4,28 +4,37 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper
-      :aspect-ratio="300/800"
-      height="200px"
-      :list="demo04_list"
-      v-model="demo01_index"
-      auto
-    ></swiper>
+    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" @click="toDetail()" v-for="(item,index) in xinwen" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              @click="toDetail(item.id)"
+              v-for="(item,index) in xinwen"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
-          <div v-if="slotProps.slotdata===1">
+        <div v-if="slotProps.slotdata===1">
           <ul class="news">
-            <li class="news_title" @click="toDetail()" v-for="(item,index) in chuangye" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              @click="toDetail(item.id)"
+              v-for="(item,index) in chuangye"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
-           <div v-if="slotProps.slotdata===2">
+        <div v-if="slotProps.slotdata===2">
           <ul class="news">
-            <li class="news_title" @click="toDetail()" v-for="(item,index) in zhiben" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              @click="toDetail(item.id)"
+              v-for="(item,index) in zhiben"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
       </template>
@@ -35,7 +44,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in biaozhun" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in biaozhun" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -46,7 +55,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in jiaoliu" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in jiaoliu" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -57,7 +66,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in zhengce" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in zhengce" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -75,7 +84,7 @@ import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
 
 export default {
-   async created() {
+  async created() {
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -93,7 +102,7 @@ export default {
     }).then(res => {
       this.xinwen = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 105,
       ptCode: 9,
       pageSize: 5,
@@ -101,7 +110,7 @@ export default {
     }).then(res => {
       this.chuangye = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 105,
       ptCode: 9,
       pageSize: 5,
@@ -109,7 +118,7 @@ export default {
     }).then(res => {
       this.zhiben = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 120,
       ptCode: 9,
       pageSize: 5,
@@ -117,7 +126,7 @@ export default {
     }).then(res => {
       this.biaozhun = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 119,
       ptCode: 9,
       pageSize: 5,
@@ -125,7 +134,7 @@ export default {
     }).then(res => {
       this.jiaoliu = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 117,
       ptCode: 9,
       pageSize: 5,
@@ -133,7 +142,6 @@ export default {
     }).then(res => {
       this.zhengce = res.data.data;
     });
-  
   },
   components: {
     XHeader,
@@ -143,13 +151,11 @@ export default {
     Tabs,
     Footer
   },
-  methods:{
-    toDetail(){
-      this.$router.push('/')
+  methods: {
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
-      onChangeTabs(){
-
-    }
+    onChangeTabs() {}
   },
   data() {
     return {
@@ -160,14 +166,13 @@ export default {
       jiaoliu: [],
       zhengce: [],
       TabsList: [
-        [{title:"新闻动态"}, {title:"创业分享"}, {title:"资本市场"}],
-        [{title:"行业标准查询"}],
-        [{title:"项目交流"}],
-        [{title:"相关政策"}],
+        [{ title: "新闻动态" }, { title: "创业分享" }, { title: "资本市场" }],
+        [{ title: "行业标准查询" }],
+        [{ title: "项目交流" }],
+        [{ title: "相关政策" }]
       ],
       demo01_index: 0,
-      tabList: [
-      ],
+      tabList: [],
       demo04_list: [
         {
           url: "javascript:",

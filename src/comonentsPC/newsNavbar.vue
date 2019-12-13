@@ -4,7 +4,7 @@
       <span @mouseenter="active(0)" :class="{'active':activeIndex === 0}">新闻动态</span>
       <span @mouseenter="active(1)" :class="{'active':activeIndex === 1}">联谊会活动</span>
       <a
-        :href="activeIndex === 0?'#/second/menu?parentId=6&ptCode=0&currenId=11&indexUrl=%2F':'#/menu/list?menu/list?title=联谊会活动'"
+        :href="activeIndex === 0?'#/second/menu?parentId=6&ptCode=0&currenId=11&indexUrl=%2F':'#/second/menu?parentId=6&ptCode=0&currenId=10&indexUrl=%2F'"
         target="_blank"
       >更多 &gt;&gt;</a>
     </div>
@@ -17,6 +17,22 @@
         <div
           class="news_item"
           v-for="(item,index) in newsList"
+          :key="index"
+          @click="toDetail(item.id)"
+        >
+          <img src="@/assets/images/mipmap-xxxhdpi/hot.png" alt srcset>
+          <p class="title">{{item.title}}</p>
+          <span class="date">{{item.createTime}}</span>
+        </div>
+      </div>
+      <div v-if="activeIndex === 1" class="news_list">
+        <div class="hot_news">
+          <h3>{{activeList[0]?activeList[0].title:''}}</h3>
+          <div class="content" v-html="activeList[0]?activeList[0].content:''"></div>
+        </div>
+        <div
+          class="news_item"
+          v-for="(item,index) in activeList"
           :key="index"
           @click="toDetail(item.id)"
         >
@@ -44,11 +60,20 @@ export default {
     }).then(res => {
       this.newsList = res.data.data;
     });
-  },
+   getNewsList({
+      colid: 10,
+      ptCode: 0,
+      pageSize: 10,
+      pageNo: 1
+    }).then(res => {
+      this.activeList = res.data.data;
+    });
+},
   data() {
     return {
       activeIndex: 0,
-      newsList: []
+      newsList: [],
+      activeList: []
     };
   },
   methods: {

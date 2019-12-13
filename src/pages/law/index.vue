@@ -12,7 +12,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in gongshifa"
               :key="index"
             >{{item.title}}</li>
@@ -22,7 +22,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in hetongfa"
               :key="index"
             >{{item.title}}</li>
@@ -32,7 +32,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in qingquan"
               :key="index"
             >{{item.title}}</li>
@@ -45,7 +45,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in newsList" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in newsList"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -56,7 +61,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in shangbiaofa" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in shangbiaofa"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -67,7 +77,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in zhuzuoquan" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in zhuzuoquan"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -78,7 +93,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in laodongfa" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in laodongfa"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -89,7 +109,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in zhuanlifa" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in zhuanlifa"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -175,7 +200,7 @@ export default {
     }).then(res => {
       this.laodongfa = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       colid: 31,
       ptCode: 2,
       pageSize: 5,
@@ -194,8 +219,8 @@ export default {
     Footer
   },
   methods: {
-    toDetail() {
-      this.$router.push("/");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
     onChangeTabs(id) {
       // console.log(id);
@@ -270,7 +295,7 @@ export default {
 .news {
   font-size: 14px;
   padding: 14px 13px;
-  min-height: 194px;;
+  min-height: 194px;
   .news_title {
     padding: 7px 0px;
     width: 100%;

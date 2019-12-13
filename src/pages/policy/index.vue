@@ -3,7 +3,7 @@
     <XHeader>
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
-    <Header logo="false" :tabList="tabList"></Header>
+    <Header logo="false" :tabList="tablist"></Header>
     <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="['/policy/activeAnddynamic']">
       <template slot-scope="slotProps">
@@ -11,7 +11,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in newsList"
               :key="index"
             >{{item.title}}</li>
@@ -21,7 +21,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in newsList"
               :key="index"
             >{{item.title}}</li>
@@ -38,7 +38,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in guowuyuan" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              v-for="(item,index) in guowuyuan"
+              :key="index"
+              @click="toDetail(item.id)"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -53,7 +58,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in mingying" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              v-for="(item,index) in mingying"
+              :key="index"
+              @click="toDetail(item.id)"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -68,7 +78,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in guandian" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              v-for="(item,index) in guandian"
+              :key="index"
+              @click="toDetail(item.id)"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -83,7 +98,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in jingyan" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              v-for="(item,index) in jingyan"
+              :key="index"
+              @click="toDetail(item.id)"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -119,7 +139,7 @@ export default {
       "/",
       true
     );
-    this.tabList = temp;
+    this.tablist = temp;
     getNewsList({
       colid: 3,
       ptCode: 1,
@@ -142,7 +162,7 @@ export default {
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.guowuyuan = res.data.data[0];
+      this.guowuyuan = res.data.data;
     });
     getNewsList({
       colid: 24,
@@ -170,8 +190,8 @@ export default {
     });
   },
   methods: {
-    toDetail() {
-      this.$router.push("/");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
     onChangeTabs() {}
   },
@@ -189,22 +209,8 @@ export default {
         [{ title: "经验交流" }]
       ],
       demo01_index: 0,
-      tabList: [
-        // { label: "首页", url: "/" },
-        // { label: "政策汇总", url: "/policy/summary" },
-        // { label: "政策解读", url: "/policy/explain" },
-        // { label: "观点考察", url: "/policy/inspect" },
-        // { label: "经验交流", url: "/policy/chat" }
-      ],
-      newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-      ],
+      tablist: [],
+      newsList: [],
       demo04_list: [
         {
           url: "javascript:",

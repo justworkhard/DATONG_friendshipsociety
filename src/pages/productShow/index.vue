@@ -11,7 +11,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+             @click="toDetail(item.id)"
               v-for="(item,index) in newsList"
               :key="index"
             >{{item.title}}</li>
@@ -60,8 +60,8 @@ export default {
     Footer
   },
   methods: {
-    toDetail() {
-      this.$router.push("/");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
     onChangeTabs() {}
   },

@@ -12,7 +12,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in qiye"
               :key="index"
             >{{item.title}}</li>
@@ -22,7 +22,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in guanli"
               :key="index"
             >{{item.title}}</li>
@@ -32,7 +32,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in baijia"
               :key="index"
             >{{item.title}}</li>
@@ -45,7 +45,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in fengmao" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in fengmao"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -56,7 +61,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in fengcai" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in fengcai"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -67,7 +77,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in ganwu" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in ganwu"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -155,8 +170,8 @@ export default {
     Footer
   },
   methods: {
-    toDetail() {
-      this.$router.push("/");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
     onChangeTabs() {}
   },

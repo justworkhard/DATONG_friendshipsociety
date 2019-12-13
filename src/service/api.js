@@ -4,6 +4,11 @@ export function getCarouselList(params) {
     `/api/web/carouselList?ptCode=${params}`,
   )
 }
+export function getContentCarouselList(params) {
+  return axios.post(
+    `/api/web/contentCarouselList?ptCode=${params}`,
+  )
+}
 export function getIndexList(params) {
   return axios.post(
     `/api/web/indexlist?parentId=${params.parentId}&ptCode=${params.ptCode}`,

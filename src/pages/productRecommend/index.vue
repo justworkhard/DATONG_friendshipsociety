@@ -11,7 +11,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in dongtai"
               :key="index"
             >{{item.title}}</li>
@@ -21,7 +21,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in zhaoshang"
               :key="index"
             >{{item.title}}</li>
@@ -31,7 +31,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in youhui"
               :key="index"
             >{{item.title}}</li>
@@ -44,7 +44,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in fuwuye" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in fuwuye" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -55,7 +55,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in zhizhao" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in zhizhao" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -66,7 +66,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in wenhua" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in wenhua" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -77,7 +77,7 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in xiandai" :key="index">{{item.title}}</li>
+            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in xiandai" :key="index">{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -171,8 +171,8 @@ export default {
     });
   },
   methods: {
-    toDetail() {
-      this.$router.push("/");
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
     },
     onChangeTabs() {}
   },

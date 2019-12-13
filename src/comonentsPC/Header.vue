@@ -17,8 +17,8 @@
       </router-link>
     </div>
     <el-carousel height="350px">
-      <el-carousel-item v-for="item in imgList" :key="item">
-        <img class="carousel_img" :src="item.img">
+      <el-carousel-item v-for="(item,index) in imgList" :key="index">
+        <img class="carousel_img" :src="item.picUrl">
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -31,6 +31,7 @@ export default {
   components: { Carousel },
   props: ["navs", "ptCode"],
   created() {
+    
     getCarouselList(this.ptCode).then(res => {
       let temp = [];
       res.data.carouselList.forEach(element => {
@@ -43,6 +44,11 @@ export default {
       this.imgList = res.data.carouselList;
     });
   },
+  mounted() {
+    console.log('this.navs',this.navs);
+    
+  },
+  
   data() {
     return {
       imgList: []

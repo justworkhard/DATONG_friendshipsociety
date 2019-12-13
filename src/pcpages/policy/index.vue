@@ -42,6 +42,8 @@ export default {
       ptCode: 1
     },'/policy/service')
     this.navList = temp
+    console.log(temp);
+    
   },
   async mounted(){
  

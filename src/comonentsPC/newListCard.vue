@@ -8,7 +8,7 @@
       </router-link>
     </div>
     <div class="content">
-      <div v-for="(item,index) in data" :key="index" class="news_item" @click="toDetail()">
+      <div v-for="(item,index) in data" :key="index" class="news_item" @click="toDetail(item.id)">
         <span>{{item.title}}</span>
         <span class="date">{{item.date}}</span>
       </div>
@@ -19,7 +19,9 @@
 export default {
   props: ["title", "icon", "more", "data"],
   methods: {
-    toDetail() {}
+    toDetail(id) {
+      this.$router.push(this.more+'&contentId='+id)
+    }
   }
 };
 </script>

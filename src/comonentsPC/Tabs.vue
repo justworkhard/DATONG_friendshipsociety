@@ -11,7 +11,7 @@
     </div>
     <div class="content">
       <div :class="{show:activeIndex === index}" class="news_list" v-for="(item,index) in newsList" :key="index" >
-        <div v-for="(item2,index) in item" :key="index" class="news_item" @click="toDetail()">
+        <div v-for="(item2,index) in item" :key="index" class="news_item" @click="toDetail(item2.id)">
           <span>{{item2.title}}</span>
           <span class="date">{{item2.date}}</span>
         </div>
@@ -59,13 +59,14 @@ export default {
 
   methods: {
     changeTab(index) {
-      console.log("child", index);
       this.activeIndex = index;
       this.$emit("onChangeTab", index);
-      console.log("child", index);
     },
     toList(url) {
       this.$router.push(url);
+    },
+    toDetail(id){
+      this.$router.push(this.TabsList[this.activeIndex].url+'&contentId='+id);
     }
   }
 };

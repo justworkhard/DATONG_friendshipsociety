@@ -76,8 +76,8 @@
     <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0" class="introduce">
-          <h3 class="introduce_title">{{jieshao.title}}</h3>
-          <div class="introduce_content">{{jieshao.summary}}</div>
+          <h3 class="introduce_title">{{about.title}}</h3>
+          <div class="introduce_content">{{about.summary}}</div>
         </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
@@ -111,7 +111,7 @@ import Ten from "./ten.vue";
 import ComponyCard from "./componyCard.vue";
 import { Button, Carousel } from "element-ui";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+import { getCarouselList, getIndexList, getNewsList ,getSororityList} from "@/service/api";
 
 export default {
   name: "app",
@@ -142,22 +142,6 @@ export default {
     }).then(res => {
       this.huodong = res.data.data;
     });
-    // getNewsList({
-    //   colid: 3,
-    //   ptCode: 0,
-    //   pageSize: 5,
-    //   pageNo: 1
-    // }).then(res => {
-    //   this.newsList = res.data.data;
-    // });
-    getNewsList({
-      colid: 10,
-      ptCode: 0,
-      pageSize: 5,
-      pageNo: 1
-    }).then(res => {
-      this.jieshao = res.data.data[0];
-    });
     getNewsList({
       colid: 7,
       ptCode: 0,
@@ -174,9 +158,13 @@ export default {
     }).then(res => {
       this.productList = res.data.data;
     });
+    getSororityList().then(res => {
+      this.about = res.data.sororityInfo;
+    });
   },
   data() {
     return {
+      about: {},
       qiyexingxi: [],
       huodong: [],
       jieshao: {},
@@ -186,7 +174,7 @@ export default {
       activeName: "",
       TabsList: [
         [{ title: "新闻动态" }, { title: "联谊会活动" }],
-        [{ title: "十大平台" }, { title: "企业信息服务" }],
+        [{ title: "十大平台  企业信息服务" }],
         [{ title: "平台排行榜" }],
         [{ title: "联谊会介绍" }],
         [{ title: "联谊会企业" }],

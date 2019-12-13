@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="body" @click="toDetail(data.id)">
     <div class="logo">
       <img
         :src="data.minPicAddress"
@@ -33,6 +33,11 @@ export default {
         { label: "联系我们" }
       ]
     };
+  },
+  methods:{
+    toDetail(newsId) {
+      this.$router.push("/newsdetail?newsId=" + newsId);
+    }
   }
 };
 </script>
