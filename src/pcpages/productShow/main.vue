@@ -3,18 +3,15 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+          <MCarousel :ptCode="7"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <SearchBox :ptCode='7'></SearchBox>
+        <SearchBox :ptCode="7"></SearchBox>
       </div>
-      <RedHeader title="企业产品" href="/second/menu?title=产品展示&id=105&parentId=105&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=105">
+      <RedHeader
+        title="企业产品"
+        href="/second/menu?title=产品展示&id=105&parentId=105&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=105"
+      >
         <div class="box">
           <ProductCard :data="item" v-for="(item,index) in zhanshi" :key="index"></ProductCard>
           <!-- <ProductCard :data="componyItem"></ProductCard>
@@ -25,7 +22,7 @@
           <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
           <ProductCard :data="componyItem"></ProductCard>
-          <ProductCard :data="componyItem"></ProductCard> -->
+          <ProductCard :data="componyItem"></ProductCard>-->
         </div>
       </RedHeader>
     </div>
@@ -37,6 +34,7 @@ import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import ProductCard from "./productCard.vue";
 import RedHeader from "@/comonentsPC/RedHeader.vue";
@@ -50,6 +48,7 @@ export default {
     Swiper,
     ProductCard,
     SwiperItem,
+    MCarousel,
     Footer,
     Tabs,
     RedHeader,
@@ -57,8 +56,8 @@ export default {
     NewListCard,
     SearchBox
   },
-  created(){
-               getNewsList({
+  created() {
+    getNewsList({
       ptCode: "7",
       colid: "102",
       pageSize: "10",
@@ -66,7 +65,7 @@ export default {
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "7",
       colid: "103",
       pageSize: "10",
@@ -74,7 +73,7 @@ export default {
     }).then(res => {
       this.newsList[1] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "7",
       colid: "104",
       pageSize: "10",
@@ -82,7 +81,7 @@ export default {
     }).then(res => {
       this.newsList[2] = res.data.data;
     });
-          getNewsList({
+    getNewsList({
       ptCode: "7",
       colid: "105",
       pageSize: "10",
@@ -137,15 +136,18 @@ export default {
       TabsList: [
         {
           title: "新闻动态",
-          url: "/second/menu?title=新闻动态&id=102&parentId=102&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=102"
+          url:
+            "/second/menu?title=新闻动态&id=102&parentId=102&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=102"
         },
         {
           title: "参展须知",
-          url: "/second/menu?title=参展须知&id=103&parentId=103&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=103"
+          url:
+            "/second/menu?title=参展须知&id=103&parentId=103&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=103"
         },
         {
           title: "参展商",
-          url: "/second/menu?title=参展商&id=104&parentId=104&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=104"
+          url:
+            "/second/menu?title=参展商&id=104&parentId=104&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=104"
         }
       ],
 

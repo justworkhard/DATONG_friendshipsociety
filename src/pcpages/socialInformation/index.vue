@@ -40,7 +40,7 @@ export default {
         parentId: "web",
         ptCode: 8
       },
-      "/social/information/finance"
+      "/social/information"
     );
     this.navList = temp;
   },

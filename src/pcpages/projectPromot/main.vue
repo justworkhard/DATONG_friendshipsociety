@@ -3,13 +3,7 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+        <MCarousel :ptCode='4'></MCarousel>             
         </div>
         <Tabs :TabsList="TabsList"></Tabs>
         <SearchBox :ptCode='4'></SearchBox>
@@ -24,6 +18,7 @@
           ></NewListCard>
           <Tabs
             :newsList='wenhualvyou'
+            type="top"
             :TabsList="[{title:'文化旅游',url:'/second/menu?parentId=71&ptCode=4&currenId=78&indexUrl=%2Fproject%2Fpromot'}]"
           ></Tabs>
         </div>
@@ -51,6 +46,7 @@ import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import { Swiper, SwiperItem } from "vux";
@@ -66,6 +62,7 @@ export default {
     SwiperItem,
     Footer,
     Tabs,
+    MCarousel,
     NewsNavbar,
     NewListCard
   },

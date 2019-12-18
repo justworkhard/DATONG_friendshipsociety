@@ -3,22 +3,12 @@
     <XHeader :title="title"></XHeader>
     <Tabs :TabsList="tabList" :defaultIndex='activeIndex' class="tabs" @onChangeTab="setActive">
       <template>
-        <div>
+        <div class="marginTop">
           <Search @onSearch='onSearch'></Search>
           <ScrollContent id="scrollContent" @load="load" @refresh="refresh">
             <NewsCar v-for="(item,index) in newsList" :key="index" :data="item"></NewsCar>
-            <!-- <NewsCar></NewsCar>
-            <NewsCar></NewsCar>
-            <NewsCar></NewsCar>
-            <NewsCar></NewsCar>
-            <NewsCar></NewsCar>
-            <NewsCar></NewsCar>
-            <NewsCar></NewsCar>-->
           </ScrollContent>
         </div>
-        <!-- <div v-if="slotProps.slotdata===1"></div>
-        <div v-if="slotProps.slotdata===1"></div>
-        <div v-if="slotProps.slotdata===1"></div>-->
       </template>
     </Tabs>
   </div>
@@ -121,10 +111,14 @@ export default {
   flex-direction: column;
   .tabs {
     flex: 1;
+    overflow: hidden;
   }
   // .scrollContent {
   //   overflow: hidden;
   //   height: 500px;
   // }
+}
+.marginTop{
+  margin-top: 10px
 }
 </style>

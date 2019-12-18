@@ -5,7 +5,7 @@
       <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset>
       <span>最新公告</span>
     </div>
-    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" v-model="demo01_index" auto></swiper>
+    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -111,7 +111,13 @@ import Ten from "./ten.vue";
 import ComponyCard from "./componyCard.vue";
 import { Button, Carousel } from "element-ui";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList ,getSororityList} from "@/service/api";
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getSororityList,
+  getContentCarouselList
+} from "@/service/api";
 
 export default {
   name: "app",
@@ -162,6 +168,19 @@ export default {
       this.about = res.data.sororityInfo;
     });
   },
+  beforeCreate() {
+    let temp = [];
+    getContentCarouselList(0).then(res => {
+      res.data.contentCarouselList.forEach(element => {
+        temp.push({
+          url: "javascript:",
+          img: element.picUrl,
+          title: element.contentTitle
+        });
+      });
+      this.carouselList = temp;
+    });
+  },
   data() {
     return {
       about: {},
@@ -174,7 +193,7 @@ export default {
       activeName: "",
       TabsList: [
         [{ title: "新闻动态" }, { title: "联谊会活动" }],
-        [{ title: "十大平台  企业信息服务" }],
+        [{ title: "十大平台",tip: '企业信息服务' }],
         [{ title: "平台排行榜" }],
         [{ title: "联谊会介绍" }],
         [{ title: "联谊会企业" }],
@@ -206,21 +225,7 @@ export default {
       ],
       TabsIndex: 0,
       newsList: [],
-      carouselList: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
+      carouselList: []
     };
   },
   methods: {

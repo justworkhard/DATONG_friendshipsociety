@@ -4,7 +4,7 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
     <Header logo="false" :tabList="tablist"></Header>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
+    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" v-model="demo01_index" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="['/policy/activeAnddynamic']">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -119,7 +119,7 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
-import { getNewsList } from "@/service/api";
+import { getNewsList ,getContentCarouselList} from "@/service/api";
 
 export default {
   components: {
@@ -188,6 +188,17 @@ export default {
     }).then(res => {
       this.jingyan = res.data.data;
     });
+      getContentCarouselList(1).then(res => {
+      let temp = []
+      res.data.contentCarouselList.forEach(element => {
+        temp.push({
+          url: "javascript:",
+          img: element.picUrl,
+          title: element.contentTitle
+        });
+      });
+      this.carouselList = temp;
+    });
   },
   methods: {
     toDetail(newsId) {
@@ -211,20 +222,7 @@ export default {
       demo01_index: 0,
       tablist: [],
       newsList: [],
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
+      carouselList: [
       ]
     };
   }

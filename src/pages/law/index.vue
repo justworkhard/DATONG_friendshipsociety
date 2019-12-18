@@ -5,7 +5,7 @@
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
     <Search></Search>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
+    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" v-model="demo01_index" auto></swiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -131,7 +131,7 @@ import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
-import { getNewsList } from "@/service/api";
+import { getNewsList, getContentCarouselList } from "@/service/api";
 
 export default {
   async created() {
@@ -208,6 +208,17 @@ export default {
     }).then(res => {
       this.zhuanlifa = res.data.data;
     });
+    getContentCarouselList(2).then(res => {
+      let temp = [];
+      res.data.contentCarouselList.forEach(element => {
+        temp.push({
+          url: "javascript:",
+          img: element.picUrl,
+          title: element.contentTitle
+        });
+      });
+      this.carouselList = temp;
+    });
   },
   components: {
     XHeader,
@@ -268,21 +279,7 @@ export default {
         { label: "指导案例", url: "/law/guide" }
       ],
       newsList: [],
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
+      carouselList: []
     };
   }
 };

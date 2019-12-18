@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="carousel">
     <div class="MCarousel" v-show="activeIndex === index" v-for="(item,index) in data" :key="index">
       <img :src="item.picUrl" alt srcset>
     </div>
@@ -12,20 +12,19 @@
   </div>
 </template>
 <script>
+import {
+  getContentCarouselList
+} from "@/service/api";
 export default {
-  props: ['data'],
+  props: ['ptCode'],
+  created(){
+    getContentCarouselList(this.ptCode).then(res=>{
+      this.data = res.data.contentCarouselList
+    })
+  },
   data() {
     return {
-      // data: [
-      //   {
-      //     contentTitle: "1",
-      //     picUrl: "http://shxx.dtpcmq.com/pcqrddbqylyh/cycxfwpt/img/tupian1.jpg"
-      //   },
-      //      {
-      //     contentTitle: "2",
-      //     picUrl: "http://shxx.dtpcmq.com/pcqrddbqylyh/cycxfwpt/img/ewm-gzh.jpg"
-      //   }
-      // ],
+      data: [],
       activeIndex: 0
     };
   },
@@ -37,7 +36,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.content {
+.carousel {
   height: 100%;
   width: 100%;
   position: relative;

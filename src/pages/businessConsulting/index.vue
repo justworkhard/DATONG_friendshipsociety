@@ -41,11 +41,10 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
-import { getNewsList } from "@/service/api";
-
+import { getNewsList, getContentCarouselList } from "@/service/api";
 
 export default {
-    async created() {
+  async created() {
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -71,6 +70,17 @@ export default {
     }).then(res => {
       this.zhiben = res.data.data;
     });
+    getContentCarouselList(3).then(res => {
+      let temp = [];
+      res.data.contentCarouselList.forEach(element => {
+        temp.push({
+          url: "javascript:",
+          img: element.picUrl,
+          title: element.contentTitle
+        });
+      });
+      this.carouselList = temp;
+    });
   },
   components: {
     XHeader,
@@ -89,7 +99,7 @@ export default {
     return {
       zhiben: [],
       xinwen: [],
-      TabsList: [[{title:"新闻动态"}], [{title: "资本市场"}]],
+      TabsList: [[{ title: "新闻动态" }], [{ title: "资本市场" }]],
       demo01_index: 0,
       tabList: [
         { label: "首页", url: "/" },
@@ -105,21 +115,7 @@ export default {
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
       ],
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
+      carouselList: []
     };
   }
 };

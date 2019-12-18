@@ -20,8 +20,10 @@
         background
         @current-change="onChangePage"
         layout="prev, pager, next"
-        :total="1000"
+        :total="InfoList.length"
         style="margin-top:20px"
+        :page-size='pageSize'
+        :hide-on-single-page = 'true'
       ></el-pagination>
     </div>
     <Footer></Footer>
@@ -76,6 +78,7 @@ export default {
   methods: {
     onChangePage(currentPage) {
       
+      this.newsList = this.InfoList.slice((currentPage-1)*this.pageSize,currentPage*this.pageSize)
     },
     search() {
       
@@ -83,7 +86,9 @@ export default {
         ptCode: this.$route.query.ptCode,
         title: this.keyword
       }).then(res => {
-          this.newsList = res.data.tInfoList
+        res.data.tInfoList
+          this.InfoList = res.data.tInfoList;
+          this.newsList = res.data.tInfoList.slice(0,this.pageSize)
       });
     }
   },
@@ -93,6 +98,8 @@ export default {
       imgList: [],
       keyword: "",
       newsList: [],
+      InfoList : [],
+      pageSize : 10,
     };
   }
 };
@@ -140,6 +147,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
 }
 .news_list {

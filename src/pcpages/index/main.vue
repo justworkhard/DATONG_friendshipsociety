@@ -5,14 +5,7 @@
       <span class="title">最新公告</span>
     </div>
     <div class="swiper_box">
-      <!-- <swiper
-        :aspect-ratio="300/800"
-        height="362px"
-        :list="demo04_list"
-        :auto='true'
-        show-dots
-      ></swiper> -->
-      <MCarousel :data='demo04_list'></MCarousel>
+      <MCarousel :ptCode='0'></MCarousel>
     </div>
     <div class="news_box">
       <NewsNavbar></NewsNavbar>
@@ -131,10 +124,7 @@ export default {
     MCarousel
   },
   created() {
-    getContentCarouselList(0).then(res=>{
-      console.log(res);
-      this.demo04_list = res.data.contentCarouselList
-    })
+
     getNewsList({
       // colid: 2,
       colid: 7,
@@ -190,8 +180,6 @@ export default {
         introduct:
           "大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、"
       },
-      demo04_list: [
-      ]
     };
   }
 };
@@ -229,6 +217,7 @@ export default {
     width: 560px;
     vertical-align: top;
     height: 362px;
+    position: relative;
   }
   .news_box {
     display: inline-block;

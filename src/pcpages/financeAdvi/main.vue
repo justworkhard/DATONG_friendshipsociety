@@ -3,13 +3,7 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+        <MCarousel :ptCode='5'></MCarousel>                      
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
         <SearchBox></SearchBox>
@@ -25,6 +19,7 @@
           <Tabs
             :TabsList="[{title:'融资案例',url:'/second/menu?title=融资案例&id=86&parentId=86&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=86'}]"
             :newsList="newsList"
+            type="top"
           ></Tabs>
         </div>
         <div class="col">
@@ -49,6 +44,7 @@
 import Welcome from "@/comonentsPC/welcome.vue";
 import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
@@ -66,6 +62,7 @@ export default {
     Footer,
     Tabs,
     NewsNavbar,
+    MCarousel,
     NewListCard,
     SearchBox
   },

@@ -3,29 +3,38 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+          <MCarousel :ptCode="8"></MCarousel>     
         </div>
-        <Tabs :TabsList="TabsList"></Tabs>
+        <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
         <SearchBox :ptCode="8"></SearchBox>
       </div>
       <div class="row">
         <div class="col">
           <NewListCard
-            title="行业标志查询"
+            icon="icon-zbgg"
+            title="行业标准查询"
             :data="hangyebiaozhi"
             more="/social/information/other/menu?title=行业标志查询"
           ></NewListCard>
-          <Tabs :data='[qiyexingxi]' :TabsList="[{title:'企业信息管理',url:'/social/information/other/menu?title=企业信息管理'}]"></Tabs>
+          <Tabs
+            type="top"
+            :data="qiyexingxi"
+            :TabsList="[{title:'企业信息管理',url:'/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2Fsocial%2Finformation%2Ffinance&hadChild=fale&currenId=109'}]"
+          ></Tabs>
         </div>
         <div class="col">
-          <NewListCard title="企业信用查询" :data='qiyexingyong' more="/social/information/other/menu?title=企业信用查询"></NewListCard>
-          <NewListCard title="行业数据统计" :data='hangyeshuju' more="/social/information/other/menu?title=行业数据统计"></NewListCard>
+          <NewListCard
+            icon="icon-zbgs"
+            title="企业信用查询"
+            :data="qiyexingyong"
+            more="/social/information/other/menu?title=企业信用查询"
+          ></NewListCard>
+          <NewListCard
+            title="行业数据查询"
+            icon="icon-scjg"
+            :data="hangyeshuju"
+            more="/social/information/other/menu?title=行业数据统计"
+          ></NewListCard>
         </div>
       </div>
     </div>
@@ -36,10 +45,13 @@ import Welcome from "@/comonentsPC/welcome.vue";
 import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+
 
 export default {
   components: {
@@ -47,6 +59,7 @@ export default {
     Welcome,
     Header,
     Swiper,
+    MCarousel,
     SwiperItem,
     Footer,
     Tabs,
@@ -55,31 +68,31 @@ export default {
   },
   created() {
     getNewsList({
-      ptCode: "9",
-      colid: "70",
+      ptCode: "8",
+      colid: "113",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
     getNewsList({
-      ptCode: "9",
-      colid: "72",
+      ptCode: "8",
+      colid: "111",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.newsList[0] = res.data.data;
+      this.newsList[1] = res.data.data;
     });
     getNewsList({
-      ptCode: "9",
-      colid: "80",
+      ptCode: "8",
+      colid: "108",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.newsList[0] = res.data.data;
+      this.newsList[2] = res.data.data;
     });
     getNewsList({
-      ptCode: "9",
+      ptCode: "8",
       colid: "120",
       pageSize: "10",
       pageNo: "0"
@@ -87,15 +100,15 @@ export default {
       this.hangyebiaozhi = res.data.data;
     });
     getNewsList({
-      ptCode: "9",
+      ptCode: "8",
       colid: "119",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.qiyexingxi = res.data.data;
+      this.qiyexingxi.push(res.data.data)
     });
     getNewsList({
-      ptCode: "9",
+      ptCode: "8",
       colid: "118",
       pageSize: "10",
       pageNo: "0"
@@ -103,7 +116,7 @@ export default {
       this.qiyexingyong = res.data.data;
     });
     getNewsList({
-      ptCode: "10",
+      ptCode: "8",
       colid: "75",
       pageSize: "10",
       pageNo: "0"
@@ -117,6 +130,7 @@ export default {
       hangyeshuju: [],
       qiyexingxi: [],
       qiyexingyong: [],
+      newsList: [],
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },

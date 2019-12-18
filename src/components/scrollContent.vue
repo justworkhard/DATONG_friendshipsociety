@@ -71,7 +71,6 @@ export default {
 .list {
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 .bscroll {
   flex: 1;

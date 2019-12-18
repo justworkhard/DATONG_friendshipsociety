@@ -12,7 +12,9 @@
       <div v-if="activeIndex === 0" class="news_list">
         <div class="hot_news">
           <h3>{{newsList[0]?newsList[0].title:''}}</h3>
-          <div class="content" v-html="newsList[0]?newsList[0].content:''"></div>
+          <div class="content" v-html="newsList[0]?newsList[0].summary:''" 
+          @click="toDetail(newsList[0].id)"
+          ></div>
         </div>
         <div
           class="news_item"
@@ -28,7 +30,9 @@
       <div v-if="activeIndex === 1" class="news_list">
         <div class="hot_news">
           <h3>{{activeList[0]?activeList[0].title:''}}</h3>
-          <div class="content" v-html="activeList[0]?activeList[0].content:''"></div>
+          <div class="content" v-html="activeList[0]?activeList[0].summary:''"
+          @click="toDetail(newsList[0].id)"          
+          ></div>
         </div>
         <div
           class="news_item"
@@ -154,6 +158,10 @@ export default {
       font-size: 14px;
       height: 24px;
       text-overflow: ellipsis;
+      cursor: pointer;
+      &:hover{
+        color: #1a95c7
+      }
     }
   }
   .news_item {

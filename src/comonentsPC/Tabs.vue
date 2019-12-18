@@ -8,15 +8,28 @@
         :key="index"
         v-on:click="changeTab(index)"
       >{{item.title}}</p>
+      <div class="more_top" v-if="Type === 'top'">
+        <a :href="'#'+TabsList[activeIndex].url">更多>></a>
+      </div>
     </div>
     <div class="content">
-      <div :class="{show:activeIndex === index}" class="news_list" v-for="(item,index) in newsList" :key="index" >
-        <div v-for="(item2,index) in item" :key="index" class="news_item" @click="toDetail(item2.id)">
+      <div
+        :class="{show:activeIndex === index}"
+        class="news_list"
+        v-for="(item,index) in newsList"
+        :key="index"
+      >
+        <div
+          v-for="(item2,index) in item"
+          :key="index"
+          class="news_item"
+          @click="toDetail(item2.id)"
+        >
           <span>{{item2.title}}</span>
           <span class="date">{{item2.date}}</span>
         </div>
       </div>
-      <div class="more">
+      <div class="more" v-if="Type !== 'top'">
         <a :href="'#'+TabsList[activeIndex].url">更多>></a>
       </div>
     </div>
@@ -28,6 +41,12 @@ import { Tabs } from "element-ui";
 export default {
   name: "HelloWorld",
   props: {
+    Type: {
+      type: String,
+      default: function() {
+        return "";
+      }
+    },
     TabsList: {
       type: Array,
       // 对象或数组默认值必须从一个工厂函数获取
@@ -50,10 +69,10 @@ export default {
       }
     }
   },
+
   data() {
     return {
-      activeIndex: 0,
-
+      activeIndex: 0
     };
   },
 
@@ -65,17 +84,27 @@ export default {
     toList(url) {
       this.$router.push(url);
     },
-    toDetail(id){
-      this.$router.push(this.TabsList[this.activeIndex].url+'&contentId='+id);
+    toDetail(id) {
+      this.$router.push(
+        this.TabsList[this.activeIndex].url + "&contentId=" + id
+      );
     }
   }
 };
 </script>
 <style lang="less" scoped>
+.more_top {
+  position: absolute;;
+  right: 10px;
+  a{
+  color: #646464;
+  }
+}
 .label {
   display: flex;
   align-items: center;
-  width: 500px;
+  position: relative;
+  min-width: 500px;
   // padding: 0 15px;
   // position: relative;
   // overflow: scroll;
@@ -156,7 +185,7 @@ export default {
     }
   }
 }
-.show{
-  display: block
+.show {
+  display: block;
 }
 </style>

@@ -3,16 +3,10 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+          <MCarousel :ptCode="9"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <SearchBox :ptCode='9'></SearchBox>
+        <SearchBox :ptCode="9"></SearchBox>
       </div>
       <div class="row">
         <div class="col">
@@ -25,6 +19,7 @@
           <Tabs
             :TabsList="[{title:'项目交流',url:'/second/menu?title=项目交流&id=119&parentId=119&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=119'}]"
             :newsList="xiangmujiaoliu"
+            type="top"
           ></Tabs>
         </div>
         <div class="col">
@@ -48,11 +43,13 @@
 <script>
 import Welcome from "@/comonentsPC/welcome.vue";
 import Header from "@/comonentsPC/Header.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
 
 import { Swiper, SwiperItem } from "vux";
 
@@ -61,6 +58,7 @@ export default {
     SearchBox,
     Welcome,
     Header,
+    MCarousel,
     Swiper,
     SwiperItem,
     Footer,
@@ -68,7 +66,7 @@ export default {
     NewsNavbar,
     NewListCard
   },
-      created(){
+  created() {
     getNewsList({
       ptCode: "9",
       colid: "70",
@@ -77,7 +75,7 @@ export default {
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "9",
       colid: "72",
       pageSize: "10",
@@ -85,7 +83,7 @@ export default {
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "9",
       colid: "80",
       pageSize: "10",
@@ -93,7 +91,7 @@ export default {
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-            getNewsList({
+    getNewsList({
       ptCode: "9",
       colid: "120",
       pageSize: "10",
@@ -101,7 +99,7 @@ export default {
     }).then(res => {
       this.hangyebiaozhun = res.data.data;
     });
-                getNewsList({
+    getNewsList({
       ptCode: "9",
       colid: "119",
       pageSize: "10",
@@ -109,7 +107,7 @@ export default {
     }).then(res => {
       this.xiangmujiaoliu = res.data.data;
     });
-                getNewsList({
+    getNewsList({
       ptCode: "9",
       colid: "118",
       pageSize: "10",
@@ -117,22 +115,21 @@ export default {
     }).then(res => {
       this.xiangmuhezuo = res.data.data;
     });
-                   getNewsList({
-      ptCode: "4",
-      colid: "75",
+    getNewsList({
+      ptCode: "9",
+      colid: "117",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
       this.xiangguanzhengce = res.data.data;
     });
-    
   },
   data() {
     return {
-    hangyebiaozhun: [],
-    xiangmujiaoliu: [],
-    xiangmuhezuo: [],
-    xiangguanzhengce: [],
+      hangyebiaozhun: [],
+      xiangmujiaoliu: [],
+      xiangmuhezuo: [],
+      xiangguanzhengce: [],
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },

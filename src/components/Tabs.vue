@@ -1,13 +1,13 @@
 <template>
   <div class="tabs">
-    <div class="label" v-if="TabsList.length>0">
+    <div class="label" >
       <p
         class="title"
         v-bind:class="{active:activeIndex == index,active_one:TabsList.length<=1}"
         v-for="(item,index) in TabsList"
         :key="index"
         v-on:click="changeTab(index)"
-      >{{item.title}}</p>
+      >{{item.title}} <span style='color:#545454'>{{item.tip}}</span></p>
       <a @click="toList(href[activeIndex])">
         <img
           v-if="href[activeIndex]"
@@ -32,6 +32,7 @@ export default {
     }
   },
   props: {
+    type: '',
     TabsList: {
       type: Array,
       // 对象或数组默认值必须从一个工厂函数获取

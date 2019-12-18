@@ -3,16 +3,10 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+        <MCarousel :ptCode='1'></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <SearchBox :ptCode='1'></SearchBox>
+        <SearchBox :ptCode="1"></SearchBox>
       </div>
       <div class="row">
         <div class="col">
@@ -25,6 +19,7 @@
           <Tabs
             :TabsList="[{title:'观点观察',url:'/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=17'}]"
             :newsList="guandianguanc"
+            type="top"
           ></Tabs>
         </div>
         <div class="col">
@@ -47,6 +42,7 @@
 </template>
 <script>
 import Welcome from "@/comonentsPC/welcome.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
@@ -54,13 +50,14 @@ import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList ,getNewsList} from "@/service/api";
+import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
 
 export default {
   components: {
     Welcome,
     Header,
     Swiper,
+    MCarousel,
     SwiperItem,
     Footer,
     Tabs,
@@ -74,41 +71,40 @@ export default {
       ptCode: 1
     });
     getNewsList({
-      ptCode:'1',
+      ptCode: "1",
       colid: "19",
-      pageSize: '10',
-      pageNo: '0'
-    }).then(res=>{
-      this.guowuyuan = res.data.data
-    })
-        getNewsList({
-      ptCode:'1',
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.guowuyuan = res.data.data;
+    });
+    getNewsList({
+      ptCode: "1",
       colid: "24",
-      pageSize: '10',
-      pageNo: '0'
-    }).then(res=>{
-      this.mingying = res.data.data
-    })
-        getNewsList({
-      ptCode:'1',
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.mingying = res.data.data;
+    });
+    getNewsList({
+      ptCode: "1",
       colid: "18",
-      pageSize: '10',
-      pageNo: '0'
-    }).then(res=>{
-      this.jingyanjiaoliu = res.data.data
-    })
-        getNewsList({
-      ptCode:'1',
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.jingyanjiaoliu = res.data.data;
+    });
+    getNewsList({
+      ptCode: "1",
       colid: "17",
-      pageSize: '10',
-      pageNo: '0'
-    }).then(res=>{
-      this.guandianguanc[0] = res.data.data
-    })
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.guandianguanc.push(res.data.data)
+      
+    });
   },
-  methods: {
-
-  },
+  methods: {},
   data() {
     return {
       keyword: "",
@@ -150,19 +146,6 @@ export default {
 
       demo01_index: 1,
       demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
       ]
     };
   }

@@ -3,13 +3,7 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-          <swiper
-            :aspect-ratio="300/800"
-            height="260px"
-            :list="demo04_list"
-            v-model="demo01_index"
-            auto
-          ></swiper>
+          <MCarousel :ptCode="10"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
         <SearchBox></SearchBox>
@@ -20,11 +14,12 @@
             icon="icon-zbgg"
             title="企业风貌"
             :data="data"
-            more="/entreAndInnova/secondMenu?title=双创项目"
+            more="/second/menu?parentId=125&ptCode=10&currenId=132&indexUrl=%2Fpromote%2Fexperien"
           ></NewListCard>
           <Tabs
-            :TabsList="[{title:'管理感悟',url:'/entreAndInnova/secondMenu?title=双创活动'}]"
+            :TabsList="[{title:'管理感悟',url:'/second/menu?parentId=123&ptCode=10&currenId=127&indexUrl=%2Fpromote%2Fexperien'}]"
             :newsList="newsList"
+            type="top"
           ></Tabs>
         </div>
         <div class="col">
@@ -32,13 +27,13 @@
             icon="icon-zbgs"
             :data="data"
             title="员工风采"
-            more="/entreAndInnova/service?title=双创政策"
+            more="/second/menu?parentId=125&ptCode=10&currenId=133&indexUrl=%2Fpromote%2Fexperien"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
             :data="data"
             title="经验分享"
-            more="/entreAndInnova/service?title=挂牌服务"
+            more="/second/menu?parentId=123&ptCode=10&currenId=128&indexUrl=%2Fpromote%2Fexperien"
           ></NewListCard>
         </div>
       </div>
@@ -49,6 +44,7 @@
 import Welcome from "@/comonentsPC/welcome.vue";
 import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import Footer from "@/comonentsPC/Footer.vue";
@@ -64,108 +60,78 @@ export default {
     Swiper,
     SwiperItem,
     Footer,
+    MCarousel,
     Tabs,
     NewsNavbar,
     NewListCard
   },
-    created(){
+  created() {
     getNewsList({
-      ptCode: "4",
-      colid: "70",
+      ptCode: "10",
+      colid: "125",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-        getNewsList({
-      ptCode: "4",
-      colid: "72",
+    getNewsList({
+      ptCode: "10",
+      colid: "122",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.newsList[0] = res.data.data;
+      this.newsList[2] = res.data.data;
     });
-        getNewsList({
-      ptCode: "4",
-      colid: "80",
+    getNewsList({
+      ptCode: "10",
+      colid: "133",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.newsList[0] = res.data.data;
+      this.newsList[3] = res.data.data;
     });
-            getNewsList({
-      ptCode: "9",
-      colid: "120",
+    getNewsList({
+      ptCode: "10",
+      colid: "125",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.hangyebiaozhun = res.data.data;
+      this.qiyefengmao = res.data.data;
     });
-                getNewsList({
-      ptCode: "9",
-      colid: "119",
+    getNewsList({
+      ptCode: "10",
+      colid: "123",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.xiangmujiaoliu = res.data.data;
+      this.guanliganwu = res.data.data;
     });
-                getNewsList({
-      ptCode: "9",
-      colid: "118",
+    getNewsList({
+      ptCode: "10",
+      colid: "133",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.xiangmuhezuo = res.data.data;
+      this.yuangongfengcai = res.data.data;
     });
-                   getNewsList({
-      ptCode: "4",
-      colid: "75",
+    getNewsList({
+      ptCode: "10",
+      colid: "128",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.xiangguanzhengce = res.data.data;
+      this.jingyanfenxaing = res.data.data;
     });
-    
   },
   data() {
     return {
-      hangyebiaozhun: [],
-      xiangmujiaoliu: [],
-      xiangmuhezuo: [],
-      xiangguanzhengce: [],
+      qiyefengmao: [],
+      guanliganwu: [],
+      yuangongfengcai: [],
+      jingyanfenxaing: [],
       data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
       ],
       newsList: [
-        [
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ],
-        [
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ]
       ],
       TabsList: [
         {
