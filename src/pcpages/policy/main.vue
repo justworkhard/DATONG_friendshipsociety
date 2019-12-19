@@ -3,7 +3,7 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-        <MCarousel :ptCode='1'></MCarousel>
+          <MCarousel :ptCode="1"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
         <SearchBox :ptCode="1"></SearchBox>
@@ -16,11 +16,12 @@
             :data="guowuyuan"
             more="/second/menu?parentId=15&ptCode=1&currenId=19&indexUrl=%2Fpolicy%2Fservice"
           ></NewListCard>
-          <Tabs
-            :TabsList="[{title:'观点观察',url:'/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=17'}]"
-            :newsList="guandianguanc"
-            type="top"
-          ></Tabs>
+          <NewListCard
+            title="观点观察"
+            icon="icon-two"
+            :data="guandianguanc"
+            more="/second/menu?title=观点观察&id=17&parentId=17&ptCode=1&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=17"
+          ></NewListCard>
         </div>
         <div class="col">
           <NewListCard
@@ -100,8 +101,7 @@ export default {
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.guandianguanc.push(res.data.data)
-      
+      this.guandianguanc = res.data.data;
     });
   },
   methods: {},
@@ -145,8 +145,7 @@ export default {
       ],
 
       demo01_index: 1,
-      demo04_list: [
-      ]
+      demo04_list: []
     };
   }
 };

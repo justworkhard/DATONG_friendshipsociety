@@ -72,6 +72,9 @@ export default {
 .icon-zbgs {
   background-position: -10px -8px!important;
 }
+.icon-two {
+  background-position: -10px -48px!important;
+}
 .icon-zbgg {
     background-position: -50px -8px!important;
 }

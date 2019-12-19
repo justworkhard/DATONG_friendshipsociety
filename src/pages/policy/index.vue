@@ -17,16 +17,6 @@
             >{{item.title}}</li>
           </ul>
         </div>
-        <div v-if="slotProps.slotdata===1">
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in newsList"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
-        </div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
@@ -148,14 +138,7 @@ export default {
     }).then(res => {
       this.newsList = res.data.data;
     });
-    // getNewsList({
-    //   colid: 3,
-    //   ptCode: 0,
-    //   pageSize: 5,
-    //   pageNo: 1
-    // }).then(res => {
-    //   this.newsList = res.data.data;
-    // });
+
     getNewsList({
       colid: 19,
       ptCode: 1,
@@ -213,7 +196,7 @@ export default {
       guandian: [],
       jingyan: [],
       TabsList: [
-        [{ title: "发布动态" }, { title: "发布活动" }],
+        [{ title: "新闻动态" }],
         [{ title: "国务院" }],
         [{ title: "民营企业政策" }],
         [{ title: "观点考察" }],

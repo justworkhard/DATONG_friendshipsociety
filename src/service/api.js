@@ -39,3 +39,13 @@ export function getSororityList() {
     `/api/web/sororitylList`,
   )
 }
+export function getReadList() {
+  return axios.get(
+    `/api/web/readList`,
+  )
+}
+export function getInterList() {
+  return axios.get(
+    `/api/web/integralList`,
+  )
+}

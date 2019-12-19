@@ -11,11 +11,12 @@
       <div class="row">
         <div class="col">
           <NewListCard icon="icon-zbgg" title="商标法" :data="shangbiaofa" more></NewListCard>
-          <Tabs
-            :TabsList="[{title:'劳动法',url:'/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2Flaw'}]"
-            :newsList="newsList"
-            type="top"
-          ></Tabs>
+               <NewListCard
+            title="劳动法"
+            icon="icon-two"
+            :data="laodongfa"
+            more="/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2Flaw"
+          ></NewListCard>
         </div>
         <div class="col">
           <NewListCard icon="icon-zbgs" :data="zuzuoquan" title="著作权法" more></NewListCard>
@@ -81,11 +82,12 @@ export default {
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.newsList[2] = res.data.data;
+      this.laodongfa = res.data.data;
     });
   },
   data() {
     return {
+      laodongfa: [],
       data: [
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
         { title: "中华人民共和国商标法（一）", date: "2019-1-13" },

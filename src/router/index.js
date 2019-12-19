@@ -19,13 +19,6 @@ let RouterPhone = new Router({
       name: "Index",
       component: resolve => require(["@/pages/index"], resolve)
     },
-    //加入我们
-    // {
-    //   path: "/join",
-    //   name: "newslist",
-    //   component: resolve => require(["@/pages/index/join"], resolve)
-    // },
-  
     {
       path: "/newsdetail",
       name: "newsdetail",
@@ -93,6 +86,17 @@ let RouterPhone = new Router({
       path: "/spread/advanced",
       name: "SpreadAdvanced",
       component: resolve => require(["@/pages/spreadAdvanced"], resolve)
+    },
+    // 排行榜
+    {
+      path: "/readRank",
+      name: "SpreadAdvanced",
+      component: resolve => require(["@/pages/rank/readIndex"], resolve)
+    },
+    {
+      path: "/interRank",
+      name: "SpreadAdvanced",
+      component: resolve => require(["@/pages/rank/interIndex"], resolve)
     },
    
   ]

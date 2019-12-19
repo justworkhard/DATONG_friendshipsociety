@@ -53,24 +53,15 @@
     <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div class="rank" v-if="slotProps.slotdata===0">
-          <div class="rankItem">
+          <div class="rankItem" @click="toRankRead()">
             <img src="@/assets/images/mipmap-hdpi/points.png" alt srcset>
           </div>
-          <div class="rankItem">
-            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset>
+          <div class="rankItem" >
+            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset @click="toRankInter()">
           </div>
         </div>
       </template>
-      <template slot-scope="slotProps">
-        <div class="rank" v-if="slotProps.slotdata===0">
-          <div class="rankItem">
-            <img src="@/assets/images/mipmap-hdpi/points.png" alt srcset>
-          </div>
-          <div class="rankItem">
-            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset>
-          </div>
-        </div>
-      </template>
+
     </Tabs>
     <!-- 联谊会介绍 -->
     <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
@@ -229,6 +220,14 @@ export default {
     };
   },
   methods: {
+    toRankRead(){
+      this.$router.push('/interRank')
+    },
+    toRankInter(){
+      console.log('====');
+      
+      this.$router.push('/interRank')
+    },
     demo01_onIndexChange() {},
     handleClick() {},
     onChangeTabs(index) {
