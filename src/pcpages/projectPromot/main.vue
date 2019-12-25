@@ -50,7 +50,7 @@ import MCarousel from "@/comonentsPC/Carouse.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+import { getCarouselList, getIndexList, getNewsList ,getDevColumnList} from "@/service/api";
 
 
 export default {
@@ -67,6 +67,14 @@ export default {
     NewListCard
   },
   created(){
+    getDevColumnList(2).then(res=>{
+      res.data.devColumnList.forEach(element => {
+         this.TabsList.push({
+           title: element.columnName,
+           url: `/second/menu?title=${element.columnName}&id=${element.id}&parentId=${element.id}&ptCode=1&indexUrl=%2Fpolicy%2Fservice`
+         })
+      });
+    })
     getNewsList({
       ptCode: "4",
       colid: "70",
@@ -138,24 +146,7 @@ export default {
       zhizhaoye: [],
       wenhualvyou: [],
       xiandainongye: [],
-      TabsList: [
-        {
-          title: "动态工作",
-          url:
-            "/second/menu?title=动态工作&id=70&parentId=70&ptCode=4&indexUrl=%2Fproject%2Fpromot&hadChild=fale&currenId=70"
-        },
-        {
-          title: "招商信息",
-          url:
-            "/second/menu?title=招商信息&id=72&parentId=72&ptCode=4&indexUrl=%2Fproject%2Fpromot&hadChild=fale&currenId=72"
-        },
-        {
-          title: "优惠政策",
-          url:
-            "/second/menu?parentId=73&ptCode=4&currenId=80&indexUrl=%2Fproject%2Fpromot"
-        }
-      ],
-
+      TabsList: [],
       demo01_index: 1,
       demo04_list: [
         {

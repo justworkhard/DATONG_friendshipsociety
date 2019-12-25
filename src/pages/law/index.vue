@@ -177,7 +177,7 @@ export default {
       this.lvshisuo = res.data.data[0];
     });
     getNewsList({
-      colid: 24,
+      colid: 60,
       ptCode: 2,
       pageSize: 5,
       pageNo: 1
@@ -185,7 +185,7 @@ export default {
       this.shangbiaofa = res.data.data;
     });
     getNewsList({
-      colid: 17,
+      colid: 136,
       ptCode: 2,
       pageSize: 5,
       pageNo: 1
@@ -193,7 +193,7 @@ export default {
       this.zhuzuoquan = res.data.data;
     });
     getNewsList({
-      colid: 31,
+      colid: 63,
       ptCode: 2,
       pageSize: 5,
       pageNo: 1
@@ -201,7 +201,7 @@ export default {
       this.laodongfa = res.data.data;
     });
     getNewsList({
-      colid: 31,
+      colid: 135,
       ptCode: 2,
       pageSize: 5,
       pageNo: 1

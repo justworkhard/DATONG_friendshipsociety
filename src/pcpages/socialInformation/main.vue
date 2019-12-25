@@ -93,7 +93,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "120",
+      colid: "137",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -101,7 +101,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "119",
+      colid: "138",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -109,7 +109,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "118",
+      colid: "139",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -117,7 +117,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "75",
+      colid: "140",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {

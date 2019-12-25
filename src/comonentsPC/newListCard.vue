@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-12-22 18:05:11
+ * @LastEditTime : 2019-12-25 21:03:49
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \DATONG_friendshipsociety\src\comonentsPC\newListCard.vue
+ -->
 <template>
   <div class="newsList">
     <div class="header">
@@ -11,6 +19,9 @@
       <div v-for="(item,index) in data" :key="index" class="news_item" @click="toDetail(item.id)">
         <span>{{item.title}}</span>
         <span class="date">{{item.date}}</span>
+      </div>
+      <div class="not_data">
+        暂无数据 
       </div>
     </div>
   </div>
@@ -29,7 +40,7 @@ export default {
 .newsList {
   border: 1px solid #ddd;
   border-radius: 4px;
-  min-height: 300px;
+  min-height: 359px;
   overflow: hidden;
   width: 573px;
   margin-bottom: 10px;

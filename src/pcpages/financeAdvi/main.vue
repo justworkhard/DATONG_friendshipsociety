@@ -3,7 +3,7 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-        <MCarousel :ptCode='5'></MCarousel>                      
+          <MCarousel :ptCode="5"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
         <SearchBox></SearchBox>
@@ -50,8 +50,7 @@ import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
-
+import { getCarouselList, getIndexList, getNewsList ,getDevColumnList} from "@/service/api";
 
 export default {
   components: {
@@ -66,8 +65,16 @@ export default {
     NewListCard,
     SearchBox
   },
-  created(){
-        getNewsList({
+  created() {
+    getDevColumnList(5).then(res => {
+      res.data.devColumnList.forEach(element => {
+        this.TabsList.push({
+          title: element.columnName,
+          url: `/second/menu?title=${element.columnName}&id=${element.id}&parentId=${element.id}&ptCode=1&indexUrl=%2Fpolicy%2Fservice`
+        });
+      });
+    });
+    getNewsList({
       ptCode: "5",
       colid: "87",
       pageSize: "10",
@@ -75,7 +82,7 @@ export default {
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "82",
       pageSize: "10",
@@ -83,7 +90,7 @@ export default {
     }).then(res => {
       this.newsList[1] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "83",
       pageSize: "10",
@@ -91,7 +98,7 @@ export default {
     }).then(res => {
       this.newsList[2] = res.data.data;
     });
-         getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "84",
       pageSize: "10",
@@ -99,7 +106,7 @@ export default {
     }).then(res => {
       this.tujing = res.data.data;
     });
-         getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "86",
       pageSize: "10",
@@ -107,7 +114,7 @@ export default {
     }).then(res => {
       this.anli[0] = res.data.data;
     });
-         getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "85",
       pageSize: "10",
@@ -115,7 +122,7 @@ export default {
     }).then(res => {
       this.zhapian[0] = res.data.data;
     });
-         getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "83",
       pageSize: "10",
@@ -148,15 +155,18 @@ export default {
       TabsList: [
         {
           title: "融资平台",
-          url: "/second/menu?title=融资平台&id=87&parentId=87&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=87"
+          url:
+            "/second/menu?title=融资平台&id=87&parentId=87&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=87"
         },
         {
           title: "融资定义",
-          url: "/second/menu?title=融资定义&id=82&parentId=82&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=82"
+          url:
+            "/second/menu?title=融资定义&id=82&parentId=82&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=82"
         },
         {
           title: "融资方式",
-          url: "/second/menu?title=融资方式&id=83&parentId=83&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=83"
+          url:
+            "/second/menu?title=融资方式&id=83&parentId=83&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=83"
         }
       ],
 
@@ -180,103 +190,3 @@ export default {
   }
 };
 </script>
-
-<style lang="less" scoped>
-.main {
-  width: 1200px;
-  margin: 5px auto;
-}
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.swiper_box {
-  position: relative;
-  width: 348px;
-  height: 260px;
-}
-.search {
-  width: 284px;
-
-  .input_box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 284px;
-    height: 95px;
-    background-color: #eee;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    .input {
-      margin: 0 auto;
-      display: flex;
-      input {
-        width: 175px;
-        display: inline-block;
-        outline: none;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
-        color: #555;
-        background-color: #fff;
-        background-image: none;
-        border: 1px solid #ccc;
-        border-radius: 4px 0 0 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -webkit-transition: border-color ease-in-out 0.15s,
-          -webkit-box-shadow ease-in-out 0.15s;
-        -o-transition: border-color ease-in-out 0.15s,
-          box-shadow ease-in-out 0.15s;
-        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-      }
-      .btn {
-        border: 1px solid #ccc;
-        background-color: #fff;
-        display: inline-block;
-        padding: 6px 12px;
-        margin-bottom: 0;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.42857143;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        -ms-touch-action: manipulation;
-        touch-action: manipulation;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        background-image: none;
-        border-radius: 0 4px 4px 0;
-        border-left: none;
-      }
-    }
-    select {
-      display: block;
-      width: 252px;
-      height: 34px;
-    }
-  }
-}
-.col {
-  width: 573px;
-}
-.news_list {
-  padding: 15px 30px;
-  color: rgb(51, 51, 51);
-  font-size: 14px;
-
-  .news_item {
-    line-height: 28px;
-    cursor: pointer;
-    .date {
-      float: right;
-    }
-  }
-}
-</style>

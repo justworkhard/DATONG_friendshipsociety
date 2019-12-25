@@ -38,18 +38,17 @@ export default {
   components: { NewsCardList, NewsContent },
   watch: {
     async $route(to, from) {
-      let temp = [];
+      let temp = [{
+          title: this.$route.query.title,
+          id: this.$route.query.id
+        }];
       if (
         this.$route.query.title &&
         this.$route.query.id &&
         this.$route.query.hadChild
       ) {
-        temp.push({
-          title: this.$route.query.title,
-          id: this.$route.query.id
-        });
       } else {
-        temp = await this.getIndexList(
+        let res = await this.getIndexList(
           {
             parentId: this.$route.query.parentId,
             ptCode: this.$route.query.ptCode
@@ -57,7 +56,8 @@ export default {
           "/second/menu",
           true
         );
-        console.log(temp);
+        temp = temp.concat(res)
+
       }
 
       this.menuList = temp;
@@ -73,19 +73,20 @@ export default {
     }
   },
   async created() {
-    let temp = [];
+    let temp = [
+      {
+          title: this.$route.query.title,
+          id: this.$route.query.id
+        }
+    ];
 
     if (
       this.$route.query.title &&
       this.$route.query.id &&
       this.$route.query.hadChild
     ) {
-      temp.push({
-        title: this.$route.query.title,
-        id: this.$route.query.id
-      });
     } else {
-      temp = await this.getIndexList(
+      let res = await this.getIndexList(
         {
           parentId: this.$route.query.parentId,
           ptCode: this.$route.query.ptCode
@@ -93,6 +94,7 @@ export default {
         "/second/menu",
         true
       );
+      temp = temp.concat(res)
     }
 
     this.menuList = temp;

@@ -129,17 +129,17 @@ let RouterPC = new Router({
     {
       path: "/policy/service",
       component: resolve => require(["@/pcpages/policy"], resolve),
-      children: [
-        {
-          path: "/",
-          component: resolve => require(["@/pcpages/policy/main"], resolve)
-        }
-        // {
-        //   path: "/policy/service/second/menu",
-        //   component: resolve =>
-        //     require(["@/pcpages/policy/secondMenu"], resolve)
-        // }
-      ]
+      // children: [
+      //   {
+      //     path: "/",
+      //     component: resolve => require(["@/pcpages/policy/main"], resolve)
+      //   }
+      //   // {
+      //   //   path: "/policy/service/second/menu",
+      //   //   component: resolve =>
+      //   //     require(["@/pcpages/policy/secondMenu"], resolve)
+      //   // }
+      // ]
     },
     {
       path: "/law",

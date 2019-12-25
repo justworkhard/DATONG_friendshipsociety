@@ -1,8 +1,16 @@
+<!--
+ * @Author: your name
+ * @Date: 2019-12-22 18:05:11
+ * @LastEditTime: 2019-12-25 22:38:11
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \DATONG_friendshipsociety\src\comonentsPC\RedHeader.vue
+ -->
 <template>
   <div class="red_header">
     <div class="header">
       <span>{{title}}</span>
-      <a :href="'#'+href" target="_blank">更多 &gt;&gt;</a>
+      <a v-if="href" :href="'#'+href" target="_blank">更多 &gt;&gt;</a>
     </div>
     <div class="padding_15">
       <slot></slot>

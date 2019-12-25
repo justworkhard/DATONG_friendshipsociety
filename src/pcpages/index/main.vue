@@ -1,11 +1,11 @@
 <template>
   <div class="content">
     <div class="hot_news">
-      <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset>
+      <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset />
       <span class="title">最新公告</span>
     </div>
     <div class="swiper_box">
-      <MCarousel :ptCode='0'></MCarousel>
+      <MCarousel :ptCode="0"></MCarousel>
     </div>
     <div class="news_box">
       <NewsNavbar></NewsNavbar>
@@ -14,7 +14,7 @@
     <!-- 十大平台 -->
     <div class="ten">
       <div class="title">
-        <img src="@/assets/images/mipmap-xxxhdpi/ten.png" alt srcset>
+        <img src="@/assets/images/mipmap-xxxhdpi/ten.png" alt srcset />
       </div>
       <div class="icons">
         <router-link to="/policy/service" target="_blank" class="icon1">
@@ -62,16 +62,41 @@
     <div class="col">
       <div class="col_left">
         <!--  联谊会简介 -->
-        <RedHeader title="联谊会介绍" href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F">
+        <RedHeader
+          title="联谊会介绍"
+          href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F"
+        >
           <div class="about">
-            <img :src="about.minPicAddress" alt srcset>
+            <img :src="about.minPicAddress" alt srcset />
             {{about.summary}}
           </div>
         </RedHeader>
         <!-- 积分排行榜 -->
-        <RedHeader title="积分排行榜" href="/second/menu/solo?title=积分排行榜&ptCode=0&id=5&indexUrl=%2F"></RedHeader>
+        <RedHeader title="积分排行榜" >
+          <div class="jifen">
+            <div class="rank_item">
+              <p>平台名称</p>
+              <p>积分</p>
+            </div>
+            <div class="rank_item" v-for="(item,index) in jifenList" :key="index">
+              <p>{{item.ptname}}</p>
+              <p>{{item.integral}}</p>
+              </div>
+          </div>
+        </RedHeader>
         <!-- 阅读排行榜 -->
-        <RedHeader title="阅读排行榜" href="/second/menu/solo?title=阅读排行榜&ptCode=0&id=5&indexUrl=%2F"></RedHeader>
+        <RedHeader title="阅读排行榜">
+          <div class="read">
+            <div class="rank_item">
+              <p>平台名称</p>
+              <p>积分</p>
+            </div>
+            <div class="rank_item" v-for="(item,index) in readList" :key="index">
+              <p>{{item.ptname}}</p>
+              <p>{{item.readcounts}}</p>
+              </div>
+          </div>
+        </RedHeader>
       </div>
       <div class="col_right">
         <RedHeader
@@ -108,7 +133,9 @@ import {
   getIndexList,
   getNewsList,
   getSororityList,
-  getContentCarouselList
+  getContentCarouselList,
+  getReadList,
+  getInterList
 } from "@/service/api";
 
 export default {
@@ -124,7 +151,12 @@ export default {
     MCarousel
   },
   created() {
-
+    getReadList().then(res => {
+      this.readList = res.data.data;
+    });
+    getInterList().then(res => {
+      this.jifenList = res.data.data;
+    });
     getNewsList({
       // colid: 2,
       colid: 7,
@@ -166,6 +198,8 @@ export default {
   data() {
     return {
       about: {},
+      jifenList: [],
+      readList: [],
       componyList: [],
       // componyItem: {
       //   title: "大同华林有限公司",
@@ -179,12 +213,20 @@ export default {
         url: "http://www.dtpcmq.com/upload/201903011612527619.png",
         introduct:
           "大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、"
-      },
+      }
     };
   }
 };
 </script>
 <style lang="less" scoped>
+.rank_item{
+  display: flex;
+  justify-content: space-between;
+  line-height: 30px;
+  font-size: 14px;
+  border-bottom: 1px dashed #888888;
+  cursor: pointer;
+}
 .box {
   display: flex;
   flex-wrap: wrap;

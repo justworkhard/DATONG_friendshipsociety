@@ -1,29 +1,6 @@
 <template>
   <div>
-    <div class="main">
-      <div class="row">
-        <div class="swiper_box">
-        <MCarousel :ptCode='2'></MCarousel>      
-        </div>
-        <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <SearchBox :ptCode="2"></SearchBox>
-      </div>
-      <div class="row">
-        <div class="col">
-          <NewListCard icon="icon-zbgg" title="商标法" :data="shangbiaofa" more></NewListCard>
-               <NewListCard
-            title="劳动法"
-            icon="icon-two"
-            :data="laodongfa"
-            more="/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2Flaw"
-          ></NewListCard>
-        </div>
-        <div class="col">
-          <NewListCard icon="icon-zbgs" :data="zuzuoquan" title="著作权法" more></NewListCard>
-          <NewListCard icon="icon-scjg" :data="zhuanlifa" title="专利法" more></NewListCard>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </template>
 <script>

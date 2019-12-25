@@ -3,10 +3,10 @@
     <div class="main">
       <div class="row">
         <div class="swiper_box">
-        <MCarousel :ptCode='6'></MCarousel>                         
+          <MCarousel :ptCode="6"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <SearchBox :ptCode='6'></SearchBox>
+        <SearchBox :ptCode="6"></SearchBox>
       </div>
       <div class="row">
         <div class="col">
@@ -50,8 +50,7 @@ import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
 import SearchBox from "@/comonentsPC/Search.vue";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
-
+import { getCarouselList, getIndexList, getNewsList ,getDevColumnList} from "@/service/api";
 
 export default {
   components: {
@@ -66,8 +65,16 @@ export default {
     NewListCard,
     SearchBox
   },
-  created(){
-           getNewsList({
+  created() {
+    getDevColumnList(6).then(res => {
+      res.data.devColumnList.forEach(element => {
+        this.TabsList.push({
+          title: element.columnName,
+          url: `/second/menu?title=${element.columnName}&id=${element.id}&parentId=${element.id}&ptCode=1&indexUrl=%2Fpolicy%2Fservice`
+        });
+      });
+    });
+    getNewsList({
       ptCode: "6",
       colid: "95",
       pageSize: "10",
@@ -75,7 +82,7 @@ export default {
     }).then(res => {
       this.newsList[0] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "96",
       pageSize: "10",
@@ -83,7 +90,7 @@ export default {
     }).then(res => {
       this.newsList[1] = res.data.data;
     });
-        getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "97",
       pageSize: "10",
@@ -91,7 +98,7 @@ export default {
     }).then(res => {
       this.newsList[2] = res.data.data;
     });
-          getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "97",
       pageSize: "10",
@@ -99,7 +106,7 @@ export default {
     }).then(res => {
       this.xiangmu = res.data.data;
     });
-          getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "97",
       pageSize: "10",
@@ -107,7 +114,7 @@ export default {
     }).then(res => {
       this.zhengche = res.data.data;
     });
-          getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "97",
       pageSize: "10",
@@ -115,7 +122,7 @@ export default {
     }).then(res => {
       this.huodong = res.data.data;
     });
-          getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "97",
       pageSize: "10",
@@ -164,20 +171,7 @@ export default {
           { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
         ]
       ],
-      TabsList: [
-        {
-          title: "新闻动态",
-          url: "/second/menu?parentId=89&ptCode=6&currenId=95&indexUrl=%2FentreAndInnova"
-        },
-        {
-          title: "创业分享",
-          url: "/second/menu?parentId=89&ptCode=6&currenId=96&indexUrl=%2FentreAndInnova"
-        },
-        {
-          title: "资本市场",
-          url: "/second/menu?parentId=89&ptCode=6&currenId=97&indexUrl=%2FentreAndInnova"
-        }
-      ],
+      TabsList: [],
 
       demo01_index: 1,
       demo04_list: [

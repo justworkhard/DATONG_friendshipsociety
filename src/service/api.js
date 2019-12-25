@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-22 18:05:12
+ * @LastEditTime : 2019-12-23 10:34:48
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \DATONG_friendshipsociety\src\service\api.js
+ */
 import axios from 'axios'
 export function getCarouselList(params) {
   return axios.post(
@@ -47,5 +55,10 @@ export function getReadList() {
 export function getInterList() {
   return axios.get(
     `/api/web/integralList`,
+  )
+}
+export function getDevColumnList(params) {
+  return axios.post(
+    `/api/web/devColumnList?ptCode=${params}`,
   )
 }

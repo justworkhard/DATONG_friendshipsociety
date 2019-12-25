@@ -18,24 +18,36 @@
 <script>
 import NewsCard from "./newsCard";
 import { getNewsContent, getNextContent } from "@/service/api";
+import { Loading } from "element-ui";
 export default {
   components: { NewsCard },
   props: ["contentId"],
   watch: {
     contentid(curV, oldV) {
-      getNewsContent(this.contentid).then(res => {
+      let loadingInstance = Loading.service({ fullscreen: true });
+      getNewsContent(curV).then(res => {
         this.data = res.data.tInfoList[0];
+        loadingInstance.close();
       });
+      getNextContent(curV).then(res => {
+      this.next = []
+      this.pre = []
+      this.next = res.data.nextInfo
+      this.pre = res.data.preInfo
+    });
     }
   },
   created() {
-    this.contentid = this.contentId
+    this.contentid = this.contentId;
     // getNewsContent(this.contentId).then(res => {
     //   this.data = res.data.tInfoList[0];
     // });
+    // Loading.service(options);
     getNextContent(this.contentId).then(res => {
-      (this.next = res.data.nextInfo), (this.pre = res.data.preInfo);
-
+      this.next = []
+      this.pre = []
+      this.next = res.data.nextInfo
+      this.pre = res.data.preInfo
     });
   },
   afrerMounted() {},
@@ -44,7 +56,7 @@ export default {
       data: {},
       pre: {},
       next: {},
-      contentid:''
+      contentid: ""
     };
   },
   methods: {
@@ -59,6 +71,7 @@ export default {
     },
     toNext() {
       if (this.next && this.next.id) {
+
         this.contentid = this.next.id;
       }
     }
@@ -101,7 +114,7 @@ export default {
     }
   }
 }
-.content_html{
+.content_html {
   overflow-x: scroll;
   width: 885px;
 }
