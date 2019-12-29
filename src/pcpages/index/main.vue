@@ -25,7 +25,7 @@
           <div class="pic"></div>
           <p>法律服务平台</p>
         </router-link>
-        <router-link to="/search?ptCode=3" target="_blank" class="icon3">
+        <router-link to="/business/manage" target="_blank" class="icon3">
           <div class="pic"></div>
           <p>企业经营管理咨询平台</p>
         </router-link>
@@ -72,7 +72,7 @@
           </div>
         </RedHeader>
         <!-- 积分排行榜 -->
-        <RedHeader title="积分排行榜" >
+        <RedHeader title="平台积分排行榜" >
           <div class="jifen">
             <div class="rank_item">
               <p>平台名称</p>
@@ -85,11 +85,11 @@
           </div>
         </RedHeader>
         <!-- 阅读排行榜 -->
-        <RedHeader title="阅读排行榜">
+        <RedHeader title="平台阅读排行榜">
           <div class="read">
             <div class="rank_item">
               <p>平台名称</p>
-              <p>积分</p>
+              <p>阅读量</p>
             </div>
             <div class="rank_item" v-for="(item,index) in readList" :key="index">
               <p>{{item.ptname}}</p>

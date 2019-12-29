@@ -25,7 +25,7 @@
               title="国务院"
               icon="icon-zbgg"
               :data="guowuyuan"
-              more="/second/menu?parentId=15&ptCode=1&currenId=19&indexUrl=%2Fpolicy%2Fservice"
+              more="/second/menu?parentId=15&ptCode=1&currenId=19&indexUrl=%2Fpolicy%2Fservice&title=政策汇总"
             ></NewListCard>
             <NewListCard
               title="观点观察"
@@ -39,7 +39,7 @@
               :data="mingying"
               icon="icon-zbgs"
               title="民营企业政策"
-              more="/second/menu?parentId=16&ptCode=1&currenId=24&indexUrl=%2Fpolicy%2Fservice"
+              more="/second/menu?parentId=16&ptCode=1&currenId=24&indexUrl=%2Fpolicy%2Fservice&title=政策解读"
             ></NewListCard>
             <NewListCard
               :data="jingyanjiaoliu"

@@ -1,24 +1,19 @@
 <template>
   <div>
     <XHeader>
-      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
+      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset />
     </XHeader>
     <Header logo="false" :tabList="tablist"></Header>
-    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" v-model="demo01_index" auto></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="['/policy/activeAnddynamic']">
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
+    <MSwiper :ptCode=1></MSwiper>
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" >
           <ul class="news">
             <li
               class="news_title"
               @click="toDetail(item.id)"
-              v-for="(item,index) in newsList"
+              v-for="(item,index) in dongtaiList"
               :key="index"
             >{{item.title}}</li>
           </ul>
-        </div>
-      </template>
-      <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
     <Tabs
       :TabsList="TabsList[1]"
@@ -107,9 +102,14 @@
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
-import { getNewsList ,getContentCarouselList} from "@/service/api";
+import {
+  getNewsList,
+  getContentCarouselList,
+  getWebList
+} from "@/service/api";
 
 export default {
   components: {
@@ -118,7 +118,8 @@ export default {
     Swiper,
     SwiperItem,
     Tabs,
-    Footer
+    Footer,
+    MSwiper
   },
   async created() {
     let temp = await this.getIndexList(
@@ -130,6 +131,9 @@ export default {
       true
     );
     this.tablist = temp;
+    getWebList(1).then(res=>{
+      this.dongtaiList = res.data.tInfoList
+    })
     getNewsList({
       colid: 3,
       ptCode: 1,
@@ -171,8 +175,8 @@ export default {
     }).then(res => {
       this.jingyan = res.data.data;
     });
-      getContentCarouselList(1).then(res => {
-      let temp = []
+    getContentCarouselList(1).then(res => {
+      let temp = [];
       res.data.contentCarouselList.forEach(element => {
         temp.push({
           url: "javascript:",
@@ -191,12 +195,13 @@ export default {
   },
   data() {
     return {
+dongtaiList: [],
       guowuyuan: [],
       mingying: [],
       guandian: [],
       jingyan: [],
       TabsList: [
-        [{ title: "新闻动态" }],
+        [{title: '新闻动态'}],
         [{ title: "国务院" }],
         [{ title: "民营企业政策" }],
         [{ title: "观点考察" }],
@@ -205,8 +210,7 @@ export default {
       demo01_index: 0,
       tablist: [],
       newsList: [],
-      carouselList: [
-      ]
+      carouselList: []
     };
   }
 };

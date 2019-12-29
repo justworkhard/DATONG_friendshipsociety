@@ -26,11 +26,12 @@
             :data="hangyebiaozhun"
             more="/second/menu?title=行业标准查询&id=120&parentId=120&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=120"
           ></NewListCard>
-          <Tabs
-            :TabsList="[{title:'项目交流',url:'/second/menu?title=项目交流&id=119&parentId=119&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=119'}]"
-            :newsList="xiangmujiaoliu"
-            type="top"
-          ></Tabs>
+          <NewListCard
+            icon="icon-zbgg"
+            title="项目交流"
+            :data="xiangmujiaoliu"
+            more="/second/menu?title=项目交流&id=119&parentId=119&ptCode=9&indexUrl=%2Fexport%2Fcountry&hadChild=fale&currenId=119"
+          ></NewListCard>
         </div>
         <div class="col">
           <NewListCard

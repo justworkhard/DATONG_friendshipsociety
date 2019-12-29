@@ -20,17 +20,6 @@ export default {
   props: ["tabList", "logo", "Bcolor", "Fcolor"],
   data() {
     return {
-      tabList: [
-        { label: "首页" },
-        { label: "热门资讯" },
-        { label: "新闻动态" },
-        { label: "十大平台" },
-        { label: "平台排行榜" },
-        { label: "联谊会介绍" },
-        { label: "联谊会企业" },
-        { label: "企业产品介绍" },
-        { label: "联系我们" }
-      ]
     };
   }
 };

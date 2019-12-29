@@ -1,6 +1,6 @@
 <template>
   <div class="carousel">
-    <div class="MCarousel" v-show="activeIndex === index" v-for="(item,index) in data" :key="index">
+    <div class="MCarousel" @click="toDetail(item.contentId)" v-show="activeIndex === index" v-for="(item,index) in data" :key="index">
       <img :src="item.picUrl" alt srcset>
     </div>
     <div class="bottom" v-show="activeIndex === index" v-for="(item,index) in data" :key="index">
@@ -31,6 +31,9 @@ export default {
   methods:{
     setActive(index){
       this.activeIndex = index
+    },
+    toDetail(id){
+      this.$router.push(`/second/menu?parentId=6&ptCode=0&currenId=12&indexUrl=%2F&title=联谊会介绍&contentId=${id}`)
     }
   }
 };
@@ -45,6 +48,7 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
+  cursor: pointer;
   img {
     height: 100%;
     width: 100%;

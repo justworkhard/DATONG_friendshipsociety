@@ -4,7 +4,7 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
+    <MSwiper :ptCode=7></MSwiper>
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -27,6 +27,7 @@
 <script>
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
@@ -57,7 +58,8 @@ export default {
     Swiper,
     SwiperItem,
     Tabs,
-    Footer
+    Footer,
+    MSwiper
   },
   methods: {
     toDetail(newsId) {
@@ -71,26 +73,10 @@ export default {
       hrefs: [
         ["/second/menu?title=产品展示&id=105&parentId=105&ptCode=7&indexUrl=%2F&hadChild=fale&currenId=105"],
       ],
-      demo01_index: 0,
       tabList: [
       ],
       newsList: [
       ],
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };

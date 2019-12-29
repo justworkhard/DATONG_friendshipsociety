@@ -142,6 +142,10 @@ let RouterPC = new Router({
       // ]
     },
     {
+      path: "/business/manage",
+      component: resolve => require(["@/pcpages/businessConsulting"], resolve),
+    },
+    {
       path: "/law",
       component: resolve => require(["@/pcpages/law"], resolve),
       children: [

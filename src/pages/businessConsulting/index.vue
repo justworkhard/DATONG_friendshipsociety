@@ -1,23 +1,22 @@
 <template>
   <div>
     <XHeader>
-      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
+      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset />
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
-    <Tabs :TabsList="TabsList[0]" :href="hrefs">
+    <MSwiper :ptCode=2></MSwiper>
+    <Tabs :TabsList="TabsList[0]"  :href="devUrlList">
       <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
+        <div v-if="slotProps.slotdata=== index" v-for="(newsItem,index) in devList" :key="index">
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
-              v-for="(item,index) in xinwen"
+              @click="toDetail(item.id)"
+              v-for="(item,index) in newsItem"
               :key="index"
             >{{item.title}}</li>
           </ul>
         </div>
-        <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
@@ -39,9 +38,14 @@
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
-import { getNewsList, getContentCarouselList } from "@/service/api";
+import {
+  getNewsList,
+  getContentCarouselList,
+  getDevColumnList
+} from "@/service/api";
 
 export default {
   async created() {
@@ -54,6 +58,33 @@ export default {
       true
     );
     this.tabList = temp;
+    getDevColumnList(3).then(res => {
+      console.log(res.data.devColumnList, "=-=-=");
+
+      res.data.devColumnList.forEach(element => {
+        console.log(element.id, "=-=-=-=");
+
+        let url = "";
+        this.tabList.forEach(item => {
+          if (item.title === element.columnName) {
+            url = item.url;
+          }
+        });
+        this.TabsList[0].push({
+          title: element.columnName
+        });
+        this.devUrlList.push(url);
+        getNewsList({
+          ptCode: "3",
+          colid: element.id,
+          pageSize: "5",
+          pageNo: "0"
+        }).then(res => {
+          this.devList.push(res.data.data);
+          console.log(this.devList, "this.devList");
+        });
+      });
+    });
     getNewsList({
       colid: 30,
       ptCode: 3,
@@ -88,7 +119,8 @@ export default {
     Swiper,
     SwiperItem,
     Tabs,
-    Footer
+    Footer,
+    MSwiper
   },
   methods: {
     toDetail() {
@@ -97,9 +129,11 @@ export default {
   },
   data() {
     return {
+      devList: [],
+      devUrlList: [],
       zhiben: [],
       xinwen: [],
-      TabsList: [[{ title: "新闻动态" }], [{ title: "资本市场" }]],
+      TabsList: [[], [{ title: "资本市场" }]],
       demo01_index: 0,
       tabList: [
         { label: "首页", url: "/" },

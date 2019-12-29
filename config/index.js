@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-22 18:05:10
+ * @LastEditTime : 2019-12-26 10:04:34
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \DATONG_friendshipsociety\config\index.js
+ */
 'use strict'
 // Template version: 1.2.4
 // see http://vuejs-templates.github.io/webpack for documentation.
@@ -21,7 +29,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '0.0.0.0', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

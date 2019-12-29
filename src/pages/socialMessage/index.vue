@@ -1,44 +1,20 @@
 <template>
   <div>
     <XHeader>
-      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
+      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset />
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
+    <MSwiper :ptCode=8></MSwiper>
+    <Tabs :TabsList="TabsList[0]" >
+
           <ul class="news">
             <li
               class="news_title"
               @click="toDetail(item.id)"
-              v-for="(item,index) in xinwen"
+              v-for="(item,index) in dongtaiList"
               :key="index"
             >{{item.title}}</li>
           </ul>
-        </div>
-        <div v-if="slotProps.slotdata===1">
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in suoying"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
-        </div>
-        <div v-if="slotProps.slotdata===2">
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in jinrong"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
-        </div>
-      </template>
-      <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
     <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
@@ -111,8 +87,14 @@
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
+import {
+  getNewsList,
+  getContentCarouselList,
+  getWebList 
+} from "@/service/api";
 
 export default {
   async created() {
@@ -125,46 +107,42 @@ export default {
       true
     );
     this.tabList = temp;
+      getWebList(8).then(res=>{
+      this.dongtaiList = res.data.tInfoList
+    })
     getNewsList({
-      colid: 113,
+      colid: 137,
       ptCode: 8,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.xinwen = res.data.data;
+      this.biaozhun = res.data.data;
     });
     getNewsList({
-      colid: 113,
+      colid: 138,
       ptCode: 8,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.newsList = res.data.data;
+      this.xingyong = res.data.data;
     });
     getNewsList({
-      colid: 111,
+      colid: 139,
       ptCode: 8,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.suoying = res.data.data;
+      this.guanli = res.data.data;
     });
     getNewsList({
-      colid: 108,
+      colid: 140,
       ptCode: 8,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.jinrong = res.data.data;
+      this.shuju = res.data.data;
     });
-    getNewsList({
-      colid: 113,
-      ptCode: 8,
-      pageSize: 5,
-      pageNo: 1
-    }).then(res => {
-      this.newsList = res.data.data;
-    });
+  
   },
   components: {
     XHeader,
@@ -172,7 +150,8 @@ export default {
     Swiper,
     SwiperItem,
     Tabs,
-    Footer
+    Footer,
+    MSwiper
   },
   methods: {
     toDetail(newsId) {
@@ -182,6 +161,7 @@ export default {
   },
   data() {
     return {
+      dongtaiList: [],
       xinwen: [],
       suoying: [],
       jinrong: [],
@@ -190,7 +170,7 @@ export default {
       guanli: [],
       shuju: [],
       TabsList: [
-        [{ title: "新闻动态" }, { title: "索引信息" }, { title: "金融信息" }],
+        [{title: '新闻动态'}],
         [{ title: "行业标准查询" }],
         [{ title: "企业信用查询" }],
         [{ title: "企业管理信息" }],
@@ -209,24 +189,8 @@ export default {
         ],
         ["/social/message/list"]
       ],
-      demo01_index: 0,
       tabList: [],
       newsList: [],
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };

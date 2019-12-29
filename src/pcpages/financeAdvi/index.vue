@@ -26,11 +26,12 @@
             :data="tujing"
             more="/second/menu?title=融资途径&id=84&parentId=84&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=84"
           ></NewListCard>
-          <Tabs
-            :TabsList="[{title:'融资案例',url:'/second/menu?title=融资案例&id=86&parentId=86&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=86'}]"
-            :newsList="newsList"
-            type="top"
-          ></Tabs>
+          <NewListCard
+            icon="icon-zbgg"
+            title="融资案例"
+            :data="newsList"
+            more="/second/menu?title=融资案例&id=86&parentId=86&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=86"
+          ></NewListCard>
         </div>
         <div class="col">
           <NewListCard
@@ -114,7 +115,7 @@ export default {
       });
     });
 
-       getNewsList({
+    getNewsList({
       ptCode: "5",
       colid: "84",
       pageSize: "10",

@@ -1,50 +1,31 @@
 <template>
   <div>
     <XHeader>
-      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
+      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset />
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper :aspect-ratio="300/800" height="200px" :list="demo04_list" v-model="demo01_index" auto></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in dongtai"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
-        </div>
-        <div v-if="slotProps.slotdata===1">
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in zhaoshang"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
-        </div>
-        <div v-if="slotProps.slotdata===2">
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in youhui"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
-        </div>
-      </template>
+    <MSwiper :ptCode="4"></MSwiper>
+    <Tabs :TabsList="TabsList[0]" :href="devUrlList">
+      <ul class="news">
+        <li
+          class="news_title"
+          @click="toDetail(item.id)"
+          v-for="(item,index) in dongtaiList"
+          :key="index"
+        >{{item.title}}</li>
+      </ul>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
     <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in fuwuye" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in fuwuye"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -55,7 +36,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in zhizhao" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in zhizhao"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -66,7 +52,12 @@
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in wenhua" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in wenhua"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -74,15 +65,15 @@
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
     <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" :href="hrefs[4]">
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li @click="toDetail(item.id)" class="news_title" v-for="(item,index) in xiandai" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in xiandai"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
-        </div>
-        <div v-if="slotProps.slotdata===1">2</div>
-      </template>
-      <!-- <div v-if='slotData.activeIndex===0'> -->
+
     </Tabs>
     <Footer></Footer>
   </div>
@@ -91,8 +82,14 @@
 import XHeader from "@/components/XHeader.vue";
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
+import {
+  getNewsList,
+  getContentCarouselList,
+  getWebList 
+} from "@/service/api";
 
 export default {
   components: {
@@ -101,7 +98,8 @@ export default {
     Header,
     Swiper,
     SwiperItem,
-    Tabs
+    Tabs,
+    MSwiper
   },
   async created() {
     let temp = await this.getIndexList(
@@ -113,6 +111,11 @@ export default {
       true
     );
     this.tabList = temp;
+    getWebList(4).then(res => {
+      console.log('=-=-=-=-=',res.data.tInfoList);
+      
+      this.dongtaiList = res.data.tInfoList;
+    });
     getNewsList({
       colid: 70,
       ptCode: 4,
@@ -147,7 +150,7 @@ export default {
     });
     getNewsList({
       colid: 77,
-      ptCode: 3,
+      ptCode: 4,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
@@ -155,7 +158,7 @@ export default {
     });
     getNewsList({
       colid: 78,
-      ptCode: 3,
+      ptCode: 4,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
@@ -163,7 +166,7 @@ export default {
     });
     getNewsList({
       colid: 75,
-      ptCode: 3,
+      ptCode: 4,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
@@ -178,6 +181,7 @@ export default {
   },
   data() {
     return {
+      dongtaiList: [],
       dongtai: [],
       zhaoshang: [],
       youhui: [],
@@ -186,7 +190,7 @@ export default {
       zhizhao: [],
       xiandai: [],
       TabsList: [
-        [{ title: "动态工作" }, { title: "招商信息" }, { title: "优惠政策" }],
+        [{ title: "新闻动态" }],
         [{ title: "服务业" }],
         [{ title: "制作业" }],
         [{ title: "文化旅游" }],
@@ -207,10 +211,18 @@ export default {
           "/second/menu?title=招商信息&id=72&parentId=72&ptCode=4&indexUrl=%2F&hadChild=fale&currenId=72",
           "/second/menu?title=政策环境&id=73&parentId=73&ptCode=4&indexUrl=%2F&currentId=80"
         ],
-        ["/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=76"],
-        ["/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=77"],
-        ["/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=78"],
-        ["/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=75"]
+        [
+          "/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=76"
+        ],
+        [
+          "/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=77"
+        ],
+        [
+          "/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=78"
+        ],
+        [
+          "/second/menu?title=项目介绍&id=71&parentId=71&ptCode=4&indexUrl=%2F&currentId=75"
+        ]
       ],
       demo04_list: [
         {

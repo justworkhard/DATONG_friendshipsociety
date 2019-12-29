@@ -31,7 +31,7 @@ export async function getMenuList(params, Firsturl,leftMenu) {
                 title: item.columnName,
                 url:
                   url +
-                  `?parentId=${element.id}&ptCode=${params.ptCode}&currenId=${item.id}&indexUrl=${Firsturl}`,
+                  `?parentId=${element.id}&ptCode=${params.ptCode}&currenId=${item.id}&indexUrl=${Firsturl}&title=${element.columnName}`,
                 id: item.id,
                 ptCode: element.item
               });

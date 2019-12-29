@@ -1,52 +1,53 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-22 18:05:12
- * @LastEditTime : 2019-12-23 16:21:34
+ * @LastEditTime : 2019-12-23 15:46:17
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: \DATONG_friendshipsociety\src\pcpages\projectPromot\index.vue
+ * @FilePath: \DATONG_friendshipsociety\src\pcpages\policy\index.vue
  -->
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
-    <div class="main">
-      <div class="row">
-        <div class="swiper_box">
-          <MCarousel :ptCode="4"></MCarousel>
+    <Header :navs="navList" ptCode="3"></Header>
+    <div>
+      <div class="main">
+        <div class="row">
+          <div class="swiper_box">
+            <MCarousel :ptCode="3"></MCarousel>
+          </div>
+          <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
+          <SearchBox :ptCode="3"></SearchBox>
         </div>
-        <Tabs :TabsList="TabsList"></Tabs>
-        <SearchBox :ptCode="4"></SearchBox>
-      </div>
-      <div class="row">
-        <div class="col">
-          <NewListCard
-            icon="icon-zbgg"
-            title="服务业"
-            :data="fuwuye"
-            more="/second/menu?parentId=71&ptCode=4&currenId=76&indexUrl=%2Fproject%2Fpromot&title=项目介绍"
-          ></NewListCard>
-             <NewListCard
-            icon="icon-zbgg"
-            title="文化旅游"
-            :data="wenhualvyou"
-            more="/second/menu?parentId=71&ptCode=4&currenId=78&indexUrl=%2Fproject%2Fpromot&title=项目介绍"
-          ></NewListCard>
-   
-        </div>
-        <div class="col">
-          <NewListCard
-            icon="icon-zbgs"
-            title="制造业"
-            :data="zhizhaoye"
-            more="/second/menu?parentId=71&ptCode=4&currenId=77&indexUrl=%2Fproject%2Fpromot&title=项目介绍"
-          ></NewListCard>
-          <NewListCard
-            icon="icon-scjg"
-            title="现代农业"
-            :data="xiandainongye"
-            more="/second/menu?parentId=71&ptCode=4&currenId=75&indexUrl=%2Fproject%2Fpromot&title=项目介绍"
-          ></NewListCard>
+        <div class="row">
+          <div class="col">
+            <NewListCard
+              title="企业管理"
+              icon="icon-zbgg"
+              :data="guowuyuan"
+              more="/second/menu?title=企业管理&id=65&parentId=65&ptCode=3&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=65"
+            ></NewListCard>
+            <NewListCard
+              title="安全生产"
+              icon="icon-two"
+              :data="guandianguanc"
+              more="/second/menu?title=安全生产&id=66&parentId=66&ptCode=3&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=66"
+            ></NewListCard>
+          </div>
+          <div class="col">
+            <NewListCard
+              :data="mingying"
+              icon="icon-zbgs"
+              title="企业环保"
+              more="/second/menu?title=企业环保&id=67&parentId=67&ptCode=3&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=67"
+            ></NewListCard>
+            <NewListCard
+              :data="jingyanjiaoliu"
+              title="管理培训"
+              icon="icon-scjg"
+              more="/second/menu?title=管理培训&id=68&parentId=68&ptCode=3&indexUrl=%2Fpolicy%2Fservice&hadChild=fale&currenId=68"
+            ></NewListCard>
+          </div>
         </div>
       </div>
     </div>
@@ -55,13 +56,13 @@
 </template>
 <script>
 import Welcome from "@/comonentsPC/welcome.vue";
+import MCarousel from "@/comonentsPC/Carouse.vue";
 import Header from "@/comonentsPC/Header.vue";
 import Tabs from "@/comonentsPC/Tabs.vue";
 import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
-import MCarousel from "@/comonentsPC/Carouse.vue";
-import NewListCard from "@/comonentsPC/newListCard.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
+import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
 import {
   getCarouselList,
@@ -72,32 +73,33 @@ import {
 
 export default {
   components: {
-    SearchBox,
     Welcome,
     Header,
     Swiper,
     SwiperItem,
     Footer,
+    NewListCard,
     Tabs,
+    SearchBox,
     MCarousel,
-    NewsNavbar,
-    NewListCard
+    NewsNavbar
   },
   async created() {
     let temp = await this.getIndexList(
       {
         parentId: "web",
-        ptCode: 4
+        ptCode: 3
       },
-      "/project/promot"
+      "/business/manage"
     );
     this.navList = temp;
-    getDevColumnList(4).then(res => {
+
+    getDevColumnList(3).then(res => {
       res.data.devColumnList.forEach(element => {
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
-            url = item.url || "";
+            url = item.url;
           }
         });
         this.TabsList.push({
@@ -105,90 +107,73 @@ export default {
           url: url
         });
         getNewsList({
-          ptCode: 4,
+          ptCode: "3",
           colid: element.id,
           pageSize: "5",
           pageNo: "0"
         }).then(res => {
-          this.newsList.push(res.data.data);
+          this.newsList.push(res.data.data)
+          console.log(this.newsList,'this.newsList');
+          
         });
       });
     });
-
-                getNewsList({
-      ptCode: "4",
-      colid: "76",
+    getNewsList({
+      ptCode: "3",
+      colid: "65",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.fuwuye = res.data.data;
+      this.guowuyuan = res.data.data;
     });
-                getNewsList({
-      ptCode: "4",
-      colid: "77",
+    getNewsList({
+      ptCode: "3",
+      colid: "67",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.zhizhaoye = res.data.data;
+      this.mingying = res.data.data;
     });
-                getNewsList({
-      ptCode: "4",
-      colid: "78",
+    getNewsList({
+      ptCode: "3",
+      colid: "68",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.wenhualvyou = res.data.data;
+      this.jingyanjiaoliu = res.data.data;
     });
-                   getNewsList({
-      ptCode: "4",
-      colid: "75",
+    getNewsList({
+      ptCode: "3",
+      colid: "66",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.xiandainongye = res.data.data;
+      this.guandianguanc = res.data.data;
     });
   },
+  async mounted() {},
   data() {
     return {
       navList: [],
-      data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
-      ],
-      fuwuye: [],
-      zhizhaoye: [],
-      wenhualvyou: [],
-      xiandainongye: [],
+      keyword: "",
+      guowuyuan: [],
+      mingying: [],
+      jingyanjiaoliu: [],
+      guandianguanc: [],
+
+      newsList: [],
       TabsList: [],
       demo01_index: 1,
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
+      demo04_list: []
     };
   }
 };
 </script>
 
-
 <style lang="less" scoped>
 .main {
   width: 1200px;
-  margin: 0 auto;
+  margin: 5px auto;
 }
 .row {
   display: flex;
@@ -269,5 +254,18 @@ export default {
 }
 .col {
   width: 573px;
+}
+.news_list {
+  padding: 15px 30px;
+  color: rgb(51, 51, 51);
+  font-size: 14px;
+
+  .news_item {
+    line-height: 28px;
+    cursor: pointer;
+    .date {
+      float: right;
+    }
+  }
 }
 </style>

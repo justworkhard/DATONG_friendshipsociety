@@ -20,7 +20,7 @@
         <span>{{item.title}}</span>
         <span class="date">{{item.date}}</span>
       </div>
-      <div class="not_data">
+      <div class="not_data" v-if="data.length === 0">
         暂无数据 
       </div>
     </div>

@@ -26,7 +26,9 @@ export default {
     contentid(curV, oldV) {
       let loadingInstance = Loading.service({ fullscreen: true });
       getNewsContent(curV).then(res => {
-        this.data = res.data.tInfoList[0];
+        console.log(res,'=-=-=-=');
+        
+        this.data =  res.data.tInfoList?res.data.tInfoList[0] : [];
         loadingInstance.close();
       });
       getNextContent(curV).then(res => {

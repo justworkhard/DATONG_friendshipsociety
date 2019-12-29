@@ -5,7 +5,8 @@
       <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset>
       <span>最新公告</span>
     </div>
-    <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" auto></swiper>
+      <MSwiper :ptCode=0></MSwiper>
+    <!-- <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" auto></swiper> -->
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -53,11 +54,11 @@
     <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div class="rank" v-if="slotProps.slotdata===0">
-          <div class="rankItem" @click="toRankRead()">
+          <div class="rankItem"  @click="toRankInter()">
             <img src="@/assets/images/mipmap-hdpi/points.png" alt srcset>
           </div>
           <div class="rankItem" >
-            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset @click="toRankInter()">
+            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset @click="toRankRead()">
           </div>
         </div>
       </template>
@@ -98,13 +99,13 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Tabs from "@/components/Tabs.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import Ten from "./ten.vue";
 import ComponyCard from "./componyCard.vue";
 import { Button, Carousel } from "element-ui";
 import { Swiper, SwiperItem } from "vux";
 import {
   getCarouselList,
-  getIndexList,
   getNewsList,
   getSororityList,
   getContentCarouselList
@@ -112,7 +113,7 @@ import {
 
 export default {
   name: "app",
-  components: { Header, Footer, Swiper, SwiperItem, Tabs, Ten, ComponyCard },
+  components: { Header, Footer, Swiper, SwiperItem, Tabs, Ten, ComponyCard ,MSwiper},
   async created() {
     let temp = await this.getIndexList(
       {
@@ -120,9 +121,11 @@ export default {
         ptCode: 0
       },
       "/",
-      true
+      false
     );
     this.tabList = temp;
+    console.log(this.tabList,'====================');
+    
     getNewsList({
       colid: 3,
       ptCode: 0,
@@ -159,19 +162,6 @@ export default {
       this.about = res.data.sororityInfo;
     });
   },
-  beforeCreate() {
-    let temp = [];
-    getContentCarouselList(0).then(res => {
-      res.data.contentCarouselList.forEach(element => {
-        temp.push({
-          url: "javascript:",
-          img: element.picUrl,
-          title: element.contentTitle
-        });
-      });
-      this.carouselList = temp;
-    });
-  },
   data() {
     return {
       about: {},
@@ -197,7 +187,6 @@ export default {
         ],
         ["", "企业信息服务"],
         [
-          "/second/menu?title=平台排行榜&id=5&parentId=5&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=5"
         ],
         ["/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F"],
         [
@@ -207,13 +196,7 @@ export default {
           "/second/menu?title=企业产品展示&id=8&parentId=8&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=8"
         ]
       ],
-      tabList: [
-        { label: "首页", url: "/" },
-        { label: "热门资讯", url: "/newslist" },
-        { label: "新闻动态", url: "/newslist" },
-        { label: "十大平台", url: "#ten" },
-        { label: "平台排行榜", url: "/policy/chat" }
-      ],
+      tabList: [],
       TabsIndex: 0,
       newsList: [],
       carouselList: []
@@ -221,7 +204,7 @@ export default {
   },
   methods: {
     toRankRead(){
-      this.$router.push('/interRank')
+      this.$router.push('/readRank')
     },
     toRankInter(){
       console.log('====');
@@ -258,9 +241,7 @@ body {
     padding-left: 2px;
   }
 }
-.el-carousel .el-carousel__indicators {
-  background-color: red !important;
-}
+
 .copyright {
   font-size: 12px;
   color: #ccc;
@@ -329,6 +310,7 @@ body {
     height: 128px;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 21px;
   }
 }
 .compony {

@@ -1,63 +1,63 @@
 <template>
   <div>
     <XHeader>
-      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset>
+      <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset />
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <swiper
-      :aspect-ratio="300/800"
-      height="200px"
-      :list="demo04_list"
-      v-model="demo01_index"
-      auto
-    ></swiper>
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href='hrefs[0]'>
-      <template slot-scope="slotProps">
-        <div v-if="slotProps.slotdata===0">
+    <MSwiper :ptCode=6></MSwiper>
+    <Tabs :TabsList="TabsList[0]" :href="devUrlList">
           <ul class="news">
-            <li class="news_title"  @click="toDetail(item.id)" v-for="(item,index) in xinwen" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              @click="toDetail(item.id)"
+              v-for="(item,index) in dongtaiList"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
-        </div>
-     <div v-if="slotProps.slotdata===1">
-          <ul class="news">
-            <li class="news_title"  @click="toDetail(item.id)" v-for="(item,index) in chuangye" :key="index">{{item.title}}</li>
-          </ul>
-        </div>
-             <div v-if="slotProps.slotdata===2">
-          <ul class="news">
-            <li class="news_title"  @click="toDetail(item.id)" v-for="(item,index) in zhiben" :key="index">{{item.title}}</li>
-          </ul>
-        </div>
-      </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href='hrefs[1]'>
+    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" >
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title"  @click="toDetail(item.id)" v-for="(item,index) in zhengce" :key="index">{{item.title}}</li>
+            <li
+              class="news_title"
+              @click="toDetail(item.id)"
+              v-for="(item,index) in zhengce"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href='hrefs[2]'>
+    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li  @click="toDetail(item.id)" class="news_title" v-for="(item,index) in huodong" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in huodong"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href='hrefs[3]'>
+    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li  @click="toDetail(item.id)" class="news_title" v-for="(item,index) in guapai" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in guapai"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -71,11 +71,17 @@
 import XHeader from "@/components/XHeader.vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import MSwiper from "@/components/MSwiper.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
+import {
+  getNewsList,
+  getContentCarouselList,
+  getWebList 
+} from "@/service/api";
 
 export default {
-    async created() {
+  async created() {
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -85,6 +91,9 @@ export default {
       true
     );
     this.tabList = temp;
+    getWebList(6).then(res=>{
+      this.dongtaiList = res.data.tInfoList
+    })
     getNewsList({
       colid: 95,
       ptCode: 6,
@@ -140,18 +149,18 @@ export default {
     Swiper,
     SwiperItem,
     Tabs,
-    Footer
+    Footer,
+    MSwiper
   },
-  methods:{
+  methods: {
     toDetail(newsId) {
       this.$router.push("/newsdetail?newsId=" + newsId);
     },
-    onChangeTabs(){
-
-    }
+    onChangeTabs() {}
   },
   data() {
     return {
+      dongtaiList: [],
       xinwen: [],
       chuangye: [],
       zhiben: [],
@@ -159,27 +168,35 @@ export default {
       huodong: [],
       guapai: [],
       TabsList: [
-        [{title:"新闻动态"}, {title:"创业分享"}, {title:"资本市场"}],
-        [{title:"双创政策"}],
-        [{title:"双创活动"}],
-        [{title:"挂牌服务"}],
+        [{ title: "新闻动态" }],
+        [{ title: "双创政策" }],
+        [{ title: "双创活动" }],
+        [{ title: "挂牌服务" }]
       ],
       hrefs: [
-        ["/second/menu?title=双创动态&id=89&parentId=89&ptCode=6&indexUrl=%2F&currentId=95", "/second/menu?parentId=89&ptCode=6&currenId=96&indexUrl=%2FentreAndInnova&currentId=96", "/second/menu?parentId=89&ptCode=6&currenId=97&indexUrl=%2FentreAndInnova&currentId=97"],
+        [
+          "/second/menu?title=双创动态&id=89&parentId=89&ptCode=6&indexUrl=%2F&currentId=95",
+          "/second/menu?parentId=89&ptCode=6&currenId=96&indexUrl=%2FentreAndInnova&currentId=96",
+          "/second/menu?parentId=89&ptCode=6&currenId=97&indexUrl=%2FentreAndInnova&currentId=97"
+        ],
         ["/second/menu?title=双创服务&id=93&parentId=93&ptCode=6&indexUrl=%2F"],
-        ["/second/menu?title=双创活动&id=91&parentId=91&ptCode=6&indexUrl=%2F&hadChild=fale&currenId=91"],
-        ["/second/menu?title=双创服务&id=93&parentId=93&ptCode=6&indexUrl=%2F&currentId=100"],
+        [
+          "/second/menu?title=双创活动&id=91&parentId=91&ptCode=6&indexUrl=%2F&hadChild=fale&currenId=91"
+        ],
+        [
+          "/second/menu?title=双创服务&id=93&parentId=93&ptCode=6&indexUrl=%2F&currentId=100"
+        ]
       ],
       demo01_index: 0,
       tabList: [
-        { label: "首页",url:'/' },
-        { label: "双创动态",url:'/entrep/doubleE' },
-        { label: "双创基地",url:'/entrep/ASATPT' },
-        { label: "双创活动",url:'/entrep/ASATPT' },
-        { label: "双创项目",url:'/entrep/ASATPT' },
-        { label: "双创服务",url:'/entrep/serve' }
+        { label: "首页", url: "/" },
+        { label: "双创动态", url: "/entrep/doubleE" },
+        { label: "双创基地", url: "/entrep/ASATPT" },
+        { label: "双创活动", url: "/entrep/ASATPT" },
+        { label: "双创项目", url: "/entrep/ASATPT" },
+        { label: "双创服务", url: "/entrep/serve" }
       ],
-          newsList: [
+      newsList: [
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
         { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },

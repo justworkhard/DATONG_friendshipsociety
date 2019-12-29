@@ -76,7 +76,7 @@ export default {
     let temp = [
       {
           title: this.$route.query.title,
-          id: this.$route.query.id
+          id: this.$route.query.parentId
         }
     ];
 
@@ -142,7 +142,6 @@ export default {
       });
     },
     setActive(index, ifShowContent) {
-      console.log("active");
 
       let _this = this;
       this.selectMenu = index;
@@ -150,6 +149,7 @@ export default {
       let temp = this.menuList[index];
       this.menuList.splice(index, 1);
       this.menuList.unshift(temp);
+      console.log("active",this.menuList,temp);
 
       getNewsList({
         // colid: 2,

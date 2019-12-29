@@ -62,3 +62,8 @@ export function getDevColumnList(params) {
     `/api/web/devColumnList?ptCode=${params}`,
   )
 }
+export function getWebList(params) {
+  return axios.post(
+    `/api/web/newsList?ptCode=${params}`,
+  )
+}

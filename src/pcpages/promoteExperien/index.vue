@@ -24,26 +24,28 @@
             icon="icon-zbgg"
             title="企业风貌"
             :data="data"
-            more="/second/menu?parentId=125&ptCode=10&currenId=132&indexUrl=%2Fpromote%2Fexperien"
+            more="/second/menu?parentId=125&ptCode=10&currenId=132&indexUrl=%2Fpromote%2Fexperien&title=企业文化"
           ></NewListCard>
-          <Tabs
-            :TabsList="[{title:'管理感悟',url:'/second/menu?parentId=123&ptCode=10&currenId=127&indexUrl=%2Fpromote%2Fexperien'}]"
-            :newsList="newsList"
-            type="top"
-          ></Tabs>
+                    <NewListCard
+            icon="icon-zbgg"
+            title="管理感悟"
+            :data="newsList"
+            more="/second/menu?parentId=123&ptCode=10&currenId=127&indexUrl=%2Fpromote%2Fexperien&title=经营心得"
+          ></NewListCard>
+  
         </div>
         <div class="col">
           <NewListCard
             icon="icon-zbgs"
             :data="data"
             title="员工风采"
-            more="/second/menu?parentId=125&ptCode=10&currenId=133&indexUrl=%2Fpromote%2Fexperien"
+            more="/second/menu?parentId=125&ptCode=10&currenId=133&indexUrl=%2Fpromote%2Fexperien&title=企业文化"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
             :data="data"
             title="经验分享"
-            more="/second/menu?parentId=123&ptCode=10&currenId=128&indexUrl=%2Fpromote%2Fexperien"
+            more="/second/menu?parentId=123&ptCode=10&currenId=128&indexUrl=%2Fpromote%2Fexperien&title=经营心得"
           ></NewListCard>
         </div>
       </div>

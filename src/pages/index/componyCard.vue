@@ -1,10 +1,7 @@
 <template>
   <div class="body" @click="toDetail(data.id)">
     <div class="logo">
-      <img
-        :src="data.minPicAddress"
-        alt
-      >
+      <img :src="data.minPicAddress" alt />
     </div>
     <div class="content">
       <p class="title">{{data.title}}</p>
@@ -18,7 +15,7 @@ import { Tabs } from "element-ui";
 
 export default {
   name: "HelloWorld",
-  props: ['data'],
+  props: ["data"],
   data() {
     return {
       tabList: [
@@ -34,7 +31,7 @@ export default {
       ]
     };
   },
-  methods:{
+  methods: {
     toDetail(newsId) {
       this.$router.push("/newsdetail?newsId=" + newsId);
     }
@@ -49,7 +46,7 @@ export default {
     margin-bottom: 15px;
   }
   .logo {
-    width: 108px;
+    width: 108px !important;
     height: 73px;
     border-radius: 2px;
     overflow: hidden;
@@ -60,10 +57,20 @@ export default {
   }
   .content {
     color: #666666;
-    width: 220px;
+    margin-left: 10px;
+    // width: 200px;
+    flex: 1;
     .title {
+      width: 100%;
       font-size: 14px;
       color: #333333;
+      text-overflow: -o-ellipsis-lastline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
     .introduce {
       font-size: 12px;

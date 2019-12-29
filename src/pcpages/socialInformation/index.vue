@@ -18,11 +18,12 @@
             :data="hangyebiaozhi"
             more="/social/information/other/menu?title=行业标志查询"
           ></NewListCard>
-          <Tabs
-            type="top"
+                <NewListCard
+            icon="icon-zbgg"
+            title="企业信息管理"
             :data="qiyexingxi"
-            :TabsList="[{title:'企业信息管理',url:'/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2Fsocial%2Finformation%2Ffinance&hadChild=fale&currenId=109'}]"
-          ></Tabs>
+            more="/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2Fsocial%2Finformation%2Ffinance&hadChild=fale&currenId=109"
+          ></NewListCard>
         </div>
         <div class="col">
           <NewListCard
@@ -53,7 +54,7 @@ import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+import { getCarouselList, getIndexList, getNewsList ,getDevColumnList } from "@/service/api";
 
 export default {
   components: {
@@ -77,7 +78,7 @@ export default {
       "/social/information"
     );
     this.navList = temp;
-    getDevColumnList(2).then(res => {
+    getDevColumnList(8).then(res => {
       res.data.devColumnList.forEach(element => {
         let url = "";
         this.navList.forEach(item => {
@@ -90,7 +91,7 @@ export default {
           url: url
         });
         getNewsList({
-          ptCode: 2,
+          ptCode: 8,
           colid: element.id,
           pageSize: "5",
           pageNo: "0"
@@ -114,7 +115,7 @@ export default {
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.qiyexingxi.push(res.data.data);
+      this.qiyexingxi = res.data.data;
     });
     getNewsList({
       ptCode: "8",

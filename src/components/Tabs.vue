@@ -1,6 +1,6 @@
 <template>
   <div class="tabs">
-    <div class="label" >
+    <div class="label"  v-if="TabsList.length>0">
       <p
         class="title"
         v-bind:class="{active:activeIndex == index,active_one:TabsList.length<=1}"
@@ -68,6 +68,7 @@ export default {
   methods: {
     changeTab(index) {
       this.activeIndex = index;
+      console.log('=-=-=-=');
       this.$emit("onChangeTab", index);
     },
     toList(url) {

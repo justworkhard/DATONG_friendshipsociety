@@ -10,7 +10,7 @@
   <div>
     <Welcome></Welcome>
     <Header :navs="navList"></Header>
-  <div class="main">
+    <div class="main">
       <div class="row">
         <div class="swiper_box">
           <MCarousel :ptCode="6"></MCarousel>
@@ -26,24 +26,25 @@
             :data="xiangmu"
             more="/second/menu?title=双创项目&id=92&parentId=92&ptCode=6&indexUrl=%2FentreAndInnova&hadChild=fale&currenId=92"
           ></NewListCard>
-          <Tabs
-            :TabsList="[{title:'双创活动',url:'/second/menu?title=双创活动&id=91&parentId=91&ptCode=6&indexUrl=%2FentreAndInnova&hadChild=fale&currenId=91'}]"
-            :newsList="[huodong]"
-            type="top"
-          ></Tabs>
+          <NewListCard
+            icon="icon-zbgg"
+            title="双创活动"
+            :data="huodong"
+            more="/second/menu?title=双创活动&id=91&parentId=91&ptCode=6&indexUrl=%2FentreAndInnova&hadChild=fale&currenId=91"
+          ></NewListCard>
         </div>
         <div class="col">
           <NewListCard
             icon="icon-zbgs"
             :data="zhengche"
             title="双创政策"
-            more="/second/menu?parentId=93&ptCode=6&currenId=98&indexUrl=%2FentreAndInnova"
+            more="/second/menu?parentId=93&ptCode=6&currenId=98&indexUrl=%2FentreAndInnova&title=双创服务"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
             :data="fuwu"
             title="挂牌服务"
-            more="/second/menu?parentId=93&ptCode=6&currenId=100&indexUrl=%2FentreAndInnova"
+            more="/second/menu?parentId=93&ptCode=6&currenId=100&indexUrl=%2FentreAndInnova&title=双创服务"
           ></NewListCard>
         </div>
       </div>
@@ -61,7 +62,12 @@ import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
 import SearchBox from "@/comonentsPC/Search.vue";
-import { getCarouselList, getIndexList, getNewsList ,getDevColumnList} from "@/service/api";
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getDevColumnList
+} from "@/service/api";
 
 export default {
   components: {
@@ -76,7 +82,7 @@ export default {
     NewListCard,
     SearchBox
   },
-    async created() {
+  async created() {
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -90,7 +96,7 @@ export default {
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
-            url = item.url||'';
+            url = item.url || "";
           }
         });
         this.TabsList.push({
@@ -103,13 +109,12 @@ export default {
           pageSize: "5",
           pageNo: "0"
         }).then(res => {
-          this.newsList.push(res.data.data)
-          console.log(this.newsList,'this.newsList');
-          
+          this.newsList.push(res.data.data);
+          console.log(this.newsList, "this.newsList");
         });
       });
     });
-     getNewsList({
+    getNewsList({
       ptCode: "6",
       colid: "97",
       pageSize: "10",
@@ -145,7 +150,7 @@ export default {
   data() {
     return {
       navList: [],
-        xiangmu: [],
+      xiangmu: [],
       zhengche: [],
       huodong: [],
       fuwu: [],

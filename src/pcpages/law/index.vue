@@ -12,7 +12,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard icon="icon-zbgg" title="商标法" :data="shangbiaofa" more></NewListCard>
+          <NewListCard icon="icon-zbgg" title="商标法" :data="shangbiaofa" more='/second/menu?parentId=33&ptCode=2&currenId=60&indexUrl=%2Flaw&title=指导案例'></NewListCard>
           <NewListCard
             title="劳动法"
             icon="icon-two"
@@ -21,8 +21,8 @@
           ></NewListCard>
         </div>
         <div class="col">
-          <NewListCard icon="icon-zbgs" :data="zuzuoquan" title="著作权法" more></NewListCard>
-          <NewListCard icon="icon-scjg" :data="zhuanlifa" title="专利法" more></NewListCard>
+          <NewListCard icon="icon-zbgs" :data="zuzuoquan" title="著作权法" more='second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法'></NewListCard>
+          <NewListCard icon="icon-scjg" :data="zhuanlifa" title="专利法" more='second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法'></NewListCard>
         </div>
       </div>
     </div>
