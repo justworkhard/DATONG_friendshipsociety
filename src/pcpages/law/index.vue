@@ -87,6 +87,38 @@ export default {
         });
       });
     });
+        getNewsList({
+      ptCode: "2",
+      colid: "60",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.shangbiaofa = res.data.data;
+    });
+    getNewsList({
+      ptCode: "2",
+      colid: "24",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.laodongfa = res.data.data;
+    });
+    getNewsList({
+      ptCode: "2",
+      colid: "135",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.zhuanlifa = res.data.data;
+    });
+    getNewsList({
+      ptCode: "2",
+      colid: "136",
+      pageSize: "10",
+      pageNo: "0"
+    }).then(res => {
+      this.zuzuoquan = res.data.data;
+    });
   },
   data() {
     return {
@@ -136,8 +168,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  width: 1200px;
+  width: 1170px;
   margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

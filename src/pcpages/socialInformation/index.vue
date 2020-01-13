@@ -1,7 +1,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" :ptCode="8"></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -16,7 +16,7 @@
             icon="icon-zbgg"
             title="行业标准查询"
             :data="hangyebiaozhi"
-            more="/social/information/other/menu?title=行业标志查询"
+            more="/second/menu?parentId=109&ptCode=8&currenId=137&indexUrl=%2Fsocial%2Finformation&title=企业管理信息"
           ></NewListCard>
                 <NewListCard
             icon="icon-zbgg"
@@ -30,13 +30,13 @@
             icon="icon-zbgs"
             title="企业信用查询"
             :data="qiyexingyong"
-            more="/social/information/other/menu?title=企业信用查询"
+            more="/second/menu?parentId=109&ptCode=8&currenId=138&indexUrl=%2Fsocial%2Finformation&title=企业管理信息"
           ></NewListCard>
           <NewListCard
             title="行业数据查询"
             icon="icon-scjg"
             :data="hangyeshuju"
-            more="/social/information/other/menu?title=行业数据统计"
+            more="/second/menu?parentId=109&ptCode=8&currenId=140&indexUrl=%2Fsocial%2Finformation&title=企业管理信息"
           ></NewListCard>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "138",
+      colid: "139",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -119,7 +119,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "139",
+      colid: "138",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -151,8 +151,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  width: 1200px;
-  margin: 0 auto;
+  width: 1170px;
+  margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

@@ -9,7 +9,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" :ptCode="10"></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -64,7 +64,12 @@ import Footer from "@/comonentsPC/Footer.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 
 import { Swiper, SwiperItem } from "vux";
-
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getDevColumnList
+} from "@/service/api";
 export default {
   components: {
     SearchBox,
@@ -112,7 +117,7 @@ export default {
     });
     getNewsList({
       ptCode: "10",
-      colid: "125",
+      colid: "132",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -120,7 +125,7 @@ export default {
     });
     getNewsList({
       ptCode: "10",
-      colid: "123",
+      colid: "127",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -161,8 +166,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  width: 1200px;
+  width: 1170px;
   margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

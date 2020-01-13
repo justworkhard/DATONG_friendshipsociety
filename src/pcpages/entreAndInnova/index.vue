@@ -9,7 +9,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" :ptCode="6"></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -116,7 +116,7 @@ export default {
     });
     getNewsList({
       ptCode: "6",
-      colid: "97",
+      colid: "92",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -124,7 +124,7 @@ export default {
     });
     getNewsList({
       ptCode: "6",
-      colid: "97",
+      colid: "98",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -132,7 +132,7 @@ export default {
     });
     getNewsList({
       ptCode: "6",
-      colid: "97",
+      colid: "91",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -140,7 +140,7 @@ export default {
     });
     getNewsList({
       ptCode: "6",
-      colid: "97",
+      colid: "100",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
@@ -154,66 +154,17 @@ export default {
       zhengche: [],
       huodong: [],
       fuwu: [],
-      data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
-      ],
-      newsList: [
-        [
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ],
-        [
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 12" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-          { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-        ]
-      ],
+      newsList: [],
       TabsList: [],
-
-      demo01_index: 1,
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };
 </script>
 <style lang="less" scoped>
 .main {
-  width: 1200px;
+  width: 1170px;
   margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

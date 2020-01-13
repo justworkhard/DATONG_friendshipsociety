@@ -9,7 +9,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" :ptCode="9"></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -61,7 +61,7 @@ import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
-import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
+import { getCarouselList, getIndexList, getNewsList ,getDevColumnList} from "@/service/api";
 
 import { Swiper, SwiperItem } from "vux";
 
@@ -87,7 +87,29 @@ export default {
       "/export/country"
     );
     this.navList = temp;
-
+    getDevColumnList(9).then(res => {
+      res.data.devColumnList.forEach(element => {
+        let url = "";
+        this.navList.forEach(item => {
+          if (item.title === element.columnName) {
+            url = item.url || "";
+          }
+        });
+        this.TabsList.push({
+          title: element.columnName,
+          url: url
+        });
+        getNewsList({
+          ptCode: 10,
+          colid: element.id,
+          pageSize: "5",
+          pageNo: "0"
+        }).then(res => {
+          this.newsList.push(res.data.data);
+          console.log(this.newsList, "this.newsList");
+        });
+      });
+    });
     getNewsList({
       ptCode: "9",
       colid: "120",
@@ -138,8 +160,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  width: 1200px;
+  width: 1170px;
   margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

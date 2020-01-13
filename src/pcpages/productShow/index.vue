@@ -1,7 +1,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" :ptCode='7'></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -34,7 +34,12 @@ import ProductCard from "./productCard.vue";
 import RedHeader from "@/comonentsPC/RedHeader.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import { Swiper, SwiperItem } from "vux";
-
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getDevColumnList
+} from "@/service/api";
 export default {
   components: {
     Welcome,
@@ -155,8 +160,9 @@ export default {
   justify-content: space-between;
 }
 .main {
-  width: 1200px;
+  width: 1170px;
   margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

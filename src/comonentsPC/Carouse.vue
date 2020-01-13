@@ -3,7 +3,7 @@
     <div class="MCarousel" @click="toDetail(item.contentId)" v-show="activeIndex === index" v-for="(item,index) in data" :key="index">
       <img :src="item.picUrl" alt srcset>
     </div>
-    <div class="bottom" v-show="activeIndex === index" v-for="(item,index) in data" :key="index">
+    <div class="bottom" v-show="activeIndex === index" v-for="(item,index) in data" :key="index+'carousel'">
       <p>{{item.contentTitle}}</p>
       <ul class="guider">
         <li @mouseover='setActive(index)' v-for="(item,index) in data" :key="index" :class="{'active': index === activeIndex}"></li>
@@ -21,9 +21,22 @@ export default {
     getContentCarouselList(this.ptCode).then(res=>{
       this.data = res.data.contentCarouselList
     })
+    this.interIndex = setInterval(()=>{
+      if(this.activeIndex<this.data.length-1){
+        this.activeIndex++
+      }else{
+        this.activeIndex = 0
+      }
+      console.log(this.activeIndex);
+      
+    },2000)
+  },
+  destroyed(){
+    clearInterval(this.interIndex)
   },
   data() {
     return {
+      interIndex : '',
       data: [],
       activeIndex: 0
     };

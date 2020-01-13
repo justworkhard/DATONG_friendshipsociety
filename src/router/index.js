@@ -12,12 +12,50 @@ let RouterPhone = new Router({
     {
       path: "/second/menu",
       name: "Index",
+      meta: {
+        keepAlive: true // 需要被缓存
+      },
       component: resolve => require(["@/pages/secendMenu"], resolve)
     },
     {
       path: "/",
       name: "Index",
       component: resolve => require(["@/pages/index"], resolve)
+    },
+    {
+      path: "/login",
+      name: "Index",
+      component: resolve => require(["@/pages/login"], resolve)
+    },
+    {
+      path: "/question/creat",
+      name: "Index",
+      component: resolve => require(["@/pages/question/create"], resolve)
+    },
+    {
+      path: "/question/detail",
+      name: "Index",
+      component: resolve => require(["@/pages/question/detail"], resolve)
+    },
+    {
+      path: "/question",
+      name: "Index",
+      component: resolve => require(["@/pages/question"], resolve),
+      children: [
+        {
+          path: '/',
+          component: resolve => require(["@/pages/question/luntan"], resolve),
+        },
+        {
+          path: '/question/wode',
+          component: resolve => require(["@/pages/question/wode"], resolve),
+        },
+      ]
+    },
+    {
+      path: "/register",
+      name: "Index",
+      component: resolve => require(["@/pages/register"], resolve)
     },
     {
       path: "/newsdetail",
@@ -62,7 +100,7 @@ let RouterPhone = new Router({
       name: "entrep",
       component: resolve => require(["@/pages/entrep"], resolve)
     },
-   
+
     //企业产品展示平台
     {
       path: "/product/show",
@@ -98,7 +136,7 @@ let RouterPhone = new Router({
       name: "SpreadAdvanced",
       component: resolve => require(["@/pages/rank/interIndex"], resolve)
     },
-   
+
   ]
 });
 
@@ -107,6 +145,7 @@ let RouterPC = new Router({
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };
   },
+
   routes: [
     {
       path: "/second/menu",
@@ -121,6 +160,26 @@ let RouterPC = new Router({
           component: resolve => require(["@/pcpages/secondMenuSolo"], resolve)
         }
       ]
+    },
+    {
+      path: "/question",
+      component: resolve => require(["@/pcpages/question"], resolve)
+    },
+    {
+      path: "/login",
+      component: resolve => require(["@/pcpages/login"], resolve)
+    },
+    {
+      path: "/question/detail",
+      component: resolve => require(["@/pcpages/question/detail"], resolve)
+    },
+    {
+      path: "/question/creat",
+      component: resolve => require(["@/pcpages/question/creat"], resolve)
+    },
+    {
+      path: "/user",
+      component: resolve => require(["@/pcpages/question/user"], resolve)
     },
     {
       path: "/search",
@@ -251,4 +310,34 @@ if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
 } else {
   route = RouterPC;
 }
+// 路由守卫
+let PCCheck = ['/question/creat','/question/wode','/question/detail']
+route.beforeEach((to, from, next) => {
+  console.log('to', to);
+
+  if (PCCheck.indexOf(to.path) >= 0) {//判断是否需要登录 
+    if (sessionStorage.getItem('isLogin')) {
+      next();
+    } else {
+      next({
+        path: "/login",
+      });
+    }
+  } else {
+    next()
+  }
+  // 
+  if (to.path === '/login') {//判断是否需要登录 
+    if (sessionStorage.getItem('isLogin')) {
+      next({
+        path: "/",
+      });
+    } else {
+      next();
+
+    }
+  } else {
+    next()
+  }
+});
 export default route;

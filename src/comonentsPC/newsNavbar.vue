@@ -83,7 +83,7 @@ export default {
   methods: {
     toDetail(id) {
       this.$router.push(
-        "/second/menu?parentId=6&ptCode=0&currenId=11&indexUrl=%2F&contentId=" + id
+        "/second/menu?parentId=6&ptCode=0&currenId=11&indexUrl=%2F&title=联谊会介绍&contentId=" + id
       );
     },
     active(index) {

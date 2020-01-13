@@ -9,7 +9,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList"></Header>
+    <Header :navs="navList" :ptCode='5'></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -29,7 +29,7 @@
           <NewListCard
             icon="icon-zbgg"
             title="融资案例"
-            :data="newsList"
+            :data="anli"
             more="/second/menu?title=融资案例&id=86&parentId=86&ptCode=5&indexUrl=%2Ffinance%2Fadvi&hadChild=fale&currenId=86"
           ></NewListCard>
         </div>
@@ -129,7 +129,7 @@ export default {
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.anli[0] = res.data.data;
+      this.anli = res.data.data;
     });
     getNewsList({
       ptCode: "5",
@@ -137,7 +137,7 @@ export default {
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.zhapian[0] = res.data.data;
+      this.zhapian = res.data.data;
     });
     getNewsList({
       ptCode: "5",
@@ -145,7 +145,7 @@ export default {
       pageSize: "10",
       pageNo: "0"
     }).then(res => {
-      this.fangshi[0] = res.data.data;
+      this.fangshi = res.data.data;
     });
   },
   data() {
@@ -180,8 +180,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  width: 1200px;
+  width: 1170px;
   margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

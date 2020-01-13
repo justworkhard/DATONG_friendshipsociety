@@ -176,8 +176,9 @@ export default {
 
 <style lang="less" scoped>
 .main {
-  width: 1200px;
-  margin: 0 auto;
+   width: 1170px;
+  margin: 5px auto;
+  padding: 0 15px;
 }
 .row {
   display: flex;

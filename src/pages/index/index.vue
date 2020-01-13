@@ -23,7 +23,7 @@
           <ul class="news">
             <li
               class="news_title"
-              @click="toDetail()"
+              @click="toDetail(item.id)"
               v-for="(item,index) in huodong"
               :key="index"
             >{{item.title}}</li>
@@ -140,6 +140,7 @@ export default {
       pageSize: 5,
       pageNo: 1
     }).then(res => {
+      
       this.huodong = res.data.data;
     });
     getNewsList({

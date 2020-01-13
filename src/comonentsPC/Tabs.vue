@@ -104,7 +104,7 @@ export default {
   display: flex;
   align-items: center;
   position: relative;
-  min-width: 500px;
+  min-width: 510px;
   // padding: 0 15px;
   // position: relative;
   // overflow: scroll;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-      <img src="@/assets/images/mipmap-xxxhdpi/logo.png" alt class="logo">
+      <img src="@/assets/images/logo.jpg" alt class="logo">
       <router-link class="navbar" :to="item.url" v-for="(item,index) in navs" :key="index">
         {{item.title}}
         <div class="navbar_menu">
@@ -69,7 +69,7 @@ export default {
     display: flex;
     align-items: center;
     margin: 0 25px;
-    height: 70px;
+    height: 90px;
     // -webkit-transition: all 0.4s;
     // transition: all 0.4s;
     font-size: 16px;
