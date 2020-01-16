@@ -10,7 +10,18 @@
     <div class="news_box">
       <NewsNavbar></NewsNavbar>
     </div>
-
+    <!-- 十大平台 -->
+    <div class="ten">
+      <div class="title">
+        <img src="@/assets/images/mipmap-xxxhdpi/ten.png" alt srcset />
+      </div>
+      <div class="icons">
+        <div class="icon1 icon" @click="toQuestion(item.id)" v-for="(item,index) in departmentList" :key="index">
+          <div class="pic"></div>
+          <p>{{item.departName}}</p>
+        </div>
+      </div>
+    </div>
     <!-- 十大平台 -->
     <div class="ten">
       <div class="title">
@@ -72,7 +83,7 @@
           </div>
         </RedHeader>
         <!-- 积分排行榜 -->
-        <RedHeader title="平台积分排行榜" >
+        <RedHeader title="平台积分排行榜">
           <div class="jifen">
             <div class="rank_item">
               <p>平台名称</p>
@@ -81,7 +92,7 @@
             <div class="rank_item" v-for="(item,index) in jifenList" :key="index">
               <p>{{item.ptname}}</p>
               <p>{{item.integral}}</p>
-              </div>
+            </div>
           </div>
         </RedHeader>
         <!-- 阅读排行榜 -->
@@ -94,7 +105,7 @@
             <div class="rank_item" v-for="(item,index) in readList" :key="index">
               <p>{{item.ptname}}</p>
               <p>{{item.readcounts}}</p>
-              </div>
+            </div>
           </div>
         </RedHeader>
       </div>
@@ -128,6 +139,7 @@ import Footer from "@/comonentsPC/Footer.vue";
 import ProductCard from "./productCard.vue";
 import MCarousel from "@/comonentsPC/Carouse.vue";
 import { Swiper, SwiperItem } from "vux";
+import {getDepartList } from '@/service/api.js'
 import {
   getCarouselList,
   getIndexList,
@@ -151,6 +163,9 @@ export default {
     MCarousel
   },
   created() {
+    getDepartList().then(res=>{
+      this.departmentList = res.data.departmentList
+    })
     getReadList().then(res => {
       this.readList = res.data.data;
     });
@@ -195,8 +210,19 @@ export default {
       this.about = res.data.sororityInfo;
     });
   },
+  methods: {
+    toQuestion(index) {
+      this.$router.push({
+        path: "/question",
+        query: {
+          qCode: index
+        }
+      });
+    }
+  },
   data() {
     return {
+      departmentList: [],
       about: {},
       jifenList: [],
       readList: [],
@@ -219,7 +245,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.rank_item{
+.rank_item {
   display: flex;
   justify-content: space-between;
   line-height: 30px;
@@ -287,6 +313,17 @@ export default {
         font-size: 14px;
         line-height: 30px;
         margin-bottom: 10px;
+      }
+      .icon {
+        display: block;
+        width: 20%;
+        text-align: center;
+        float: left;
+        color: #333;
+        font-size: 14px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        cursor: pointer;
       }
       .pic {
         width: 84px;

@@ -28,6 +28,10 @@
           <img src="@/assets/images/judged.png" alt srcset />
           <span>{{item.commentNum}}</span>
         </div>
+        <div class="good">
+          <img src="@/assets/images/colle.png" alt srcset />
+          <span>{{item.collect}}</span>
+        </div>
       </div>
     </div>
     <div class="more" @click="more">{{total>pageNo*10?'加载更多':'无更多数据'}}</div>
@@ -174,7 +178,7 @@ export default {
     line-height: 25px;
     font-size: 14px;
     color: rgb(86, 86, 86);
-    height: 125px;
+    max-height: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
   }

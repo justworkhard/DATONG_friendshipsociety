@@ -4,9 +4,23 @@
       <router-view></router-view>
     </div>
     <footer class="footer">
-      <div @click="setActiveIndex(0)"><img src="@/assets/images/zhuye.png" alt="" srcset=""> 首页</div>
-      <div @click="setActiveIndex(1)"><img :src="activeIndex ==1 ?'/src/assets/images/luntan1.png':'/src/assets/images/luntan.png'" alt="" srcset=""> 论坛</div>
-      <div @click="setActiveIndex(2)"><img :src="activeIndex ==2 ?'/src/assets/images/wode.png':'/src/assets/images/wode1.png'" alt="" srcset=""> 我的</div>
+      <div @click="setActiveIndex(0)">
+        <img src="@/assets/images/zhuye.png" alt srcset /> 首页
+      </div>
+      <div @click="setActiveIndex(1)">
+        <img
+          :src="activeIndex ==1 ?'/src/assets/images/luntan1.png':'/src/assets/images/luntan.png'"
+          alt
+          srcset
+        /> 论坛
+      </div>
+      <div @click="setActiveIndex(2)">
+        <img
+          :src="activeIndex ==2 ?'/src/assets/images/wode.png':'/src/assets/images/wode1.png'"
+          alt
+          srcset
+        /> 我的
+      </div>
     </footer>
   </div>
 </template>
@@ -17,36 +31,50 @@ export default {
   components: {
     XHeader
   },
-  data(){
-    return{
-      activeIndex : 1
-    }
+  data() {
+    return {
+      activeIndex: 1
+    };
   },
-  watch:{
-    activeIndex:function(newV,oldV){
-      if(newV === 0){
-        this.$router.push('/')
-      }else if(newV === 1){
-        this.$router.push('/question')
-      }else{
-        this.$router.push('/question/wode')
+  watch: {
+    activeIndex: function(newV, oldV) {
+      if (newV === 0) {
+        this.$router.push("/");
+      } else if (newV === 1) {
+        this.$router.push("/question");
+      } else {
+        this.$router.push("/question/wode");
+      }
+    },
+    "$route.path": function(newV, oldV) {
+      switch (newV) {
+        case "/question":
+          this.activeIndex = 1;
+          break;
+        case "/question/wode":
+          this.activeIndex = 2;
+          break;
+        case "/question/list":
+          this.activeIndex = 2;
       }
     }
   },
-  methods:{
-    setActiveIndex(index){
-      this.activeIndex = index
-
+  methods: {
+    setActiveIndex(index) {
+      this.activeIndex = index;
     }
   },
-  created(){
-    console.log(this.$route.path);
-    switch(this.$route.path){
-      case '/question':
-        this.activeIndex = 1
+  created() {
+    // console.log('this.$route',);
+    switch (this.$route.path) {
+      case "/question":
+        this.activeIndex = 1;
         break;
-      case '/question/wode':
-         this.activeIndex = 2   
+      case "/question/wode":
+        this.activeIndex = 2;
+        break;
+      case "/question/list":
+        this.activeIndex = 2;
     }
   }
 };
@@ -57,9 +85,9 @@ export default {
   flex-direction: column;
   height: 100vh;
 }
-.content{
+.content {
   flex: 1;
-  overflow: scroll
+  overflow: scroll;
 }
 .footer {
   border-top: 1px solid #999;
@@ -73,7 +101,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    img{
+    img {
       height: 20px;
       width: 20px;
     }

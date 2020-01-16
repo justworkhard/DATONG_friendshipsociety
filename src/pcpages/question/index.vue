@@ -16,6 +16,8 @@
         <div class="title">{{item.title}}</div>
         <div class="q_content" v-html="item.content"></div>
         <div class="readed">
+          <span>点赞{{item.upNum}}</span>
+          <span class="row">|</span>
           <span>浏览{{item.readCount}}</span>
           <span class="row">|</span>
           <span>收藏{{item.collect}}</span>
@@ -26,7 +28,15 @@
         </div>
       </div>
       <div style="margin-top:20px">
-         <el-pagination  background layout="prev, pager, next" :total="total"></el-pagination>
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="onPageChange"
+        ></el-pagination>
+      </div>
+      <div class="editor" @click="toCreate">
+        <img src="../../assets/images/editor.png" alt srcset />
       </div>
     </div>
     <Footer></Footer>
@@ -47,10 +57,19 @@ export default {
     return {
       questionList: [],
       pageNo: 1,
-      total: 0
+      total: 0,
+      currentIndex: 1,
+      qCode: sessionStorage.getItem('qCode')
     };
   },
   methods: {
+    onPageChange(index) {
+      this.pageNo = index;
+      this.onSearch("");
+    },
+    toCreate() {
+      this.$router.push("/question/creat");
+    },
     toDetail(id) {
       this.$router.push({
         path: "/question/detail",
@@ -62,7 +81,7 @@ export default {
     onSearch(keyword, more) {
       this.keyword = keyword;
       sendInvitSearch({
-        colid: "1",
+        colid: this.qCode,
         pageNo: this.pageNo,
         pageSize: 10,
         title: this.keyword
@@ -82,6 +101,10 @@ export default {
     }
   },
   created() {
+    if (this.$route.query.qCode) {
+      this.qCode = this.$route.query.qCode
+      sessionStorage.setItem("qCode", this.$route.query.qCode);
+    }
     this.onSearch("");
   }
 };
@@ -91,6 +114,7 @@ export default {
   width: 1200px;
   margin: 0 auto;
   margin-bottom: 20px;
+  position: relative;
 }
 .question_item {
   position: relative;
@@ -99,7 +123,7 @@ export default {
     position: absolute;
     background-color: rgb(162, 215, 109);
     border-radius: 5px;
-    height: 80px;
+    height: 70px;
     width: 70px;
     right: 0px;
     top: 0px;
@@ -123,7 +147,7 @@ export default {
     font-size: 20px;
   }
   .q_content {
-    height: 100px;
+    max-height: 100px;
     line-height: 20px;
     overflow: hidden;
     margin-bottom: 10px;
@@ -140,6 +164,24 @@ export default {
     .row {
       margin: 0 20px;
     }
+  }
+}
+.editor {
+  background-color: rgb(214, 46, 46);
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 9999;
+  img {
+    height: 30px;
+    width: 30px;
   }
 }
 </style>

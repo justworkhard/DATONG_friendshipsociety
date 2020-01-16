@@ -8,7 +8,7 @@
         <a href="#/login?type=register">注册</a>
       </div>
       <div class="btns userName" v-if="isLogin" @click="toUser">
-        <span>{{userInfo.name}}</span>
+        <span>{{userInfo.username}}</span>
       </div>
     </div>
   </div>

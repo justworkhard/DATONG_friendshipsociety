@@ -2,10 +2,10 @@
   <div id="index">
     <Header :tabList="tabList"></Header>
     <div class="label">
-      <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset>
+      <img src="@/assets/images/mipmap-hdpi/horn.png" alt srcset />
       <span>最新公告</span>
     </div>
-      <MSwiper :ptCode=0></MSwiper>
+    <MSwiper :ptCode="0"></MSwiper>
     <!-- <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" auto></swiper> -->
     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
       <template slot-scope="slotProps">
@@ -32,6 +32,14 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
+    <Tabs :TabsList="[{title:'在线问答'}]" @onChangeTab="onChangeTabs">
+      <div class="questionList">
+        <div class="question" @click="toQuestion(1)">政府办公室</div>
+        <div class="question" @click="toQuestion(2)">外事办公室</div>
+        <div class="question" @click="toQuestion(3)">税务所</div>
+        <div class="question" @click="toQuestion(4)">工商所</div>
+      </div>
+    </Tabs>
     <Tabs id="ten" :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
@@ -54,15 +62,14 @@
     <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div class="rank" v-if="slotProps.slotdata===0">
-          <div class="rankItem"  @click="toRankInter()">
-            <img src="@/assets/images/mipmap-hdpi/points.png" alt srcset>
+          <div class="rankItem" @click="toRankInter()">
+            <img src="@/assets/images/mipmap-hdpi/points.png" alt srcset />
           </div>
-          <div class="rankItem" >
-            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset @click="toRankRead()">
+          <div class="rankItem">
+            <img src="@/assets/images/mipmap-hdpi/read.png" alt srcset @click="toRankRead()" />
           </div>
         </div>
       </template>
-
     </Tabs>
     <!-- 联谊会介绍 -->
     <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
@@ -113,7 +120,16 @@ import {
 
 export default {
   name: "app",
-  components: { Header, Footer, Swiper, SwiperItem, Tabs, Ten, ComponyCard ,MSwiper},
+  components: {
+    Header,
+    Footer,
+    Swiper,
+    SwiperItem,
+    Tabs,
+    Ten,
+    ComponyCard,
+    MSwiper
+  },
   async created() {
     let temp = await this.getIndexList(
       {
@@ -124,8 +140,8 @@ export default {
       false
     );
     this.tabList = temp;
-    console.log(this.tabList,'====================');
-    
+    console.log(this.tabList, "====================");
+
     getNewsList({
       colid: 3,
       ptCode: 0,
@@ -140,7 +156,6 @@ export default {
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      
       this.huodong = res.data.data;
     });
     getNewsList({
@@ -175,7 +190,7 @@ export default {
       activeName: "",
       TabsList: [
         [{ title: "新闻动态" }, { title: "联谊会活动" }],
-        [{ title: "十大平台",tip: '企业信息服务' }],
+        [{ title: "十大平台", tip: "企业信息服务" }],
         [{ title: "平台排行榜" }],
         [{ title: "联谊会介绍" }],
         [{ title: "联谊会企业" }],
@@ -187,8 +202,7 @@ export default {
           "/newslist"
         ],
         ["", "企业信息服务"],
-        [
-        ],
+        [],
         ["/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F"],
         [
           "/second/menu?title=联谊会企业&id=7&parentId=7&ptCode=0&indexUrl=%2F&hadChild=fale&currenId=7"
@@ -204,13 +218,21 @@ export default {
     };
   },
   methods: {
-    toRankRead(){
-      this.$router.push('/readRank')
+    toQuestion(index){
+      this.$router.push({
+        path:'/question',
+        query: {
+          qCode: index
+        }
+      })
     },
-    toRankInter(){
-      console.log('====');
-      
-      this.$router.push('/interRank')
+    toRankRead() {
+      this.$router.push("/readRank");
+    },
+    toRankInter() {
+      console.log("====");
+
+      this.$router.push("/interRank");
     },
     demo01_onIndexChange() {},
     handleClick() {},
@@ -225,6 +247,22 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.questionList{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .question{
+    height: 120px;
+    background-color: #4798ef;
+    width: 40%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+}
 body {
   background-color: #fbf9fe;
 }

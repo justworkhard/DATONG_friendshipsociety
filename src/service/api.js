@@ -97,7 +97,7 @@ export function getQuestionListPage(params) {
   )
 }
 export function getDepartList(params) {
-  return axios.post(
+  return axios.get(
     `/api/app/departList`
   )
 }
@@ -123,6 +123,15 @@ export function sendInvitDetail(params) {
 export function sendUpNum(params) {
   return axios.post(
     `/api/app/sendUpNum`,Qs.stringify(params),{
+      headers:{
+        'token': sessionStorage.getItem("token")
+      }
+    }
+  )
+}
+export function sendColle(params) {
+  return axios.post(
+    `/api/app/sendConllect`,Qs.stringify(params),{
       headers:{
         'token': sessionStorage.getItem("token")
       }
@@ -161,4 +170,17 @@ export function sendInvitSearch(params) {
     `/api/app/sendInvitSearch`,Qs.stringify(params),
   )
 }
+export function userSend(params) {
+  return axios.post(
+    `/api/app/userSend`,Qs.stringify(params),{ headers: {
+      'token':  sessionStorage.getItem('token') }}
+  )
+}
+export function getUsercollect(params) {
+  return axios.post(
+    `/api/app/userCollect`,Qs.stringify(params),{ headers: {
+      'token':  sessionStorage.getItem('token') }}
+  )
+}
+
 

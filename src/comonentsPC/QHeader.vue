@@ -8,7 +8,7 @@
         <img src="@/assets/images/mipmap-hdpi/icon_search.png" alt srcset />
       </div>
       <div class="avadar" @click="toCenter">
-        <img src="@/assets/images/avadar.png" alt="" srcset="">
+        <img :src="userInfo.portrait" alt="" srcset="">
       </div>
     </div>
   </div>
@@ -20,14 +20,16 @@ import { getCarouselList, getIndexList } from "@/service/api";
 export default {
   components: { Carousel },
   props: ["navs", "ptCode"],
-  created() {},
+  created() {
+    this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+  },
   mounted() {
-    console.log("this.navs", this.navs);
   },
 
   data() {
     return {
-      imgList: []
+      imgList: [],
+      userInfo: {}
     };
   },
   methods:{
@@ -48,6 +50,8 @@ export default {
   img{
    height: 40px;
    width: 40px;
+  border-radius: 50%;
+
   }
 }
 .search {

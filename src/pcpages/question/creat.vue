@@ -28,6 +28,7 @@ export default {
     Footer
   },
   mounted() {
+    this.qCode = sessionStorage.getItem('qCode')
     // 创建编辑器
     this.editor = new E("#editor");
     // 配置服务器端地址
@@ -49,12 +50,12 @@ export default {
     return {
       editor: "",
       titleV: "",
-      content: ""
+      content: "",
+      qCode: ''
     };
   },
   methods: {
     submit() {
-
       if (!this.titleV) {
         return this.$message({
           message: "请输入问题标题",
@@ -68,13 +69,13 @@ export default {
         });
       }
       saveInvitation({
-        colid : '',
-        content  : this.content,
+        colid : this.qCode,
+        content  : this.editor.txt.html(),
         sendUserId  : JSON.parse(sessionStorage.getItem('userInfo')).userId,
         title  : this.titleV,
       }).then(res=>{
-        console.log(res);
-        
+        this.$message.success('提交成功')
+        this.$router.push('/question')
       })
 
     }

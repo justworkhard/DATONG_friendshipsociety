@@ -50,6 +50,14 @@ let RouterPhone = new Router({
           path: '/question/wode',
           component: resolve => require(["@/pages/question/wode"], resolve),
         },
+        {
+          path: '/question/editor',
+          component: resolve => require(["@/pages/question/editor"], resolve),
+        },
+        {
+          path: '/question/list',
+          component: resolve => require(["@/pages/question/list"], resolve),
+        },
       ]
     },
     {

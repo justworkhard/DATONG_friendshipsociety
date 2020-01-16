@@ -17,6 +17,11 @@
               <img src="@/assets/images/goodA.png" alt srcset v-show="good" />
               <span>{{qData.upNum}}</span>
             </div>
+            <div class="good" @click="addColle">
+              <img src="@/assets/images/colle.png" alt srcset v-show="!colStatus" />
+              <img src="@/assets/images/colleA.png" alt srcset v-show="colStatus" />
+              <span>{{qData.collect}}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -25,18 +30,34 @@
       <div class="answer_item" v-for="(item,index) in reparentList" :key="index">
         <div
           class="an_content"
-          @click="respJudget(item.repUserId,item.username)"
+          @click="respJudget(item.repUserId,item.username,item.repId)"
         >{{item.repContent}}</div>
         <div class="an_footer">
-          <div class="time">发布于：{{item.repTime}}</div>
+          <div class="time">
+            发布于：{{item.repTime}}
+            <div class="respon" @click="showRespon(index)">{{item.showChild?'收起':'展开'}}回复({{item.child?item.child.length:'0'}})</div>
+          </div>
           <div class="user">
             <img :src="item.portrait" alt class="avadar" />
             <p class="name">{{item.username}}</p>
           </div>
         </div>
+        <div class="JChild" v-show="item.showChild">
+          <div class="childItem" v-for="(qIterm,qIndex) in item.child" :key="qIndex">
+            <p class="QJname">{{qIterm.username}}:</p>
+            <p class="QJcontent">{{qIterm.repContent}}</p>
+          </div>
+          <input class="QJinput" v-model="item.resContent"/>
+          <span @click="sendToQJ(item.repUserId,item.resContent,item.repId)">发送</span>
+        </div>
       </div>
       <div class="editor" id="editor">
-        <textarea name id  v-model="resContent" :placeholder="respJudgetId?`回复${respJudgetName}`:'对ta说点什么'"></textarea>
+        <textarea
+          name
+          id
+          v-model="resContent"
+          :placeholder="respJudgetId?`回复${respJudgetName}`:'对ta说点什么'"
+        ></textarea>
       </div>
       <div class="answer_box">
         <div class="answer" @click="submit">我要回答</div>
@@ -52,7 +73,8 @@ import {
   sendInvitDetail,
   getQuestionListPage,
   repyInvitation,
-  sendUpNum
+  sendUpNum,
+  sendColle
 } from "@/service/api.js";
 var E = require("wangeditor"); // 使用 npm 安装
 export default {
@@ -71,13 +93,48 @@ export default {
       good: false,
       respJudgetId: "",
       resContent: "",
-      respJudgetName: ''
+      respJudgetName: "",
+      colStatus: 0,
+      repId: ""
     };
   },
   methods: {
-    respJudget(id, name) {
-      this.respJudgetId = id;
-      this.respJudgetName = name;
+    showRespon(index){
+       this.reparentList[index].showChild = !this.reparentList[index].showChild
+       console.log(this.reparentList[index].showChild ,index);
+       
+    },
+    sendToQJ(id, content, juID) {
+      let params = {
+        parentId: id,
+        repContent:content,
+        repUserId: JSON.parse(sessionStorage.getItem("userInfo")).userId,
+        sendId: juID
+      };
+      repyInvitation(params).then(res => {
+        if (res.data.code === 0) {
+          this.$message.success("提交成功");
+          this.getData();
+          this.showPositionValue = true;
+          this.resContent = "";
+          this.editor.txt.html("");
+        }
+      });
+    },
+    addColle() {
+      sendColle({
+        status: this.colStatus ? 0 : 1,
+        id: this.$route.query.id,
+        userId: JSON.parse(sessionStorage.getItem("userInfo")).userId
+      }).then(res => {
+        this.$message.success("操作成功");
+        this.getData();
+      });
+    },
+    respJudget(id, name, juID) {
+      // this.respJudgetId = id;
+      // this.respJudgetName = name;
+      // this.repId = juID
     },
     addGood() {
       sendUpNum({
@@ -85,7 +142,7 @@ export default {
         id: this.$route.query.id,
         userId: JSON.parse(sessionStorage.getItem("userInfo")).userId
       }).then(res => {
-        // this.good = !this.good;
+        this.$message.success("操作成功");
         this.getData();
       });
     },
@@ -94,7 +151,7 @@ export default {
         parentId: this.respJudgetId,
         repContent: this.resContent,
         repUserId: JSON.parse(sessionStorage.getItem("userInfo")).userId,
-        sendId: this.$route.query.id
+        sendId: this.repId || this.$route.query.id
       };
       if (!this.resContent) {
         return;
@@ -104,24 +161,63 @@ export default {
           this.$message.success("提交成功");
           this.getData();
           this.showPositionValue = true;
+          this.resContent = "";
           this.editor.txt.html("");
         }
       });
+    },
+    clear() {
+      this.respJudgetId = "";
+      this.respJudgetName = "";
+      this.repId = "";
     },
     getData() {
       sendInvitDetail({
         id: this.$route.query.id,
         userId: JSON.parse(sessionStorage.getItem("userInfo")).userId
       }).then(res => {
+        res.data.reparentList.forEach(element => {
+          element.resContent = ''
+          element.showChild = false
+        });
         this.qData = res.data.sendInvitation;
         this.reparentList = res.data.reparentList;
         this.good = res.data.upstatus;
+        this.colStatus = res.data.colstatus;
       });
     }
   }
 };
 </script>
 <style lang="less" scoped>
+.respon {
+  color: #2d64b3;
+  cursor: pointer;
+}
+.JChild {
+  background-color: rgb(228, 228, 228);
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  .childItem {
+    display: flex;
+  }
+  .QJname {
+    color: rgb(14, 205, 253);
+  }
+  .QJinput {
+    height: 20px;
+    border: 1xp solid #999;
+    width: 80%;
+    padding: 2px 10px;
+  }
+  span {
+    display: inline-block;
+    cursor: pointer;
+    color: #4d91f7;
+  }
+}
 .qFun {
   display: flex;
   align-items: center;
@@ -158,7 +254,7 @@ export default {
     resize: none;
     padding: 10px;
     line-height: 30px;
-    outline: none
+    outline: none;
   }
 }
 .q_body {
