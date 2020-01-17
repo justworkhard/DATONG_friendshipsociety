@@ -176,6 +176,12 @@ export function userSend(params) {
       'token':  sessionStorage.getItem('token') }}
   )
 }
+export function userRep(params) {
+  return axios.post(
+    `/api/app/userRep`,Qs.stringify(params),{ headers: {
+      'token':  sessionStorage.getItem('token') }}
+  )
+}
 export function getUsercollect(params) {
   return axios.post(
     `/api/app/userCollect`,Qs.stringify(params),{ headers: {

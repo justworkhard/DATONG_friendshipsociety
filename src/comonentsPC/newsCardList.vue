@@ -18,12 +18,9 @@ export default {
   props: ["data", 'count'],
   methods: {
     onChangePage(current) {
-      console.log(current);
       this.$emit('onChangePage',current)
     },
     toDetail(id){
-      console.log('=-=-=-=-=');
-      
       this.$emit('toDetail',id)
     }
   }

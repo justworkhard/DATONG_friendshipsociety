@@ -112,8 +112,6 @@ export default {
     );
     this.tabList = temp;
     getWebList(4).then(res => {
-      console.log('=-=-=-=-=',res.data.tInfoList);
-      
       this.dongtaiList = res.data.tInfoList;
     });
     getNewsList({

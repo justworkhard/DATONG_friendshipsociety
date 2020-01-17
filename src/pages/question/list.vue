@@ -30,11 +30,12 @@
         </div>
       </div>
     </div>
+    <div class="more" @click="more">{{count>pageNo*10?'加载更多':'无更多数据'}}</div>
   </div>
 </template>
 <script>
 import XHeader from "@/components/XHeader.vue";
-import { userSend, getUsercollect } from "@/service/api.js";
+import { userSend, getUsercollect, userRep } from "@/service/api.js";
 import { Confirm, Toast } from "vux";
 export default {
   components: {
@@ -53,36 +54,59 @@ export default {
   },
   created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-    switch (this.$route.query.type) {
-      case "fatie":
-        this.type = "发帖";
-        userSend({
-          pageNo: this.pageNo,
-          pageSize: 10,
-          userId: this.userInfo.userId
-        }).then(res => {
-          this.questionList = res.data.data;
-          this.count = res.data.count;
-        });
-        break;
-      case "huitie":
-        this.type = "回帖";
-        break;
-      case "colle":
-        this.type = "收藏";
-        getUsercollect({
-          pageNo: this.pageNo,
-          pageSize: 10,
-          userId: this.userInfo.userId
-        }).then(res => {
-          this.questionList = res.data.data;
-          this.count = res.data.count;
-        });
-        break;
-    }
+    this.onSearch();
   },
   methods: {
-    toList() {},
+    onSearch() {
+      switch (this.$route.query.type) {
+        case "fatie":
+          this.type = "发帖";
+          userSend({
+            pageNo: this.pageNo,
+            pageSize: 10,
+            userId: this.userInfo.userId
+          }).then(res => {
+            this.questionList = this.questionList.concat(res.data.data);
+            this.count = res.data.count;
+          });
+          break;
+        case "huitie":
+          this.type = "回帖";
+          userRep({
+            pageNo: this.pageNo,
+            pageSize: 10,
+            userId: this.userInfo.userId
+          }).then(res => {
+            let temp = []
+            res.data.data.forEach(element => {
+              temp.push(element.schild[0])
+            });
+            this.questionList = this.questionList.concat(temp);
+            this.count = res.data.count;
+          });
+          break;
+        case "colle":
+          this.type = "收藏";
+          getUsercollect({
+            pageNo: this.pageNo,
+            pageSize: 10,
+            userId: this.userInfo.userId
+          }).then(res => {
+            this.questionList = this.questionList.concat(res.data.data);
+            this.count = res.data.count;
+          });
+          break;
+      }
+    },
+    more() {
+      console.log(this.pageNo * 10 , this.count);
+      
+      if (this.pageNo * 10 >= this.count) {
+        return;
+      }
+      this.pageNo++;
+      this.onSearch();
+    },
     toDetail(id) {
       this.$router.push({
         path: "/question/detail",
@@ -95,6 +119,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.more {
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  margin: 10px 0px;
+}
 .questionItem {
   padding: 10px;
   margin-bottom: 150xp;

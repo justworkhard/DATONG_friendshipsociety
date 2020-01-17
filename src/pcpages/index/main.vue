@@ -227,12 +227,6 @@ export default {
       jifenList: [],
       readList: [],
       componyList: [],
-      // componyItem: {
-      //   title: "大同华林有限公司",
-      //   url: "http://www.dtpcmq.com/upload/20190301172227887.png",
-      //   introduct:
-      //     "山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商山西省大同市华林有限责任公司是一家大型商业零售企业，经营业态以购物中心和综合大卖场为主，现拥有华林商"
-      // },
       productList: [],
       productItem: {
         title: "大同市全域旅游直通车+大同旅游交通一卡行",

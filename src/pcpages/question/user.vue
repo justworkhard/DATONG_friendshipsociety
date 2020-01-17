@@ -65,7 +65,24 @@
       <!-- 我的回答 -->
       <div class="content" v-show="activeIndex === 2">
         <div class="title">我的回帖</div>
-        <div class="info_box"></div>
+        <div
+          class="question_item"
+          v-for="(item,index) in respList"
+          :key="index"
+          @click=" toDetail(item.id)"
+        >
+          <div class="q_header">
+            {{item.time}}
+            来自
+            <span class="user">{{item.username}}</span>
+          </div>
+          <div class="title">{{item.title}}</div>
+        </div>
+        <el-pagination
+          layout="prev, pager, next"
+          :total="respCount"
+          @current-change="respIndexChange"
+        ></el-pagination>
       </div>
       <!-- 我的发帖 -->
       <div class="content" v-show="activeIndex === 3">
@@ -74,7 +91,7 @@
           class="question_item"
           v-for="(item,index) in publicList"
           :key="index"
-          @click=" toDetail(item.id)"   
+          @click=" toDetail(item.id)"
         >
           <div class="q_header">
             {{item.time}}
@@ -98,7 +115,8 @@ import {
   getUsercollect,
   portraitUpload,
   updateUserInfo,
-  userSend
+  userSend,
+  userRep
 } from "@/service/api.js";
 export default {
   components: {
@@ -135,6 +153,14 @@ export default {
     }).then(res => {
       this.publicList = res.data.data;
       this.publicCount = res.data.count;
+    });
+    userRep({
+      pageNo: this.publicIndex,
+      pageSize: 10,
+      userId: this.userInfo.userId
+    }).then(res => {
+      this.respList = res.data.data;
+      this.respCount = res.data.count;
     });
   },
   methods: {

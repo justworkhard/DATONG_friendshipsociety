@@ -116,7 +116,7 @@ export default {
              sessionStorage.setItem('userInfo',JSON.stringify(res.data.userInfo))
              sessionStorage.setItem('isLogin',true)
              sessionStorage.setItem('token',res.data.token)
-            //  this.$router.push("/");
+             this.$router.push("/");
             
           }
         })

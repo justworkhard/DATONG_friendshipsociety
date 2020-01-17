@@ -57,15 +57,12 @@ export default {
           "/second/menu",
           true
         );
-        console.log(temp);
       }
 
       this.menuList = temp;
 
       this.menuList.forEach((item, index) => {
         if (item.id == this.$route.query.currenId) {
-          console.log("=-=-=-=watch");
-
           this.setActive(index);
         }
       });

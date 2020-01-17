@@ -7,7 +7,7 @@
     </div>
     <MSwiper :ptCode="0"></MSwiper>
     <!-- <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" auto></swiper> -->
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" :href="hrefs[0]">
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" >
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">

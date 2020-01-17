@@ -28,7 +28,8 @@ export default {
           url: "javascript:",
           img: element.picUrl,
           title: element.contentTitle,
-          contentId: element.contentId
+          contentId: element.contentId,
+          id: element.id
         });
       });
       this.carouselList = temp;
@@ -41,7 +42,9 @@ export default {
   },
   methods:{
     toDetail(id){
-      this.$router.push(`/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F&currentId=${12}`)
+      console.log(id,'==-=-=',this.carouselList);
+      
+      this.$router.push(`/newsdetail?newsId=${id}`)
       
     }
   }

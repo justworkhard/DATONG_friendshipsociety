@@ -45,7 +45,6 @@ export default {
     this.tabList.forEach((item,index)=>{
       
       if(item.id == this.$route.query.currentId){
-        console.log('ddd',index);
         this.activeIndex = index
         this.setActive(index)
       }
@@ -62,9 +61,10 @@ export default {
 
   },
   mounted() {
+    console.log('seconde=-');
+    
     let dom = document.getElementById("scrollContent");
     let scrollH = document.documentElement.clientHeight - dom.offsetTop;
-
     document.getElementById("scrollContent").style.height = `${scrollH}px`;
   },
 

@@ -2,83 +2,90 @@
   <div class="content">
     <div class="userInfo">
       <div class="info">
-        <img class="avadar" :src='userInfo.portrait' alt srcset />
+        <img class="avadar" :src="userInfo.portrait" alt srcset />
         <p>{{userInfo.username}}</p>
       </div>
-      <div class='editor' @click="toEditor">编辑</div>
+      <div class="editor" @click="toEditor">编辑</div>
     </div>
     <div class="myList">
       <div class="listItem" @click="toFatieList('fatie')">
-        <img src='@/assets/images/fatieList.png' alt srcset />
+        <img src="@/assets/images/fatieList.png" alt srcset />
         <p>发帖</p>
       </div>
       <div class="listItem" @click="toFatieList('huitie')">
-        <img src='@/assets/images/huitieList.png' alt srcset />
+        <img src="@/assets/images/huitieList.png" alt srcset />
         <p>回帖</p>
       </div>
       <div class="listItem" @click="toFatieList('colle')">
-        <img src='@/assets/images/shou.png' alt srcset />
+        <img src="@/assets/images/shou.png" alt srcset />
         <p>收藏</p>
       </div>
     </div>
+    <XButton style="margin-top:20px" type="warn" @click.native="logout">退出</XButton>
   </div>
 </template>
 <script>
 import XHeader from "@/components/XHeader.vue";
 import { upLoad, portraitUpload, updateUserInfo } from "@/service/api.js";
-import { Confirm, Toast } from "vux";
+import { Confirm, Toast, XButton } from "vux";
 export default {
   components: {
     XHeader,
     Confirm,
-    Toast
+    Toast,
+    XButton
   },
   data() {
     return {
-      userInfo: {},
-
+      userInfo: {}
     };
   },
   created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     console.log(this.userInfo);
-    
   },
   methods: {
-     toFatieList(type){
-       
-       this.$router.push({
-         path:'/question/list',
-         query: {
-           type: type
-         }
-         })
-     },
-     toEditor(){
-       this.$router.push('/question/editor')
-     }
+    logout() {
+      console.log('=-=-');
+      
+      sessionStorage.removeItem("isLogin", false);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userInfo");
+      this.$router.push("/login");
+    },
+    toFatieList(type) {
+      this.$router.push({
+        path: "/question/list",
+        query: {
+          type: type
+        }
+      });
+    },
+    toEditor() {
+      this.$router.push("/question/editor");
+    }
   }
 };
 </script>
 <style lang="less" scoped>
-.myList{
+.myList {
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(242, 242, 242);
   margin-top: 20px;
   border-radius: 10px;
-  .listItem{
+  .listItem {
     width: 50%;
     height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    img{
+    img {
       height: 40px;
       width: 40px;
     }
-}
+  }
 }
 .content {
   padding: 10px;
@@ -88,25 +95,25 @@ export default {
   border-radius: 10px;
   height: 140px;
   width: 100%;
-  .info{
+  .info {
     display: flex;
     align-items: center;
-    padding: 20px 10px;;
-    img{
+    padding: 20px 10px;
+    img {
       height: 50px;
       width: 50px;
       border-radius: 50%;
       margin-right: 10px;
     }
   }
-  .editor{
+  .editor {
     border: 1px solid #333;
     border-radius: 10px;
     width: 60px;
     text-align: center;
     float: right;
     margin-right: 20px;
-    background-color: #ffffff
+    background-color: #ffffff;
   }
 }
 </style>

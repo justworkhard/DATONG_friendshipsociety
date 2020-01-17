@@ -61,14 +61,11 @@ export default {
     };
   },
   created() {
-    console.log("this.defaultIndex", this.defaultIndex);
-
     this.changeTab(this.defaultIndex);
   },
   methods: {
     changeTab(index) {
       this.activeIndex = index;
-      console.log('=-=-=-=');
       this.$emit("onChangeTab", index);
     },
     toList(url) {

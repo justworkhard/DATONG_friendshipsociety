@@ -129,5 +129,6 @@ export default {
     text-align: center;
     margin-top: 20px;
     cursor: pointer;
+    color: #3385ff
 }
 </style>
