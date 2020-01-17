@@ -54,7 +54,6 @@ export default {
   },
   created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-    console.log(this.userInfo);
   },
   methods: {
     onCancelN() {},

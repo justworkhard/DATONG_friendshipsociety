@@ -32,8 +32,6 @@ export default {
       ptCode: 0
     },'/')
     this.navList = temp
-    console.log(temp);
-    
   },
   data() {
     return {

@@ -17,8 +17,8 @@
     </div>
     <div class="content">
       <div v-for="(item,index) in data" :key="index" class="news_item" @click="toDetail(item.id)">
-        <span>{{item.title}}</span>
-        <span class="date">{{item.date}}</span>
+        <span class="title">{{item.title}}</span>
+        <span class="date">{{item.createTime}}</span>
       </div>
       <div class="not_data" v-if="data.length === 0">
         暂无数据 
@@ -33,6 +33,8 @@ export default {
     toDetail(id) {
       this.$router.push(this.more+'&contentId='+id)
     }
+  },
+  created(){
   }
 };
 </script>
@@ -75,6 +77,13 @@ export default {
   .news_item {
     line-height: 28px;
     cursor: pointer;
+    .title{
+      display: inline-block;
+      width: 400px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
     .date {
       float: right;
     }

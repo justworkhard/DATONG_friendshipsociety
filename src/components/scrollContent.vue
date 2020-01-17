@@ -38,7 +38,6 @@ export default {
           this.scroll.refresh();
         }
         this.scroll.on("scroll", pos => {
-          // console.log(pos.y,this.dropDown)
           //如果下拉超过50px 就显示下拉刷新的文字
           if (pos.y > 50) {
             this.dropDown = true;

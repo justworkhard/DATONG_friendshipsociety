@@ -9,7 +9,6 @@ export default {
   props: ['newsItem'],
   methods:{
     toDetail(){
-      
       this.$emit('toDetail',this.newsItem.id)
     }
   }

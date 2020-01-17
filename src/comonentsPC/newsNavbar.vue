@@ -88,7 +88,6 @@ export default {
     },
     active(index) {
       this.activeIndex = index;
-      console.log(this.activeIndex);
     }
   }
 };

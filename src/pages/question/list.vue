@@ -99,8 +99,6 @@ export default {
       }
     },
     more() {
-      console.log(this.pageNo * 10 , this.count);
-      
       if (this.pageNo * 10 >= this.count) {
         return;
       }

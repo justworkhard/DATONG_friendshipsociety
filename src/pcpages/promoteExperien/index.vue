@@ -23,13 +23,13 @@
           <NewListCard
             icon="icon-zbgg"
             title="企业风貌"
-            :data="data"
+            :data="qiyefengmao"
             more="/second/menu?parentId=125&ptCode=10&currenId=132&indexUrl=%2Fpromote%2Fexperien&title=企业文化"
           ></NewListCard>
                     <NewListCard
             icon="icon-zbgg"
             title="管理感悟"
-            :data="newsList"
+            :data="guanliganwu"
             more="/second/menu?parentId=123&ptCode=10&currenId=127&indexUrl=%2Fpromote%2Fexperien&title=经营心得"
           ></NewListCard>
   
@@ -37,13 +37,13 @@
         <div class="col">
           <NewListCard
             icon="icon-zbgs"
-            :data="data"
+            :data="yuangongfengcai"
             title="员工风采"
             more="/second/menu?parentId=125&ptCode=10&currenId=133&indexUrl=%2Fpromote%2Fexperien&title=企业文化"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
-            :data="data"
+            :data="jingyanfenxaing"
             title="经验分享"
             more="/second/menu?parentId=123&ptCode=10&currenId=128&indexUrl=%2Fpromote%2Fexperien&title=经营心得"
           ></NewListCard>
@@ -111,8 +111,7 @@ export default {
           pageNo: "0"
         }).then(res => {
           this.newsList.push(res.data.data);
-          console.log(this.newsList, "this.newsList");
-        });
+ss        });
       });
     });
     getNewsList({

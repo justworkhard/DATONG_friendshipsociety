@@ -140,7 +140,6 @@ export default {
       false
     );
     this.tabList = temp;
-    console.log(this.tabList, "====================");
 
     getNewsList({
       colid: 3,
@@ -230,7 +229,6 @@ export default {
       this.$router.push("/readRank");
     },
     toRankInter() {
-      console.log("====");
 
       this.$router.push("/interRank");
     },

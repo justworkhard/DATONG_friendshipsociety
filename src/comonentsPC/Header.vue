@@ -45,8 +45,6 @@ export default {
     });
   },
   mounted() {
-    console.log('this.navs',this.navs);
-    
   },
   
   data() {

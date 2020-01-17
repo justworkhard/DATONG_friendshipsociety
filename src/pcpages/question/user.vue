@@ -189,11 +189,9 @@ export default {
       })
         .then(({ value }) => {
           if (type === "nick") {
-            console.log("valuenick", value);
 
             this.onConfirmU(value);
           } else {
-            console.log("valuename", value);
             this.onConfirmN(value);
           }
         })

@@ -172,7 +172,6 @@ export default {
       this.$router.push("/newsdetail?newsId=" + newsId);
     },
     onChangeTabs(id) {
-      // console.log(id);
     }
   },
   data() {

@@ -52,8 +52,6 @@ export default {
           this.tipMessage = '请输入问题内容'
           return
       }
-      console.log(sessionStorage.getItem("token"));
-      
       saveInvitation({
         colid: "1",
         content: this.editor.txt.html(),

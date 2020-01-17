@@ -79,11 +79,19 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(8).then(res => {
+      
       res.data.devColumnList.forEach(element => {
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
             url = item.url || "";
+          }
+          if(item.secondMenu){
+            item.secondMenu.forEach(item=>{
+              if(item.title === element.columnName){
+                url = item.url || "";
+              }
+            })
           }
         });
         this.TabsList.push({
@@ -97,7 +105,6 @@ export default {
           pageNo: "0"
         }).then(res => {
           this.newsList.push(res.data.data);
-          console.log(this.newsList, "this.newsList");
         });
       });
     });

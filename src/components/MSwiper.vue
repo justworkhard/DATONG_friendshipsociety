@@ -42,8 +42,6 @@ export default {
   },
   methods:{
     toDetail(id){
-      console.log(id,'==-=-=',this.carouselList);
-      
       this.$router.push(`/newsdetail?newsId=${id}`)
       
     }

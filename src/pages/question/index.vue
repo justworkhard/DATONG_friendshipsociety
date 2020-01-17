@@ -65,7 +65,6 @@ export default {
     }
   },
   created() {
-    // console.log('this.$route',);
     switch (this.$route.path) {
       case "/question":
         this.activeIndex = 1;

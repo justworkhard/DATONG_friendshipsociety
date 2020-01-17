@@ -42,12 +42,9 @@ export default {
   },
   created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-    console.log(this.userInfo);
   },
   methods: {
     logout() {
-      console.log('=-=-');
-      
       sessionStorage.removeItem("isLogin", false);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("userInfo");

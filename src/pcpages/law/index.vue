@@ -82,8 +82,6 @@ export default {
           pageNo: "0"
         }).then(res => {
           this.newsList.push(res.data.data)
-          console.log(this.newsList,'this.newsList');
-          
         });
       });
     });

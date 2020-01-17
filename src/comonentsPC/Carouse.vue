@@ -27,8 +27,6 @@ export default {
       }else{
         this.activeIndex = 0
       }
-      console.log(this.activeIndex);
-      
     },2000)
   },
   destroyed(){

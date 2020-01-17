@@ -66,7 +66,6 @@ export default {
   },
   created() {
     this.identifyCode = this.random();
-    console.log(this.$route.query.type);
     if (this.$route.query.type === "login") {
       this.activeIndex = 0;
     } else {
@@ -110,8 +109,6 @@ export default {
         password: this.l_password
       })
         .then(res => {
-          console.log(res.data);
-          
           if(res.data.code === 0){
              sessionStorage.setItem('userInfo',JSON.stringify(res.data.userInfo))
              sessionStorage.setItem('isLogin',true)

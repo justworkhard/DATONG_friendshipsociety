@@ -22,7 +22,7 @@ export default {
   methods: {
     onSearch() {
       this.$router.push(
-        `/search?keyword=${this.keyword}&ptCode=${this.ptCode}`
+        `/search?keyword=${this.keyword}&ptCode=${this.ptCode}&`
       );
     }
   }

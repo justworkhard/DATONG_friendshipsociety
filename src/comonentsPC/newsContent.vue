@@ -1,10 +1,7 @@
 <template>
   <div>
-    <!-- <div class="title">
-      <h2>{{data.title}}</h2>
-      <div class="date">{{'发布日期:[ '+data.createTime+' ]'}}</div>
-    </div>-->
-    <div class="content_html" v-html="data.content"></div>
+    <div class="content_html" :style="styles" v-html="data.content"></div>
+    <p class="readed">阅读量：{{data.amountRead}}</p>
     <div class="next">
       上一篇：
       <a @click="toPre">{{pre?pre.title:'无'}}</a>
@@ -21,7 +18,7 @@ import { getNewsContent, getNextContent } from "@/service/api";
 import { Loading } from "element-ui";
 export default {
   components: { NewsCard },
-  props: ["contentId"],
+  props: ["contentId", 'styles'],
   watch: {
     contentid(curV, oldV) {
       let loadingInstance = Loading.service({ fullscreen: true });
@@ -60,10 +57,7 @@ export default {
     };
   },
   methods: {
-    // onChangePage(current) {
-    //   console.log(current);
-    //   this.$emit("onChangePage", current);
-    // }
+
     toPre() {
       if (this.pre && this.pre.id) {
         this.contentid = this.pre.id;
@@ -79,6 +73,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.readed{
+  padding: 10px 0px;
+  color: #999
+}
 .title {
   border-bottom: 1px solid #ddd;
   margin-bottom: 20px;

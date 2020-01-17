@@ -113,7 +113,6 @@ export default {
       })
     },
     onChangePage(current) {
-      console.log("parent oage ");
     }
   }
 };

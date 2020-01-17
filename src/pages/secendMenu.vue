@@ -61,8 +61,6 @@ export default {
 
   },
   mounted() {
-    console.log('seconde=-');
-    
     let dom = document.getElementById("scrollContent");
     let scrollH = document.documentElement.clientHeight - dom.offsetTop;
     document.getElementById("scrollContent").style.height = `${scrollH}px`;

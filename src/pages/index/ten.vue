@@ -28,8 +28,6 @@ export default {
   methods: {
     getImage(index) {
       let url = `/src/assets/images/mipmap-hdpi/ten_${index}.png`;
-      console.log(url);
-
       return url;
     }
   }

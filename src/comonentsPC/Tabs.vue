@@ -89,6 +89,8 @@ export default {
         this.TabsList[this.activeIndex].url + "&contentId=" + id
       );
     }
+  },
+  created(){
   }
 };
 </script>

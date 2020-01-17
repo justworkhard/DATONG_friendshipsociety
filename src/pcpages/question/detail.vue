@@ -101,8 +101,6 @@ export default {
   methods: {
     showRespon(index){
        this.reparentList[index].showChild = !this.reparentList[index].showChild
-       console.log(this.reparentList[index].showChild ,index);
-       
     },
     sendToQJ(id, content, juID) {
       let params = {

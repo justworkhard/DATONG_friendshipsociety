@@ -166,13 +166,19 @@ let RouterPC = new Router({
         {
           path: "/second/menu/solo",
           component: resolve => require(["@/pcpages/secondMenuSolo"], resolve)
-        }
+        },
+     
       ]
+    },
+    {
+      path: "/detail",
+      component: resolve => require(["@/pcpages/detail"], resolve)
     },
     {
       path: "/question",
       component: resolve => require(["@/pcpages/question"], resolve)
     },
+
     {
       path: "/login",
       component: resolve => require(["@/pcpages/login"], resolve)

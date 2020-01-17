@@ -55,11 +55,8 @@ export default {
   methods: {
     load() {
       this.newsList.push(0)
-      console.log(this.newsList);
-      
     },
     refresh() {
-      console.log("refresh");
     }
   }
 };

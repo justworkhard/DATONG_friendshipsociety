@@ -1,23 +1,11 @@
 <template>
-  <div class="contener">
-    <ul class="left_menu">
-      <li
-        @click="setActive(index)"
-        :class="{'active': index === 0}"
-        v-for="(item,index) in menuList"
-        :key="index"
-      >
-        <a>{{item?item.title:''}}</a>
-      </li>
-    </ul>
+  <div>
+    <Welcome></Welcome>
+    <div class="Dheader">
+      <img src="@/assets/images/logo.jpg" alt class="logo" />
+      <p class="navbar" @click="()=>{this.$router.go(-1)}">返回</p>
+    </div>
     <div class="right">
-      <div class="crumbs">
-        <span>您的位置：</span>
-        <a>首页></a>
-        <span href="/">{{menuList[0]?menuList[0].title+'>':''}}</span>
-        <span href="/" v-if="showContent">{{selectNew?selectNew.title:''}}</span>
-      </div>
-
       <NewsCardList
         v-if="!showContent"
         @toDetail="toDetail"
@@ -25,24 +13,28 @@
         @onChangePage="onChangePage"
         :count="count"
       ></NewsCardList>
-      <NewsContent v-if="showContent" :contentId="contentId"></NewsContent>
+      <NewsContent v-if="showContent" :contentId="contentId" :styles="{'width':'1200px'}"></NewsContent>
       <p class="noData" v-show="data.length <= 0 &&!showContent">暂无数据</p>
     </div>
   </div>
 </template>
 <script>
 import NewsCardList from "@/comonentsPC/newsCardList";
+import Header from "@/comonentsPC/Header.vue";
+import Welcome from "@/comonentsPC/welcome.vue";
 import NewsContent from "@/comonentsPC/newsContent";
 import { getCarouselList, getIndexList, getNewsList } from "@/service/api";
 
 export default {
-  components: { NewsCardList, NewsContent },
+  components: { NewsCardList, NewsContent, Welcome, Header },
   watch: {
     async $route(to, from) {
-      let temp = [{
+      let temp = [
+        {
           title: this.$route.query.title,
           id: this.$route.query.id
-        }];
+        }
+      ];
       if (
         this.$route.query.title &&
         this.$route.query.id &&
@@ -57,8 +49,7 @@ export default {
           "/second/menu",
           true
         );
-        temp = temp.concat(res)
-
+        temp = temp.concat(res);
       }
 
       this.menuList = temp;
@@ -76,9 +67,9 @@ export default {
   async created() {
     let temp = [
       {
-          title: this.$route.query.title,
-          id: this.$route.query.parentId
-        }
+        title: this.$route.query.title,
+        id: this.$route.query.parentId
+      }
     ];
 
     if (
@@ -95,7 +86,7 @@ export default {
         "/second/menu",
         true
       );
-      temp = temp.concat(res)
+      temp = temp.concat(res);
     }
 
     this.menuList = temp;
@@ -143,13 +134,13 @@ export default {
       });
     },
     setActive(index, ifShowContent) {
-
       let _this = this;
       this.selectMenu = index;
       ifShowContent ? "" : (this.showContent = false);
       let temp = this.menuList[index];
       this.menuList.splice(index, 1);
       this.menuList.unshift(temp);
+
       getNewsList({
         // colid: 2,
         colid: temp.id,
@@ -178,13 +169,80 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.noData{
-  color: #999
+.Dheader {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  .logo {
+    width: 270px;
+    padding: 10px 0;
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    margin: 0 25px;
+    height: 90px;
+    // -webkit-transition: all 0.4s;
+    // transition: all 0.4s;
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    padding-right: 20px;
+    &:hover {
+      color: #b61412;
+      background: url("/src/assets/images/mipmap-xxxhdpi/down.png")
+        /*tpa=http://www.ebidding.com.cn/themes/basic/skin/images/img275.png*/
+        no-repeat right center;
+
+      .navbar_menu {
+        color: #b61412;
+        visibility: visible;
+        opacity: 1;
+        top: 25px;
+      }
+    }
+    .navbar_menu {
+      width: 134px;
+      position: absolute;
+      left: 0;
+      top: 50px;
+      box-shadow: 0 4px 15px 0 rgba(0, 12, 49, 0.5);
+      background: #ffffff;
+      font-weight: normal;
+      z-index: 100000;
+      opacity: 0;
+      visibility: hidden;
+      -webkit-transform: translateY(43px);
+      transform: translateY(43px);
+      -webkit-transition: all 0.4s;
+      transition: all 0.4s;
+      .item {
+        font-size: 14px;
+        line-height: 40px;
+        height: 40px;
+        display: block;
+        color: #333;
+        padding: 0 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        &:hover {
+          color: #fff;
+          background-color: #b61412;
+        }
+      }
+    }
+  }
+}
+.noData {
+  color: #999;
 }
 .contener {
   width: 1200px;
   margin: 20px auto;
-  display: flex;
+  //   display: flex;
 }
 .left_menu {
   width: 285px;
@@ -243,16 +301,11 @@ export default {
 }
 .right {
   flex: 1;
-  margin-left: 30px;
-  .crumbs {
-    font-size: 14px;
-    height: 40px;
-    line-height: 30px;
-    border-bottom: 1px solid #ddd;
-    color: #777;
-    a {
-      color: #333;
-    }
+  width: 1200px;
+  margin: 0 auto;
+  .content_html {
+    overflow-x: scroll;
+    width: 1200px !important;
   }
 }
 </style>

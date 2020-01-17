@@ -132,11 +132,6 @@ export default {
       qiyexingyong: [],
       newsList: [],
       data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
       ],
       TabsList: [
         {
@@ -152,23 +147,6 @@ export default {
           url: "/social/information/other/menu?title=金融信息"
         }
       ],
-
-      demo01_index: 1,
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };
