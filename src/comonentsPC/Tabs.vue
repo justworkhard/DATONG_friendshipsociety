@@ -182,6 +182,10 @@ export default {
   .news_item {
     line-height: 28px;
     cursor: pointer;
+    max-width: 448px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     .date {
       float: right;
     }

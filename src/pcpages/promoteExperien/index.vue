@@ -93,7 +93,7 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(10).then(res => {
-      res.data.devColumnList.forEach(element => {
+      res.data.devColumnList.forEach((element,index) => {
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
@@ -110,8 +110,8 @@ export default {
           pageSize: "5",
           pageNo: "0"
         }).then(res => {
-          this.newsList.push(res.data.data);
-ss        });
+          this.newsList[index] = res.data.data;
+        });
       });
     });
     getNewsList({
