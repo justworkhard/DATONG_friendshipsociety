@@ -123,7 +123,7 @@ export default {
     });
     getNewsList({
       ptCode: "8",
-      colid: "139",
+      colid: "109",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {

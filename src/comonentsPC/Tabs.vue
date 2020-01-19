@@ -9,7 +9,7 @@
         v-on:click="changeTab(index)"
       >{{item.title}}</p>
       <div class="more_top" v-if="Type === 'top'">
-        <a :href="'#'+TabsList[activeIndex].url">更多>></a>
+        <a :href="'#'+TabsList[activeIndex].url" v-if="TabsList[activeIndex]">更多>></a>
       </div>
     </div>
     <div class="content">
@@ -25,12 +25,12 @@
           class="news_item"
           @click="toDetail(item2.id)"
         >
-          <span>{{item2.title}}</span>
-          <span class="date">{{item2.date}}</span>
+          <span class="Ntitle">{{item2.title}}</span>
+          <span class="date">{{item2.createTime}}</span>
         </div>
       </div>
       <div class="more" v-if="Type !== 'top'">
-        <a :href="'#'+TabsList[activeIndex].url">更多>></a>
+        <a :href="'#'+TabsList[activeIndex].url" v-if="TabsList[activeIndex]">更多>></a>
       </div>
     </div>
   </div>
@@ -90,16 +90,15 @@ export default {
       );
     }
   },
-  created(){
-  }
+  created() {}
 };
 </script>
 <style lang="less" scoped>
 .more_top {
-  position: absolute;;
+  position: absolute;
   right: 10px;
-  a{
-  color: #646464;
+  a {
+    color: #646464;
   }
 }
 .label {
@@ -180,12 +179,18 @@ export default {
   font-size: 14px;
   display: none;
   .news_item {
-    line-height: 28px;
     cursor: pointer;
-    max-width: 448px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .Ntitle {
+      line-height: 28px;
+      max-width: 350px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block
+    }
     .date {
       float: right;
     }

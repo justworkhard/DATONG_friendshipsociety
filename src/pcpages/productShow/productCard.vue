@@ -1,7 +1,7 @@
 <template>
   <div class="product_card">
     <div class="logo">
-      <img :src="data.url" alt srcset>
+      <img :src="data.minPicAddress" alt srcset>
     </div>
     <div class="content">
       <div class="title">
@@ -10,7 +10,7 @@
       </div>
       <div class="introduct">
         <img src="@/assets/images/mipmap-xxxhdpi/icon_compony_txt.png" alt srcset>
-        <span>{{data.introduct}}</span>
+        <span>{{data.summary}}</span>
       </div>
       <a :href="'#/'" class="detail">详情>></a>
     </div>

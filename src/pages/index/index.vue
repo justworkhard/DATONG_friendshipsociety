@@ -7,7 +7,7 @@
     </div>
     <MSwiper :ptCode="0"></MSwiper>
     <!-- <swiper :aspect-ratio="300/800" height="200px" :list="carouselList" auto></swiper> -->
-    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" >
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -34,10 +34,7 @@
     </Tabs>
     <Tabs :TabsList="[{title:'在线问答'}]" @onChangeTab="onChangeTabs">
       <div class="questionList">
-        <div class="question" @click="toQuestion(1)">政府办公室</div>
-        <div class="question" @click="toQuestion(2)">外事办公室</div>
-        <div class="question" @click="toQuestion(3)">税务所</div>
-        <div class="question" @click="toQuestion(4)">工商所</div>
+        <div class="question" @click="toQuestion(item.id)" v-for="(item,index) in departmentList" :key="index">{{item.departName}}</div>
       </div>
     </Tabs>
     <Tabs id="ten" :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
@@ -115,7 +112,8 @@ import {
   getCarouselList,
   getNewsList,
   getSororityList,
-  getContentCarouselList
+  getContentCarouselList,
+  getDepartList
 } from "@/service/api";
 
 export default {
@@ -131,6 +129,9 @@ export default {
     MSwiper
   },
   async created() {
+    getDepartList().then(res => {
+      this.departmentList = res.data.departmentList;
+    });
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -179,6 +180,7 @@ export default {
   },
   data() {
     return {
+      departmentList: [],
       about: {},
       qiyexingxi: [],
       huodong: [],
@@ -217,19 +219,18 @@ export default {
     };
   },
   methods: {
-    toQuestion(index){
+    toQuestion(index) {
       this.$router.push({
-        path:'/question',
+        path: "/question",
         query: {
           qCode: index
         }
-      })
+      });
     },
     toRankRead() {
       this.$router.push("/readRank");
     },
     toRankInter() {
-
       this.$router.push("/interRank");
     },
     demo01_onIndexChange() {},
@@ -245,15 +246,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.questionList{
+.questionList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  .question{
+  justify-content: start;
+  .question {
     height: 120px;
     background-color: #4798ef;
-    width: 40%;
-    margin-top: 20px;
+    width: 42%;
+    margin: 20px 4% 0 4%;
     display: flex;
     flex-direction: column;
     justify-content: center;

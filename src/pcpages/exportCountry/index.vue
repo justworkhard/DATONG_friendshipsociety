@@ -106,7 +106,7 @@ export default {
           url: url
         });
         getNewsList({
-          ptCode: 10,
+          ptCode: 9,
           colid: element.id,
           pageSize: "5",
           pageNo: "0"
