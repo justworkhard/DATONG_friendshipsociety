@@ -26,13 +26,12 @@
             :data="fuwuye"
             more="/second/menu?parentId=71&ptCode=4&currenId=76&indexUrl=%2Fproject%2Fpromot&title=项目介绍"
           ></NewListCard>
-             <NewListCard
+          <NewListCard
             icon="icon-zbgg"
             title="文化旅游"
             :data="wenhualvyou"
             more="/second/menu?parentId=71&ptCode=4&currenId=78&indexUrl=%2Fproject%2Fpromot&title=项目介绍"
           ></NewListCard>
-   
         </div>
         <div class="col">
           <NewListCard
@@ -93,7 +92,8 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(4).then(res => {
-      res.data.devColumnList.forEach(element => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
@@ -112,10 +112,10 @@ export default {
         }).then(res => {
           this.newsList.push(res.data.data);
         });
-      });
+      }
     });
 
-                getNewsList({
+    getNewsList({
       ptCode: "4",
       colid: "76",
       pageSize: "10",
@@ -123,7 +123,7 @@ export default {
     }).then(res => {
       this.fuwuye = res.data.data;
     });
-                getNewsList({
+    getNewsList({
       ptCode: "4",
       colid: "77",
       pageSize: "10",
@@ -131,7 +131,7 @@ export default {
     }).then(res => {
       this.zhizhaoye = res.data.data;
     });
-                getNewsList({
+    getNewsList({
       ptCode: "4",
       colid: "78",
       pageSize: "10",
@@ -139,7 +139,7 @@ export default {
     }).then(res => {
       this.wenhualvyou = res.data.data;
     });
-                   getNewsList({
+    getNewsList({
       ptCode: "4",
       colid: "75",
       pageSize: "10",

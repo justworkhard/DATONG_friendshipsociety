@@ -14,7 +14,7 @@
             <input type="text" placeholder="用户名" v-model="l_name" />
           </div>
           <div class="inputBox">
-            <input type="text" placeholder="密码" v-model="l_password" />
+            <input type="password" placeholder="密码" v-model="l_password" />
           </div>
           <div class="checkBox">
             <input type="text" placeholder="验证码" v-model="l_checkCode" />

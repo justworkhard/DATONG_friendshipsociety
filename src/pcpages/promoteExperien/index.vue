@@ -26,13 +26,12 @@
             :data="qiyefengmao"
             more="/second/menu?parentId=125&ptCode=10&currenId=132&indexUrl=%2Fpromote%2Fexperien&title=企业文化"
           ></NewListCard>
-                    <NewListCard
+          <NewListCard
             icon="icon-zbgg"
             title="管理感悟"
             :data="guanliganwu"
             more="/second/menu?parentId=123&ptCode=10&currenId=127&indexUrl=%2Fpromote%2Fexperien&title=经营心得"
           ></NewListCard>
-  
         </div>
         <div class="col">
           <NewListCard
@@ -84,6 +83,7 @@ export default {
     NewListCard
   },
   async created() {
+    let _this = this;
     let temp = await this.getIndexList(
       {
         parentId: "web",
@@ -92,8 +92,9 @@ export default {
       "/promote/experien"
     );
     this.navList = temp;
-    getDevColumnList(10).then(res => {
-      res.data.devColumnList.forEach((element,index) => {
+    getDevColumnList(10).then(async res => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
@@ -104,15 +105,15 @@ export default {
           title: element.columnName,
           url: url
         });
-        getNewsList({
+        await getNewsList({
           ptCode: 10,
           colid: element.id,
           pageSize: "5",
           pageNo: "0"
         }).then(res => {
-          this.newsList[index] = res.data.data;
+          this.newsList.push(res.data.data);
         });
-      });
+      }
     });
     getNewsList({
       ptCode: "10",
@@ -156,7 +157,7 @@ export default {
       jingyanfenxaing: [],
       data: [],
       newsList: [],
-      TabsList: [],
+      TabsList: []
     };
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Welcome></Welcome>
-    <Header :navs="navList" :ptCode='7'></Header>
+    <Header :navs="navList" :ptCode="7"></Header>
     <div class="main">
       <div class="row">
         <div class="swiper_box">
@@ -65,7 +65,8 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(7).then(res => {
-      res.data.devColumnList.forEach(element => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
@@ -84,7 +85,7 @@ export default {
         }).then(res => {
           this.newsList.push(res.data.data);
         });
-      });
+      }
     });
     getNewsList({
       ptCode: "7",

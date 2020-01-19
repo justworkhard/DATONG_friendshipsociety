@@ -61,7 +61,12 @@ import NewsNavbar from "@/comonentsPC/newsNavbar.vue";
 import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
-import { getCarouselList, getIndexList, getNewsList ,getDevColumnList} from "@/service/api";
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getDevColumnList
+} from "@/service/api";
 
 import { Swiper, SwiperItem } from "vux";
 
@@ -88,7 +93,8 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(9).then(res => {
-      res.data.devColumnList.forEach(element => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
@@ -107,7 +113,7 @@ export default {
         }).then(res => {
           this.newsList.push(res.data.data);
         });
-      });
+      }
     });
     getNewsList({
       ptCode: "9",

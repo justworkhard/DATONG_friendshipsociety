@@ -12,7 +12,12 @@
       </div>
       <div class="row">
         <div class="col">
-          <NewListCard icon="icon-zbgg" title="商标法" :data="shangbiaofa" more='/second/menu?parentId=33&ptCode=2&currenId=60&indexUrl=%2Flaw&title=指导案例'></NewListCard>
+          <NewListCard
+            icon="icon-zbgg"
+            title="商标法"
+            :data="shangbiaofa"
+            more="/second/menu?parentId=33&ptCode=2&currenId=60&indexUrl=%2Flaw&title=指导案例"
+          ></NewListCard>
           <NewListCard
             title="劳动法"
             icon="icon-two"
@@ -21,8 +26,18 @@
           ></NewListCard>
         </div>
         <div class="col">
-          <NewListCard icon="icon-zbgs" :data="zuzuoquan" title="著作权法" more='second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法'></NewListCard>
-          <NewListCard icon="icon-scjg" :data="zhuanlifa" title="专利法" more='second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法'></NewListCard>
+          <NewListCard
+            icon="icon-zbgs"
+            :data="zuzuoquan"
+            title="著作权法"
+            more="second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法"
+          ></NewListCard>
+          <NewListCard
+            icon="icon-scjg"
+            :data="zhuanlifa"
+            title="专利法"
+            more="second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法"
+          ></NewListCard>
         </div>
       </div>
     </div>
@@ -39,7 +54,12 @@ import MCarousel from "@/comonentsPC/Carouse.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList ,getDevColumnList } from "@/service/api";
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getDevColumnList
+} from "@/service/api";
 
 export default {
   components: {
@@ -64,11 +84,12 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(2).then(res => {
-      res.data.devColumnList.forEach(element => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
-            url = item.url||'';
+            url = item.url || "";
           }
         });
         this.TabsList.push({
@@ -81,11 +102,11 @@ export default {
           pageSize: "5",
           pageNo: "0"
         }).then(res => {
-          this.newsList.push(res.data.data)
+          this.newsList.push(res.data.data);
         });
-      });
+      }
     });
-        getNewsList({
+    getNewsList({
       ptCode: "2",
       colid: "60",
       pageSize: "10",
@@ -122,42 +143,12 @@ export default {
     return {
       laodongfa: [],
       navList: [],
-      data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
-      ],
+      data: [],
       shangbiaofa: [],
       zuzuoquan: [],
       zhuanlifa: [],
       newsList: [],
-      TabsList: [],
-
-      demo01_index: 1,
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
+      TabsList: []
     };
   }
 };

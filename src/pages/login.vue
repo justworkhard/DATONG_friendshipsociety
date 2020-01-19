@@ -1,13 +1,13 @@
 <template>
   <div class="body">
     <div class="logo">
-      <img src="@/assets/images/logoPhone.png" class="logo" alt srcset />
+      <img src="@/assets/images/logoPhone.png" class="logo" alt srcset @click="()=>{this.$router.go(-1)}"/>
     </div>
     <div class="inputBox">
       <input type="text" placeholder="用户名" v-model="l_name"/>
     </div>
     <div class="inputBox">
-      <input type="text" placeholder="密码长度6-20位" v-model="l_password"/>
+      <input type="password" placeholder="密码长度6-20位" v-model="l_password"/>
     </div>
     <div class="checkBox">
       <input type="text" placeholder="验证码" v-model="l_checkCode"/>
@@ -81,7 +81,9 @@ export default {
 <style lang="less" scoped>
 .body {
   padding: 50px 40px 0 40px;
+  position: relative;
 }
+
 .logo {
   text-align: center;
   img {

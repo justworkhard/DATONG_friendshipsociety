@@ -18,7 +18,7 @@
             :data="hangyebiaozhi"
             more="/second/menu?parentId=109&ptCode=8&currenId=137&indexUrl=%2Fsocial%2Finformation&title=企业管理信息"
           ></NewListCard>
-                <NewListCard
+          <NewListCard
             icon="icon-zbgg"
             title="企业信息管理"
             :data="qiyexingxi"
@@ -54,7 +54,12 @@ import Footer from "@/comonentsPC/Footer.vue";
 import SearchBox from "@/comonentsPC/Search.vue";
 import NewListCard from "@/comonentsPC/newListCard.vue";
 import { Swiper, SwiperItem } from "vux";
-import { getCarouselList, getIndexList, getNewsList ,getDevColumnList } from "@/service/api";
+import {
+  getCarouselList,
+  getIndexList,
+  getNewsList,
+  getDevColumnList
+} from "@/service/api";
 
 export default {
   components: {
@@ -79,19 +84,19 @@ export default {
     );
     this.navList = temp;
     getDevColumnList(8).then(res => {
-      
-      res.data.devColumnList.forEach(element => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
             url = item.url || "";
           }
-          if(item.secondMenu){
-            item.secondMenu.forEach(item=>{
-              if(item.title === element.columnName){
+          if (item.secondMenu) {
+            item.secondMenu.forEach(item => {
+              if (item.title === element.columnName) {
                 url = item.url || "";
               }
-            })
+            });
           }
         });
         this.TabsList.push({
@@ -106,7 +111,7 @@ export default {
         }).then(res => {
           this.newsList.push(res.data.data);
         });
-      });
+      }
     });
     getNewsList({
       ptCode: "8",

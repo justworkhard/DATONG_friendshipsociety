@@ -34,7 +34,12 @@ export default {
       sessionStorage.removeItem('isLogin',false)
       sessionStorage.removeItem('token')
       sessionStorage.removeItem('userInfo')
-      this.$router.push("/login");
+      this.$router.push({
+        path: "/login",
+        query:{
+          type: 'login'
+        }
+      });
     }
   }
 };

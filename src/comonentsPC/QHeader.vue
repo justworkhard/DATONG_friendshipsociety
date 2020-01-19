@@ -1,14 +1,17 @@
 <template>
   <div>
     <div class="header">
-      <img src="@/assets/images/mipmap-xxxhdpi/logo.png" alt class="logo"  @click="toIndex"/>
+      <img src="@/assets/images/mipmap-xxxhdpi/logo.png" alt class="logo" @click="toIndex" />
       <div class="navbar" @click="()=>{this.$router.push('/question')}">首页</div>
       <div class="search">
         <input type="text" />
         <img src="@/assets/images/mipmap-hdpi/icon_search.png" alt srcset />
       </div>
       <div class="avadar" @click="toCenter">
-        <img :src="userInfo.portrait" alt="" srcset="">
+        <img :src="userInfo.portrait" alt srcset v-if="userInfo" />
+        <div class="funList">
+          <p @click="logout">退出</p>
+        </div>
       </div>
     </div>
   </div>
@@ -21,10 +24,9 @@ export default {
   components: { Carousel },
   props: ["navs", "ptCode"],
   created() {
-    this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+    this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   },
-  mounted() {
-  },
+  mounted() {},
 
   data() {
     return {
@@ -32,26 +34,53 @@ export default {
       userInfo: {}
     };
   },
-  methods:{
-    toCenter(){
-      this.$router.push('/user')
+  methods: {
+    toCenter() {
+      this.$router.push("/user");
     },
-    toIndex(){
-      this.$router.push('/')
+    toIndex() {
+      this.$router.push("/");
+    },
+    logout() {
+      sessionStorage.removeItem("isLogin", false);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("userInfo");
+      this.$router.push({
+        path: "/login",
+        query: {
+          type: "login"
+        }
+      });
     }
   }
 };
 </script>
 <style lang="less" scoped>
-.avadar{
+.avadar {
   flex: 1;
   text-align: right;
   cursor: pointer;
-  img{
-   height: 40px;
-   width: 40px;
-  border-radius: 50%;
-
+  position: relative;
+  &:hover {
+    .funList {
+      display: block;
+    }
+  }
+  .funList {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    color: #ffffff;
+    width: 80px;
+    text-align: center;
+    padding: 5px 0px;
+    right: -10px;
+    z-index: 999999;
+  }
+  img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
   }
 }
 .search {

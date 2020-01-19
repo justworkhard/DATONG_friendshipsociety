@@ -334,7 +334,7 @@ route.beforeEach((to, from, next) => {
       next();
     } else {
       next({
-        path: "/login",
+        path: "/login?type=login",
       });
     }
   } else {

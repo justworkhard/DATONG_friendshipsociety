@@ -95,7 +95,8 @@ export default {
     this.navList = temp;
 
     getDevColumnList(1).then(res => {
-      res.data.devColumnList.forEach(element => {
+      for (let index = 0; index < res.data.devColumnList.length; index++) {
+        const element = res.data.devColumnList[index];
         let url = "";
         this.navList.forEach(item => {
           if (item.title === element.columnName) {
@@ -112,9 +113,9 @@ export default {
           pageSize: "5",
           pageNo: "0"
         }).then(res => {
-          this.newsList.push(res.data.data)
+          this.newsList.push(res.data.data);
         });
-      });
+      }
     });
     getNewsList({
       ptCode: "1",
