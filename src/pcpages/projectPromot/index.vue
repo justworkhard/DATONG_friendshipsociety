@@ -15,7 +15,7 @@
         <div class="swiper_box">
           <MCarousel :ptCode="4"></MCarousel>
         </div>
-        <Tabs :TabsList="TabsList"></Tabs>
+        <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
         <SearchBox :ptCode="4"></SearchBox>
       </div>
       <div class="row">
@@ -151,34 +151,13 @@ export default {
   data() {
     return {
       navList: [],
-      data: [
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" },
-        { title: "中华人民共和国商标法（一）", date: "2019-1-13" }
-      ],
+      data: [],
+      newsList: [],
       fuwuye: [],
       zhizhaoye: [],
       wenhualvyou: [],
       xiandainongye: [],
       TabsList: [],
-      demo01_index: 1,
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };

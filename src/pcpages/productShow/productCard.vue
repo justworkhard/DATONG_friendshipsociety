@@ -12,7 +12,7 @@
         <img src="@/assets/images/mipmap-xxxhdpi/icon_compony_txt.png" alt srcset>
         <span>{{data.summary}}</span>
       </div>
-      <a :href="'#/'" class="detail">详情>></a>
+      <a :href="`#/second/menu?title=产品展示&id=105&parentId=105&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=105&contentId=${data.id}`" class="detail">详情>></a>
     </div>
   </div>
 </template>

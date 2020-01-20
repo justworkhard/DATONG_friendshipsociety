@@ -42,7 +42,7 @@ export default {
 .newsList {
   border: 1px solid #ddd;
   border-radius: 4px;
-  min-height: 359px;
+  height: 359px;
   overflow: hidden;
   width: 573px;
   margin-bottom: 10px;

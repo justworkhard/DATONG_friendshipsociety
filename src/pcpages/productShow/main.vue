@@ -95,39 +95,7 @@ export default {
       zhanshi: [],
       data: [],
       TabsList: [
-        {
-          title: "新闻动态",
-          url:
-            "/second/menu?title=新闻动态&id=102&parentId=102&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=102"
-        },
-        {
-          title: "参展须知",
-          url:
-            "/second/menu?title=参展须知&id=103&parentId=103&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=103"
-        },
-        {
-          title: "参展商",
-          url:
-            "/second/menu?title=参展商&id=104&parentId=104&ptCode=7&indexUrl=%2Fproject%2Fshow&hadChild=fale&currenId=104"
-        }
       ],
-
-      demo01_index: 1,
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };

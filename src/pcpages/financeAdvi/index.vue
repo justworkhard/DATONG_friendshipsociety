@@ -16,7 +16,7 @@
           <MCarousel :ptCode="5"></MCarousel>
         </div>
         <Tabs :TabsList="TabsList" :newsList="newsList"></Tabs>
-        <SearchBox></SearchBox>
+        <SearchBox :ptCode="5"></SearchBox>
       </div>
       <div class="row">
         <div class="col">

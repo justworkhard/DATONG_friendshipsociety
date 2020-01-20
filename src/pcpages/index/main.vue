@@ -78,7 +78,7 @@
           href="/second/menu?title=联谊会介绍&id=6&parentId=6&ptCode=0&indexUrl=%2F"
         >
           <div class="about">
-            <img :src="about.minPicAddress" alt srcset />
+            <img :src="about.minPicAddress" alt srcset v-if="about"/>
             {{about.summary}}
           </div>
         </RedHeader>
@@ -228,12 +228,6 @@ export default {
       readList: [],
       componyList: [],
       productList: [],
-      productItem: {
-        title: "大同市全域旅游直通车+大同旅游交通一卡行",
-        url: "http://www.dtpcmq.com/upload/201903011612527619.png",
-        introduct:
-          "大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、大同市旅游集散中心是大同市文化和旅游局监管下的集散客、自助、团队旅游、旅游咨询，旅游交通换乘，酒店、"
-      }
     };
   }
 };
@@ -276,14 +270,15 @@ export default {
   }
   .swiper_box {
     display: inline-block;
-    width: 560px;
+    width: 590px;
     vertical-align: top;
     height: 362px;
     position: relative;
+    margin-right: 15px;
   }
   .news_box {
     display: inline-block;
-    width: 560px;
+    width: 590px;
     vertical-align: top;
     height: 362px;
   }

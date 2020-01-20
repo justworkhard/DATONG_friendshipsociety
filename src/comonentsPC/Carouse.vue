@@ -4,7 +4,7 @@
       <img :src="item.picUrl" alt srcset>
     </div>
     <div class="bottom" v-show="activeIndex === index" v-for="(item,index) in data" :key="index+'carousel'">
-      <p>{{item.contentTitle}}</p>
+      <p >{{item.contentTitle}}</p>
       <ul class="guider">
         <li @mouseover='setActive(index)' v-for="(item,index) in data" :key="index" :class="{'active': index === activeIndex}"></li>
       </ul>
@@ -78,6 +78,9 @@ export default {
   p {
     color: #ffffff;
     margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 .guider {
