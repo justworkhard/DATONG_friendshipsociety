@@ -53,7 +53,7 @@ export default {
           return
       }
       saveInvitation({
-        colid: "1",
+        colid: sessionStorage.getItem('qCode'),
         content: this.editor.txt.html(),
         sendUserId: JSON.parse(sessionStorage.getItem("userInfo")).userId,
         title: this.titleV
