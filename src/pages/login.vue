@@ -1,30 +1,40 @@
 <template>
   <div class="body">
     <div class="logo">
-      <img src="@/assets/images/logoPhone.png" class="logo" alt srcset @click="()=>{this.$router.go(-1)}"/>
+      <img
+        src="@/assets/images/logoPhone.png"
+        class="logo"
+        alt
+        srcset
+        @click="()=>{this.$router.go(-1)}"
+      />
     </div>
     <div class="inputBox">
-      <input type="text" placeholder="用户名" v-model="l_name"/>
+      <input type="text" placeholder="用户名" v-model="l_name" />
     </div>
     <div class="inputBox">
-      <input type="password" placeholder="密码长度6-20位" v-model="l_password"/>
+      <input type="password" placeholder="密码长度6-20位" v-model="l_password" />
     </div>
     <div class="checkBox">
-      <input type="text" placeholder="验证码" v-model="l_checkCode"/>
+      <input type="text" placeholder="验证码" v-model="l_checkCode" />
       <div class="checkCode" @click="changeCheckCode">
         <SIdentify :identifyCode="identifyCode"></SIdentify>
       </div>
     </div>
     <div class="btn" @click="login">立即登录</div>
     <p class="tip" @click="toRegist">还没有账号?现在注册</p>
+    <toast v-model="tip" type="text">{{tipMesg}}</toast>
   </div>
 </template>
 <script>
 import SIdentify from "@/comonentsPC/identify";
 import { login, register } from "@/service/api";
+import { Toast } from "vux";
+
 export default {
   components: {
-    SIdentify
+    SIdentify,
+    Toast
   },
   created() {
     this.identifyCode = this.random();
@@ -32,9 +42,11 @@ export default {
   data() {
     return {
       identifyCode: "0000",
-      l_name: '',
-      l_password: '',
-      l_checkCode: ''
+      l_name: "",
+      l_password: "",
+      l_checkCode: "",
+      tip: false,
+      tipMesg: ""
     };
   },
   methods: {
@@ -48,34 +60,45 @@ export default {
       }
       return str;
     },
-    toRegist(){
-      this.$router.push('/register')
+    toRegist() {
+      this.$router.push("/register");
     },
-    login(){
-      if (this.l_checkCode !== this.identifyCode) {
-        return this.$message({
-          message: "请输入正确的验证码！",
-          type: "error"
-        });
+    login() {
+      if (!this.l_name || !this.l_password) {
+        this.tipMesg = "请输入正确的账号密码！";
+        this.tip = true;
+        return;
       }
+      if (this.l_checkCode !== this.identifyCode) {
+        this.tipMesg = "请输入正确的验证码！";
+        this.tip = true;
+        return;
+      }
+
       login({
         mobile: this.l_name,
         password: this.l_password
       })
         .then(res => {
-          if(res.data.code === 0){
-             sessionStorage.setItem('userInfo',JSON.stringify(res.data.userInfo))
-             sessionStorage.setItem('isLogin',true)
-             sessionStorage.setItem('token',res.data.token)
-             this.$router.push("/");
-            
+          if (res.data.code === 0) {
+            sessionStorage.setItem(
+              "userInfo",
+              JSON.stringify(res.data.userInfo)
+            );
+            sessionStorage.setItem("isLogin", true);
+            sessionStorage.setItem("token", res.data.token);
+            this.$router.push("/");
+          }else{
+          this.tipMesg = res.data.msg;
+          this.tip = true;
           }
         })
         .catch(error => {
-          this.$message.error("账号或密码错误");
+          this.tipMesg = "账号或密码错误";
+          this.tip = true;
         });
-    },
     }
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -125,12 +148,12 @@ export default {
   border-radius: 22px;
   margin-top: 20px;
 }
-.tip{
-    font-size: 13px;
-    color: #999999;
-    text-align: center;
-    margin-top: 20px;
-    cursor: pointer;
-    color: #3385ff
+.tip {
+  font-size: 13px;
+  color: #999999;
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
+  color: #3385ff;
 }
 </style>

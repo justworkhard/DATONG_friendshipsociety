@@ -16,7 +16,7 @@
           </ul>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs">
+    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -32,7 +32,7 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs">
+    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -48,7 +48,7 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs">
+    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -64,7 +64,7 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-        <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs">
+        <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" :href="hrefs[4]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -175,6 +175,19 @@ export default {
         [{ title: "项目交流" }],
         [{ title: "项目合作" }],
         [{ title: "相关政策" }]
+      ],
+      hrefs: [
+        [  ],
+        ["/second/menu?title=行业标准查询&id=120&parentId=120&ptCode=9&indexUrl=%2F&hadChild=fale&currenId=120"],
+        [
+          "/second/menu?title=项目交流&id=119&parentId=119&ptCode=9&indexUrl=%2F&hadChild=fale&currenId=119"
+        ],
+        [
+          "/second/menu?title=项目合作&id=118&parentId=118&ptCode=9&indexUrl=%2F&hadChild=fale&currenId=118"
+        ],
+        [
+          "/second/menu?title=相关政策&id=117&parentId=117&ptCode=9&indexUrl=%2F&hadChild=fale&currenId=117"
+        ]
       ],
       tabList: [],
     };

@@ -16,7 +16,7 @@
           </ul>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" >
+    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -174,12 +174,8 @@ export default {
         [{ title: "挂牌服务" }]
       ],
       hrefs: [
-        [
-          "/second/menu?title=双创动态&id=89&parentId=89&ptCode=6&indexUrl=%2F&currentId=95",
-          "/second/menu?parentId=89&ptCode=6&currenId=96&indexUrl=%2FentreAndInnova&currentId=96",
-          "/second/menu?parentId=89&ptCode=6&currenId=97&indexUrl=%2FentreAndInnova&currentId=97"
-        ],
-        ["/second/menu?title=双创服务&id=93&parentId=93&ptCode=6&indexUrl=%2F"],
+        [  ],
+        ["/second/menu?title=双创服务&id=93&parentId=93&ptCode=6&indexUrl=%2F&hadChild=fale&currenId=98"],
         [
           "/second/menu?title=双创活动&id=91&parentId=91&ptCode=6&indexUrl=%2F&hadChild=fale&currenId=91"
         ],

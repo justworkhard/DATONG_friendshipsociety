@@ -177,17 +177,13 @@ export default {
         [{ title: "行业数据查询" }]
       ],
       hrefs: [
+        [],
+        ["/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currentId=137"],
+        ["/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currentId=138"],
         [
-          "/social/message/list",
-          "/social/message/list",
-          "/social/message/list"
+          "/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currentId=139"
         ],
-        ["/social/message/list"],
-        ["/social/message/list"],
-        [
-          "/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currenId=109"
-        ],
-        ["/social/message/list"]
+        ["/second/menu?title=企业管理信息&id=109&parentId=109&ptCode=8&indexUrl=%2F&hadChild=fale&currentId=149"]
       ],
       tabList: [],
       newsList: [],

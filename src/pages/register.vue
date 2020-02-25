@@ -4,33 +4,41 @@
       <img src="@/assets/images/logoPhone.png" class="logo" alt srcset />
     </div>
     <div class="inputBox">
-      <input type="text" placeholder="请设置登录用户名" />
+      <input v-model="r_name" type="text" placeholder="请设置登录用户名" />
     </div>
     <div class="inputBox">
-      <input type="text" placeholder="请设置登录密码" />
+      <input v-model="r_password" type="text" placeholder="请设置登录密码" />
     </div>
     <div class="checkBox">
-      <input type="text" placeholder="请输入邀请码" />
+      <input v-model="r_inviceCode" type="text" placeholder="请输入邀请码" />
       <div class="checkCode" @click="changeCheckCode">
       </div>
     </div>
-    <div class="btn">注册并登录</div>
+    <div class="btn" @click="regin">注册并登录</div>
     <p class="tip" @click="toLogin">返回登录</p>
+    <toast v-model="tip" type="text">{{tipMesg}}</toast>
   </div>
 </template>
 <script>
 import SIdentify from "@/comonentsPC/identify";
-
+import { login, register } from "@/service/api";
+import { Toast } from 'vux'
 export default {
   components: {
-    SIdentify
+    SIdentify,
+    Toast
   },
   created() {
     this.identifyCode = this.random();
   },
   data() {
     return {
-      identifyCode: "0000"
+      identifyCode: "0000",
+      tip: false,
+      r_inviceCode: '',
+      r_name: '',
+      r_password: '',
+      tipMesg: '',
     };
   },
   methods: {
@@ -46,6 +54,25 @@ export default {
     },
     toLogin(){
       this.$router.push('/login')
+    },
+    regin(){
+      register({
+        mobile: this.r_name,
+        password: this.r_password,
+        inviteCode: this.r_inviceCode
+      })
+        .then(res => {
+          if (res.data.code !== 200) {
+            this.tipMesg = res.data.msg
+            this.tip = true
+            return;
+          }
+          this.$router.push("/");
+          this.login();
+        })
+        .catch(error => {
+          this.tipMesg = '未知错误'
+        });
     }
   }
 };

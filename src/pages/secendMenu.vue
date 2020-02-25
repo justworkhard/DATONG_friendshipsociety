@@ -43,6 +43,7 @@ export default {
     );
     this.tabList = temp;
     this.tabList.forEach((item,index)=>{
+      console.log('this.$route.query.currentId',this.$route.query.currenId);
       
       if(item.id == this.$route.query.currentId){
         this.activeIndex = index
@@ -89,6 +90,8 @@ export default {
         pageNo: this.pageNo
       }).then(res => {
         this.newsList = res.data.data;
+         this.newsList.push({})    
+
       });
     },
     onSearch(keyword){
@@ -96,7 +99,8 @@ export default {
         ptCode: this.$route.query.ptCode,
         title: keyword
       }).then(res => {
-        this.newsList = res.data.data;       
+        this.newsList = res.data.tInfoList;   
+         this.newsList.push({})    
       });
     }
   }
