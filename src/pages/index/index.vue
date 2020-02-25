@@ -34,7 +34,9 @@
     </Tabs>
     <Tabs :TabsList="[{title:'在线问答'}]" @onChangeTab="onChangeTabs">
       <div class="questionList">
-        <div class="question" @click="toQuestion(item.id)" v-for="(item,index) in departmentList" :key="index">{{item.departName}}</div>
+        <div class="question" @click="toQuestion(item.id)" v-for="(item,index) in departmentList" :key="index">
+          <img :src="item.imgUrl"/>
+        </div>
       </div>
     </Tabs>
     <Tabs id="ten" :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
@@ -226,6 +228,7 @@ export default {
           qCode: index
         }
       });
+      sessionStorage.setItem('qCode',index)
     },
     toRankRead() {
       this.$router.push("/readRank");
@@ -252,7 +255,6 @@ export default {
   justify-content: start;
   .question {
     height: 120px;
-    background-color: #4798ef;
     width: 42%;
     margin: 20px 4% 0 4%;
     display: flex;
@@ -260,6 +262,11 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    overflow: hidden;
+    img{
+      height: 100%;
+      width: 100%
+    }
   }
 }
 body {

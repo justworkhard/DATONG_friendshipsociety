@@ -4,8 +4,8 @@
       <img src="@/assets/images/mipmap-xxxhdpi/logo.png" alt class="logo" @click="toIndex" />
       <div class="navbar" @click="()=>{this.$router.push('/question')}">首页</div>
       <div class="search">
-        <input type="text" />
-        <img src="@/assets/images/mipmap-hdpi/icon_search.png" alt srcset />
+        <input type="text" v-model="searchStr" />
+        <img src="@/assets/images/mipmap-hdpi/icon_search.png" @click="onSearch" alt srcset />
       </div>
       <div class="avadar" @click="toCenter">
         <img :src="userInfo.portrait" alt srcset v-if="userInfo" />
@@ -31,17 +31,23 @@ export default {
   data() {
     return {
       imgList: [],
+      searchStr: '',
       userInfo: {}
     };
   },
   methods: {
+    onSearch(){
+      this.$emit('onSearch',this.searchStr)
+    },
     toCenter() {
       this.$router.push("/user");
     },
     toIndex() {
       this.$router.push("/");
     },
-    logout() {
+    logout(e) {
+      console.log('=====');
+      e.stopPropagation()
       sessionStorage.removeItem("isLogin", false);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("userInfo");

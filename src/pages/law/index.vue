@@ -130,11 +130,13 @@ export default {
       this.zhuzuoquan = res.data.data;
     });
     getNewsList({
-      colid: 63,
+      colid: 31,
       ptCode: 2,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
+      console.log('========');
+      
       this.laodongfa = res.data.data;
     });
     getNewsList({
@@ -195,9 +197,9 @@ export default {
       hrefs: [
         [],
         ["/second/menu?title=指导案例&id=33&parentId=33&ptCode=2&indexUrl=%2F"],
-        ["/second/menu?title=民刑法&id=28&parentId=28&ptCode=2&indexUrl=%2F&currentId=38"],
+        ["/second/menu?title=民刑法&id=28&parentId=28&ptCode=2&indexUrl=%2F&currentId=136"],
         ["/second/menu?title=劳动法&id=31&parentId=31&ptCode=2&indexUrl=%2F"],
-        ["/second/menu?title=民刑法&id=28&parentId=28&ptCode=2&indexUrl=%2F&currentId=38"],
+        ["/second/menu?title=民刑法&id=28&parentId=28&ptCode=2&indexUrl=%2F&currentId=135"],
       ],
       demo01_index: 0,
       tabList: [],

@@ -69,14 +69,16 @@
           class="question_item"
           v-for="(item,index) in respList"
           :key="index"
-          @click=" toDetail(item.id)"
+          @click=" toDetail(item.schild[0].id)"
         >
           <div class="q_header">
-            {{item.time}}
+            <img class="avadar" :src="item.portrait" alt="" srcset="">
+            {{item.schild[0].time}}
             来自
             <span class="user">{{item.username}}</span>
           </div>
-          <div class="title">{{item.title}}</div>
+          <div class="resp">{{item.repContent}}</div>
+          <div class="titleR">{{item.schild[0].title}}</div>
         </div>
         <el-pagination
           layout="prev, pager, next"
@@ -343,14 +345,45 @@ export default {
   .q_header {
     font-size: 12px;
     color: #999;
+    display: flex;
+    align-items: center;
     .user {
       color: rgb(78, 166, 237);
+    }
+    .avadar{
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 10px
     }
   }
   .title {
     line-height: 70px;
     height: 70px;
     font-size: 20px;
+  }
+  .resp{
+    padding: 0 10px;
+  }
+  .titleR{
+    background-color: rgb(228, 228, 228);
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    &::after{
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      content: '';
+      width: 100%;
+      height: 1px;
+      background-color: #000000
+
+    }
   }
   .q_content {
     height: 100px;

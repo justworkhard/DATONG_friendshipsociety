@@ -8,6 +8,7 @@
       :total="count"
       style="margin-top:20px"
       :hide-on-single-page='true'
+      :current-page='pageNo'
     ></el-pagination>
   </div>
 </template>
@@ -15,7 +16,7 @@
 import NewsCard from "./newsCard";
 export default {
   components: { NewsCard },
-  props: ["data", 'count'],
+  props: ["data", 'count','pageNo'],
   methods: {
     onChangePage(current) {
       this.$emit('onChangePage',current)

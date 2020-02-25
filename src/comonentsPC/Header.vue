@@ -59,9 +59,11 @@ export default {
   width: 1200px;
   margin: 0 auto;
   display: flex;
+  align-items: center;
   .logo {
     width: 270px;
     padding: 10px 0;
+    height: 55px;
   }
   .navbar {
     display: flex;

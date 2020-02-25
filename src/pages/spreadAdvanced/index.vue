@@ -5,7 +5,7 @@
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
     <MSwiper :ptCode="10"></MSwiper>
-    <Tabs :TabsList="TabsList[0]" :href="devUrlList">
+    <Tabs :TabsList="TabsList[0]" >
       <ul class="news">
         <li
           class="news_title"
@@ -15,7 +15,7 @@
         >{{item.title}}</li>
       </ul>
     </Tabs>
-    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs">
+    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -31,7 +31,7 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs">
+    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -47,7 +47,7 @@
       </template>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs">
+    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
@@ -95,52 +95,28 @@ export default {
       this.dongtaiList = res.data.tInfoList;
     });
     getNewsList({
-      colid: 125,
+      colid: 132,
       ptCode: 10,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.qiye = res.data.data;
+      this.fengmao = res.data.data;
     });
     getNewsList({
-      colid: 105,
+      colid: 133,
       ptCode: 10,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.chuangye = res.data.data;
+      this.fengcai = res.data.data;
     });
     getNewsList({
-      colid: 122,
+      colid: 127,
       ptCode: 10,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.zhiben = res.data.data;
-    });
-    getNewsList({
-      colid: 105,
-      ptCode: 10,
-      pageSize: 5,
-      pageNo: 1
-    }).then(res => {
-      this.biaozhun = res.data.data;
-    });
-    getNewsList({
-      colid: 105,
-      ptCode: 10,
-      pageSize: 5,
-      pageNo: 1
-    }).then(res => {
-      this.jiaoliu = res.data.data;
-    });
-    getNewsList({
-      colid: 105,
-      ptCode: 10,
-      pageSize: 5,
-      pageNo: 1
-    }).then(res => {
-      this.zhengce = res.data.data;
+      this.ganwu = res.data.data;
     });
   },
   components: {
@@ -162,8 +138,6 @@ export default {
   data() {
     return {
       dongtaiList: [],
-      qiye: [],
-      guanli: [],
       baijia: [],
       fengmao: [],
       fengcai: [],
@@ -175,37 +149,14 @@ export default {
         [{ title: "管理感悟" }]
       ],
       demo01_index: 0,
-      tabList: [
-        { label: "首页", url: "/" },
-        { label: "管理创新", url: "/policy/summary" },
-        { label: "经营心得", url: "/policy/explain" },
-        { label: "学习讨论", url: "/policy/inspect" },
-        { label: "企业文化", url: "/policy/chat" }
+      tabList: [],
+      newsList: [],
+      hrefs: [
+        [],
+        ["/second/menu?title=企业文化&id=125&parentId=125&ptCode=10&indexUrl=%2F&currentId=132"],
+        ["/second/menu?title=企业文化&id=125&parentId=125&ptCode=10&indexUrl=%2F&currentId=133"],
+        ["/second/menu?title=经营心得&id=123&parentId=123&ptCode=10&indexUrl=%2F&currentId=127"],
       ],
-      newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
-      ],
-      demo04_list: [
-        {
-          url: "javascript:",
-          img:
-            "http://img.52z.com/upload/news/image/20180621/20180621055734_59936.jpg",
-          title: "送你一朵fua"
-        },
-        {
-          url: "javascript:",
-          img: "https://static.vux.li/demo/5.jpg",
-          title: "送你一次旅行",
-          fallbackImg:
-            "http://pic27.nipic.com/20130324/9252150_152129329000_2.jpg"
-        }
-      ]
     };
   }
 };

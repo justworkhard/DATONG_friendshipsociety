@@ -1,5 +1,9 @@
 <template>
   <div class="content">
+    <div class="noticy">
+      <img  @click="toFatieList('huitie')" v-if="noticy.length == 0" src="@/assets/images/noticy.png" alt="" srcset="">
+      <img  @click="toFatieList('huitie')" v-if="noticy.length > 0" src="@/assets/images/noticy.png" alt="" srcset="">
+    </div>
     <div class="userInfo">
       <div class="info">
         <img class="avadar" :src="userInfo.portrait" alt srcset />
@@ -26,7 +30,7 @@
 </template>
 <script>
 import XHeader from "@/components/XHeader.vue";
-import { upLoad, portraitUpload, updateUserInfo } from "@/service/api.js";
+import { upLoad, portraitUpload, updateUserInfo ,notReadRep} from "@/service/api.js";
 import { Confirm, Toast, XButton } from "vux";
 export default {
   components: {
@@ -37,11 +41,17 @@ export default {
   },
   data() {
     return {
-      userInfo: {}
+      userInfo: {},
+      noticy: []
     };
   },
   created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    notReadRep({
+      userId: this.userInfo.userId
+    }).then(res=>{
+        this.noticy = res.data.data
+    })
   },
   methods: {
     logout() {
@@ -51,6 +61,15 @@ export default {
       this.$router.push("/login");
     },
     toFatieList(type) {
+      if(type === 'huitie'){
+        this.$router.push({
+        path: "/question/noticy",
+        query: {
+          type: type
+        }
+      });
+        return
+      }
       this.$router.push({
         path: "/question/list",
         query: {
@@ -65,6 +84,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.noticy{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 5px 0px;
+  img{
+    height: 30px;
+    width: 30px;
+  }
+}
 .myList {
   display: flex;
   flex-wrap: wrap;

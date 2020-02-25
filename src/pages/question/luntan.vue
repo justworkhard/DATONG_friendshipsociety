@@ -60,14 +60,18 @@ export default {
       questionList: [],
       total: 0,
       pageNo: 1,
-      keyword: ''
+      keyword: '',
+      qCode: '',
     };
+  },
+  created(){
+    this.qCode = sessionStorage.getItem('qCode')
   },
   methods: {
     onSearch(keyword,more) {
       this.keyword = keyword
       sendInvitSearch({
-        colid: "1",
+        colid: this.qCode,
         pageNo: this.pageNo,
         pageSize: 10,
         title: this.keyword

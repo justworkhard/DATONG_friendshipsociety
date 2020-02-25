@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <QHeader></QHeader>
+  <div class="qIndex">
+    <QHeader @onSearch = 'onSearch'></QHeader>
     <div class="q_body">
       <div
         class="question_item"
@@ -45,7 +45,7 @@
 <script>
 import QHeader from "@/comonentsPC/QHeader.vue";
 import Footer from "@/comonentsPC/Footer.vue";
-import { getQuestionList, sendInvitSearch } from "@/service/api";
+import { getQuestionList, getQuestionListPage, sendInvitSearch } from "@/service/api";
 import { Pagination } from "element-ui";
 
 export default {
@@ -151,6 +151,9 @@ export default {
     line-height: 20px;
     overflow: hidden;
     margin-bottom: 10px;
+    img{
+      display: none!important
+    }
   }
   .readed {
     background-color: #ededee;
@@ -184,4 +187,18 @@ export default {
     width: 30px;
   }
 }
+</style>
+<style lang="less">
+.qIndex{
+ .q_content {
+    max-height: 100px;
+    line-height: 20px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    img{
+      display: none!important
+    }
+  }
+}
+
 </style>

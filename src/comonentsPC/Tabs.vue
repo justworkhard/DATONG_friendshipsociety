@@ -85,6 +85,8 @@ export default {
       this.$router.push(url);
     },
     toDetail(id) {
+      // console.log(this.TabsList);
+      // return
       this.$router.push(
         this.TabsList[this.activeIndex].url + "&contentId=" + id
       );

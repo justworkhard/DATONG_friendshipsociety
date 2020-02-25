@@ -31,7 +31,12 @@ import MSwiper from "@/components/MSwiper.vue";
 import Footer from "@/components/Footer.vue";
 import { Swiper, SwiperItem } from "vux";
 import Tabs from "@/components/Tabs.vue";
-
+import {
+  getNewsList,
+  getContentCarouselList,
+  getDevColumnList,
+  getWebList
+} from "@/service/api";
 export default {
   async created() {
     let temp = await this.getIndexList(

@@ -4,23 +4,76 @@
       <img class="logo" src="@/assets/images/mipmap-hdpi/logo.png" alt srcset />
     </XHeader>
     <Header logo="false" :tabList="tabList"></Header>
-    <MSwiper :ptCode=2></MSwiper>
-     <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs" >
-          <ul class="news">
-            <li
-              class="news_title"
-              @click="toDetail(item.id)"
-              v-for="(item,index) in dongtaiList"
-              :key="index"
-            >{{item.title}}</li>
-          </ul>
+    <MSwiper :ptCode="2"></MSwiper>
+    <Tabs :TabsList="TabsList[0]" @onChangeTab="onChangeTabs">
+      <ul class="news">
+        <li
+          class="news_title"
+          @click="toDetail(item.id)"
+          v-for="(item,index) in dongtaiList"
+          :key="index"
+        >{{item.title}}</li>
+      </ul>
       <!-- <div v-if='slotData.activeIndex===0'> -->
     </Tabs>
-    <Tabs :TabsList="TabsList[1]">
+    <Tabs :TabsList="TabsList[1]" @onChangeTab="onChangeTabs" :href="hrefs[1]">
       <template slot-scope="slotProps">
         <div v-if="slotProps.slotdata===0">
           <ul class="news">
-            <li class="news_title" v-for="(item,index) in zhiben" :key="index">{{item.title}}</li>
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in guanli"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
+        <div v-if="slotProps.slotdata===1">2</div>
+      </template>
+      <!-- <div v-if='slotData.activeIndex===0'> -->
+    </Tabs>
+    <Tabs :TabsList="TabsList[2]" @onChangeTab="onChangeTabs" :href="hrefs[2]">
+      <template slot-scope="slotProps">
+        <div v-if="slotProps.slotdata===0">
+          <ul class="news">
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in huanbao"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
+        <div v-if="slotProps.slotdata===1">2</div>
+      </template>
+      <!-- <div v-if='slotData.activeIndex===0'> -->
+    </Tabs>
+    <Tabs :TabsList="TabsList[3]" @onChangeTab="onChangeTabs" :href="hrefs[3]">
+      <template slot-scope="slotProps">
+        <div v-if="slotProps.slotdata===0">
+          <ul class="news">
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in shengcan"
+              :key="index"
+            >{{item.title}}</li>
+          </ul>
+        </div>
+        <div v-if="slotProps.slotdata===1">2</div>
+      </template>
+      <!-- <div v-if='slotData.activeIndex===0'> -->
+    </Tabs>
+    <Tabs :TabsList="TabsList[4]" @onChangeTab="onChangeTabs" :href="hrefs[4]">
+      <template slot-scope="slotProps">
+        <div v-if="slotProps.slotdata===0">
+          <ul class="news">
+            <li
+              @click="toDetail(item.id)"
+              class="news_title"
+              v-for="(item,index) in peixun"
+              :key="index"
+            >{{item.title}}</li>
           </ul>
         </div>
         <div v-if="slotProps.slotdata===1">2</div>
@@ -55,9 +108,9 @@ export default {
       true
     );
     this.tabList = temp;
-    getWebList(3).then(res=>{
-      this.dongtaiList = res.data.tInfoList
-    })
+    getWebList(3).then(res => {
+      this.dongtaiList = res.data.tInfoList;
+    });
     getNewsList({
       colid: 30,
       ptCode: 3,
@@ -67,12 +120,36 @@ export default {
       this.xinwen = res.data.data;
     });
     getNewsList({
-      colid: 28,
+      colid: 65,
       ptCode: 3,
       pageSize: 5,
       pageNo: 1
     }).then(res => {
-      this.zhiben = res.data.data;
+      this.guanli = res.data.data;
+    });
+    getNewsList({
+      colid: 67,
+      ptCode: 3,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.huanbao = res.data.data;
+    });
+    getNewsList({
+      colid: 66,
+      ptCode: 3,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.shengcan = res.data.data;
+    });
+    getNewsList({
+      colid: 68,
+      ptCode: 3,
+      pageSize: 5,
+      pageNo: 1
+    }).then(res => {
+      this.peixun = res.data.data;
     });
     getContentCarouselList(3).then(res => {
       let temp = [];
@@ -105,24 +182,35 @@ export default {
       dongtaiList: [],
       devList: [],
       devUrlList: [],
-      zhiben: [],
+      guanli: [],
+      huanbao: [],
+      peixun: [],
+      shengcan: [],
       xinwen: [],
-      TabsList: [ [{title: '新闻动态'}], [{ title: "资本市场" }]],
+      TabsList: [
+        [{ title: "新闻动态" }],
+        [{ title: "企业管理" }],
+        [{ title: "企业环保" }],
+        [{ title: "安全生产" }],
+        [{ title: "管理培训" }]
+      ],
       demo01_index: 0,
       tabList: [
         { label: "首页", url: "/" },
         { label: "企业咨询", url: "/business/consulting/list" }
       ],
-      hrefs: ["/business/consulting/list"],
-      newsList: [
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" },
-        { title: "∙ 平城区人大常委会组织开展全区民营企业家人大代" }
+      hrefs: [
+        [],
+        ["/second/menu?title=企业管理&id=65&parentId=65&ptCode=3&indexUrl=%2F&hadChild=fale&currenId=65"],
+        [
+          "/second/menu?title=企业环保&id=67&parentId=67&ptCode=3&indexUrl=%2F&hadChild=fale&currenId=67"
+        ],
+        ["/second/menu?title=安全生产&id=66&parentId=66&ptCode=3&indexUrl=%2F&hadChild=fale&currenId=66"],
+        [
+          "/second/menu?title=管理培训&id=68&parentId=68&ptCode=3&indexUrl=%2F&hadChild=fale&currenId=68 "
+        ]
       ],
+      newsList: [],
       carouselList: []
     };
   }

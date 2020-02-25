@@ -24,6 +24,7 @@
         :data="data"
         @onChangePage="onChangePage"
         :count="count"
+        :pageNo='pageNo'
       ></NewsCardList>
       <NewsContent v-if="showContent" :contentId="contentId"></NewsContent>
       <p class="noData" v-show="data.length <= 0 &&!showContent">暂无数据</p>
@@ -148,6 +149,7 @@ export default {
       this.selectMenu = index;
       ifShowContent ? "" : (this.showContent = false);
       let temp = this.menuList[index];
+       this.pageNo = 1    
       this.menuList.splice(index, 1);
       this.menuList.unshift(temp);
       getNewsList({
@@ -164,7 +166,8 @@ export default {
     },
     onChangePage(current) {
       this.pageNo = current;
-      let temp = this.menuList[this.selectMenu];
+      let temp = this.menuList[0];
+      
       getNewsList({
         colid: temp.id,
         ptCode: this.$route.query.ptCode,

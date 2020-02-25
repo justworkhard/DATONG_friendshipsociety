@@ -30,13 +30,13 @@
             icon="icon-zbgs"
             :data="zuzuoquan"
             title="著作权法"
-            more="second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法"
+            more="second/menu?parentId=28&ptCode=2&currenId=136&indexUrl=%2Flaw&title=民刑法"
           ></NewListCard>
           <NewListCard
             icon="icon-scjg"
             :data="zhuanlifa"
             title="专利法"
-            more="second/menu?parentId=28&ptCode=2&currenId=38&indexUrl=%2Flaw&title=民刑法"
+            more="second/menu?parentId=28&ptCode=2&currenId=135&indexUrl=%2Flaw&title=民刑法"
           ></NewListCard>
         </div>
       </div>
@@ -83,19 +83,32 @@ export default {
       "/law"
     );
     this.navList = temp;
-    getDevColumnList(2).then(res => {
+    getDevColumnList(2).then(async res => {
       for (let index = 0; index < res.data.devColumnList.length; index++) {
         const element = res.data.devColumnList[index];
         let url = "";
-        this.navList.forEach(item => {
-          if (item.title === element.columnName) {
-            url = item.url || "";
-          }
-        });
+        try {
+          this.navList.forEach(item => {
+            if (item.secondMenu.length > 0) {
+              item.secondMenu.forEach((item2, index2) => {
+                if (item2.title === element.columnName) {
+                  url = item2.url;
+                  throw false;
+                }
+              });
+            }
+            if (item.title === element.columnName) {
+              url = item.url;
+              throw false;
+            }
+          });
+        } catch (error) {}
         this.TabsList.push({
           title: element.columnName,
           url: url
         });
+        console.log(this.TabsList);
+        
         getNewsList({
           ptCode: 2,
           colid: element.id,
@@ -116,7 +129,7 @@ export default {
     });
     getNewsList({
       ptCode: "2",
-      colid: "24",
+      colid: "31",
       pageSize: "10",
       pageNo: "0"
     }).then(res => {

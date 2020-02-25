@@ -58,6 +58,10 @@ let RouterPhone = new Router({
           path: '/question/list',
           component: resolve => require(["@/pages/question/list"], resolve),
         },
+        {
+          path: '/question/noticy',
+          component: resolve => require(["@/pages/question/noticy"], resolve),
+        },
       ]
     },
     {

@@ -188,5 +188,11 @@ export function getUsercollect(params) {
       'token':  sessionStorage.getItem('token') }}
   )
 }
+export function notReadRep(params) {
+  return axios.post(
+    `/api/app/notReadRep`,Qs.stringify(params),{ headers: {
+      'token':  sessionStorage.getItem('token') }}
+  )
+}
 
 

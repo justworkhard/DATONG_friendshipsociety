@@ -98,11 +98,23 @@ export default {
       for (let index = 0; index < res.data.devColumnList.length; index++) {
         const element = res.data.devColumnList[index];
         let url = "";
-        this.navList.forEach(item => {
-          if (item.title === element.columnName) {
-            url = item.url;
-          }
-        });
+      try {
+          this.navList.forEach(item => {
+            console.log("find=========", item, element.columnName);
+            if (item.secondMenu.length > 0) {
+              item.secondMenu.forEach((item2, index2) => {
+                if (item2.title === element.columnName) {
+                  url = item2.url;
+                  throw false;
+                }
+              });
+            }
+            if (item.title === element.columnName) {
+              url = item.url;
+              throw false;
+            }
+          });
+        } catch (error) {}
         this.TabsList.push({
           title: element.columnName,
           url: url
