@@ -8,6 +8,7 @@
           <li :class="activeIndex===1?'active':''" @click="setActive(1)">我的收藏</li>
           <li :class="activeIndex===2?'active':''" @click="setActive(2)">我的回帖</li>
           <li :class="activeIndex===3?'active':''" @click="setActive(3)">我的发帖</li>
+          <li :class="activeIndex===4?'active':''" @click="setActive(4)">我的消息</li>
         </ul>
       </div>
       <!-- 个人资料 -->
@@ -69,16 +70,16 @@
           class="question_item"
           v-for="(item,index) in respList"
           :key="index"
-          @click=" toDetail(item.schild[0].id)"
+          @click=" toDetail(item.schild[0]?item.schild[0].id:'')"
         >
           <div class="q_header">
-            <img class="avadar" :src="item.portrait" alt="" srcset="">
-            {{item.schild[0].time}}
+            <img class="avadar" :src="item.portrait" alt srcset />
+            {{item.schild[0]?item.schild[0].time:''}}
             来自
             <span class="user">{{item.username}}</span>
           </div>
           <div class="resp">{{item.repContent}}</div>
-          <div class="titleR">{{item.schild[0].title}}</div>
+          <div class="titleR" v-html="item.schild[0]?item.schild[0].content:'原帖已删除'"></div>
         </div>
         <el-pagination
           layout="prev, pager, next"
@@ -108,6 +109,32 @@
           @current-change="collIndexChange"
         ></el-pagination>
       </div>
+      <!-- 我的发帖 -->
+      <div class="content" v-show="activeIndex === 4">
+        <div class="title">我的消息</div>
+        <div
+          class="question_item"
+          v-for="(item,index) in noticy"
+          :key="index"
+          @click=" toDetail(item.id,item.messageChild.id)"
+        >
+          <div class="q_header">
+            <img class="avadar" :src="item.messageChild.portrait" alt srcset />
+            {{item.messageChild.createTime}}
+            来自
+            <span
+              class="user"
+            >{{item.messageChild.username}}</span>
+          </div>
+          <div class="resp" v-html="item.messageChild.context"></div>
+          <div class="titleR" v-html="item.content"></div>
+        </div>
+        <el-pagination
+          layout="prev, pager, next"
+          :total="respCount"
+          @current-change="respIndexChange"
+        ></el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -118,7 +145,9 @@ import {
   portraitUpload,
   updateUserInfo,
   userSend,
-  userRep
+  userRep,
+  notReadRep,
+  updateReadStatus
 } from "@/service/api.js";
 export default {
   components: {
@@ -136,7 +165,8 @@ export default {
       respIndex: 1,
       publicList: [],
       publicCount: 0,
-      publicIndex: 1
+      publicIndex: 1,
+      noticy: []
     };
   },
   created() {
@@ -162,7 +192,18 @@ export default {
       userId: this.userInfo.userId
     }).then(res => {
       this.respList = res.data.data;
+      // this.respList.forEach(item=>{
+      //   if(item.schild.length == 0){
+      //     item.schild.push([])
+      //   }
+      // })
       this.respCount = res.data.count;
+    });
+    this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    notReadRep({
+      userId: this.userInfo.userId
+    }).then(res => {
+      this.noticy = res.data.data;
     });
   },
   methods: {
@@ -191,7 +232,6 @@ export default {
       })
         .then(({ value }) => {
           if (type === "nick") {
-
             this.onConfirmU(value);
           } else {
             this.onConfirmN(value);
@@ -216,7 +256,15 @@ export default {
     setActive(index) {
       this.activeIndex = index;
     },
-    toDetail(id) {
+    async toDetail(id, id2) {
+      if(!id){
+        return
+      }
+      if (id2) {
+       await updateReadStatus({
+          id: id2
+        })
+      }
       this.$router.push({
         path: "/question/detail",
         query: {
@@ -350,12 +398,12 @@ export default {
     .user {
       color: rgb(78, 166, 237);
     }
-    .avadar{
+    .avadar {
       height: 30px;
       width: 30px;
       border-radius: 50%;
       overflow: hidden;
-      margin-right: 10px
+      margin-right: 10px;
     }
   }
   .title {
@@ -363,10 +411,10 @@ export default {
     height: 70px;
     font-size: 20px;
   }
-  .resp{
+  .resp {
     padding: 0 10px;
   }
-  .titleR{
+  .titleR {
     background-color: rgb(228, 228, 228);
     height: 40px;
     line-height: 40px;
@@ -374,15 +422,15 @@ export default {
     font-size: 20px;
     margin-bottom: 10px;
     position: relative;
-    &::after{
+    overflow: hidden;
+    &::after {
       position: absolute;
       left: 0px;
       bottom: 0px;
-      content: '';
+      content: "";
       width: 100%;
       height: 1px;
-      background-color: #000000
-
+      background-color: #000000;
     }
   }
   .q_content {
@@ -405,4 +453,5 @@ export default {
     }
   }
 }
+
 </style>

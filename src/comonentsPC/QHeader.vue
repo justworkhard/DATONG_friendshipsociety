@@ -8,6 +8,8 @@
         <img src="@/assets/images/mipmap-hdpi/icon_search.png" @click="onSearch" alt srcset />
       </div>
       <div class="avadar" @click="toCenter">
+        <img :style="noticy.length == 0?'display:inline-block':''" src="@/assets/images/noticy.png" alt style="height:30px;width:30px;display:none"/>
+        <img :style="noticy.length > 1?'display:inline-block':''" src="@/assets/images/noticyA.png" alt style="height:30px;width:30px;display:none"/>
         <img :src="userInfo.portrait" alt srcset v-if="userInfo" />
         <div class="funList">
           <p @click="logout">退出</p>
@@ -18,13 +20,18 @@
 </template>
 <script>
 import { Carousel } from "element-ui";
-import { getCarouselList, getIndexList } from "@/service/api";
+import { getCarouselList, getIndexList ,notReadRep} from "@/service/api";
 
 export default {
   components: { Carousel },
   props: ["navs", "ptCode"],
   created() {
     this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    notReadRep({
+      userId: this.userInfo.userId
+    }).then(res => {
+      this.noticy = res.data.data;
+    });
   },
   mounted() {},
 
@@ -32,7 +39,8 @@ export default {
     return {
       imgList: [],
       searchStr: '',
-      userInfo: {}
+      userInfo: {},
+      noticy: []
     };
   },
   methods: {

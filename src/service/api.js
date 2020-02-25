@@ -194,5 +194,10 @@ export function notReadRep(params) {
       'token':  sessionStorage.getItem('token') }}
   )
 }
-
+export function updateReadStatus(params) {
+  return axios.post(
+    `/api/app/updateReadStatus`,Qs.stringify(params),{ headers: {
+      'token':  sessionStorage.getItem('token') }}
+  )
+}
 

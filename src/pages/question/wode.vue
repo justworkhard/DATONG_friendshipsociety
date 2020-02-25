@@ -1,8 +1,8 @@
 <template>
   <div class="content">
     <div class="noticy">
-      <img  @click="toFatieList('huitie')" v-if="noticy.length == 0" src="@/assets/images/noticy.png" alt="" srcset="">
-      <img  @click="toFatieList('huitie')" v-if="noticy.length > 0" src="@/assets/images/noticy.png" alt="" srcset="">
+      <img  @click="toFatieList('noticy')" v-show="noticy.length == 0" src="@/assets/images/noticy.png" alt="" srcset="">
+      <img  @click="toFatieList('noticy')" v-show="noticy.length > 0" src="@/assets/images/noticyA.png" alt="" srcset="">
     </div>
     <div class="userInfo">
       <div class="info">
@@ -62,6 +62,15 @@ export default {
     },
     toFatieList(type) {
       if(type === 'huitie'){
+        this.$router.push({
+        path: "/question/huitie",
+        query: {
+          type: type
+        }
+      });
+        return
+      }
+      if(type === 'noticy'){
         this.$router.push({
         path: "/question/noticy",
         query: {

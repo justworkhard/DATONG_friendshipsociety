@@ -3,22 +3,22 @@
     <XHeader :title="type+'详情'"></XHeader>
     <div
       class="questionItem"
-      v-for="(item,index) in noticy"
+      v-for="(item,index) in questionList"
       :key="index"
-      @click="toDetail(item.id,item.messageChild.id)"
+      @click="toDetail(item.schild[0]?item.schild[0].id:'')"
     >
       <div class="qHeader">
         <div class="avadar">
-          <img :src="item.messageChild.portrait" alt />
+          <img :src="item.portrait" alt />
         </div>
         <div class="right">
-          <p class="name">{{item.messageChild.username}}</p>
-          <p class="time">{{item.messageChild.createTime}}</p>
+          <p class="name">{{item.username}}</p>
+          <p class="time">{{item.schild[0]?item.schild[0].time:''}}</p>
         </div>
       </div>
       <div class="qContent">
-        <div class="resp" v-html="item.messageChild.context"></div>
-        <div class="content" v-html='item.content'></div>
+        <div class="resp">{{item.repContent}}</div>
+        <div class="content" v-html="item.schild[0]?item.schild[0].content:'原帖已删除'"></div>
       </div>
       <!-- 
       <div class="qFun">
@@ -42,13 +42,7 @@
 </template>
 <script>
 import XHeader from "@/components/XHeader.vue";
-import {
-  userSend,
-  getUsercollect,
-  userRep,
-  notReadRep,
-  updateReadStatus
-} from "@/service/api.js";
+import { userSend, getUsercollect, userRep } from "@/service/api.js";
 import { Confirm, Toast } from "vux";
 export default {
   components: {
@@ -62,8 +56,7 @@ export default {
       questionList: [],
       type: "",
       count: 0,
-      pageNo: 1,
-      noticy: []
+      pageNo: 1
     };
   },
   created() {
@@ -72,12 +65,52 @@ export default {
   },
   methods: {
     onSearch() {
-      this.userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-      notReadRep({
-        userId: this.userInfo.userId
-      }).then(res => {
-        this.noticy = res.data.data;
-      });
+      switch (this.$route.query.type) {
+        case "fatie":
+          this.type = "发帖";
+          userSend({
+            pageNo: this.pageNo,
+            pageSize: 10,
+            userId: this.userInfo.userId
+          }).then(res => {
+            this.questionList = this.questionList.concat(res.data.data);
+            this.count = res.data.count;
+          });
+          break;
+        case "huitie":
+          this.type = "回帖";
+          userRep({
+            pageNo: this.pageNo,
+            pageSize: 10,
+            userId: this.userInfo.userId
+          }).then(res => {
+            let temp = [];
+            // res.data.data.forEach(element => {
+            //   temp.push(element.schild[0]);
+            // });
+            console.log("========");
+
+            this.questionList = this.questionList.concat(res.data.data);
+            // this.questionList.forEach(item => {
+            //   if (item.schild.length == 0) {
+            //     item.schild.push([]);
+            //   }
+            // });
+            this.count = res.data.count;
+          });
+          break;
+        case "colle":
+          this.type = "收藏";
+          getUsercollect({
+            pageNo: this.pageNo,
+            pageSize: 10,
+            userId: this.userInfo.userId
+          }).then(res => {
+            this.questionList = this.questionList.concat(res.data.data);
+            this.count = res.data.count;
+          });
+          break;
+      }
     },
     more() {
       if (this.pageNo * 10 >= this.count) {
@@ -86,16 +119,15 @@ export default {
       this.pageNo++;
       this.onSearch();
     },
-    toDetail(id,id2) {
-      updateReadStatus({
-        id: id2
-      }).then(res => {
-        this.$router.push({
-          path: "/question/detail",
-          query: {
-            id: id
-          }
-        });
+    toDetail(id) {
+      if(!id){
+        return
+      }
+      this.$router.push({
+        path: "/question/detail",
+        query: {
+          id: id
+        }
       });
     }
   }
